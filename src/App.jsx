@@ -104,18 +104,15 @@ export default function App() {
       {/* 1. PRE-LOADER MINIMALISTA OSCURO */}
       <AnimatePresence>
         {loading && (
-          // CAMBIO: bg-black para fondo negro
           <motion.div key="preloader" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }} className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden">
             
-            {/* Animación de Estrella Fugaz (BLANCO AMARILLENTO CÁLIDO) */}
+            {/* Animación de Estrella Fugaz CORREGIDA para pasar por el medio en PC */}
             <motion.div
-              initial={{ x: "-50vw", y: "-30vh", opacity: 0 }}
-              animate={{ x: "150vw", y: "70vh", opacity: [0, 1, 1, 0] }}
+              initial={{ x: "-30vw", y: "-10vh", opacity: 0 }}
+              animate={{ x: "130vw", y: "90vh", opacity: [0, 1, 1, 0] }}
               transition={{ duration: 3, ease: "easeInOut", delay: 0.5 }}
-              // CAMBIO: Gradiente usando #FFFACD (LemonChiffon) para un tono blanco amarillento
-              className="absolute top-0 left-0 w-[300px] md:w-[500px] h-[2px] bg-gradient-to-r from-transparent via-[#FFFACD] to-transparent -rotate-[30deg] pointer-events-none"
+              className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[2px] bg-gradient-to-r from-transparent via-[#FFFACD] to-transparent -rotate-[25deg] pointer-events-none"
             >
-               {/* Cabeza de la estrella cálida */}
                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 bg-[#FFFACD] rounded-full blur-[1px] shadow-[0_0_20px_2px_#FFFACD80]"></div>
             </motion.div>
 
@@ -125,14 +122,12 @@ export default function App() {
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ duration: 0.8, delay: 0.8 }}
-                // CAMBIOS: text-white, tamaño mucho más chico (xl a 3xl), font-light para estilo fino
                 className="text-xl sm:text-2xl md:text-3xl font-light text-white flex items-center justify-center gap-2 sm:gap-3 tracking-wide"
               >
                 <div className="relative inline-flex items-center justify-center">
                   
                   <span className="relative z-10">
                     Pide
-                    {/* Línea de tachado blanca y fina */}
                     <motion.div 
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
@@ -141,12 +136,10 @@ export default function App() {
                     />
                   </span>
                   
-                  {/* La corrección "Cumple" */}
                   <motion.span 
                     initial={{ opacity: 0, y: 5, rotate: 0 }}
                     animate={{ opacity: 1, y: "-70%", rotate: -3 }}
                     transition={{ duration: 0.5, delay: 2.4, ease: "backOut" }}
-                    // font-normal para que destaque apenas sobre el light, color azul
                     className="absolute left-0 -top-1 text-[#0074D9] text-[0.8em] z-30 font-normal whitespace-nowrap"
                   >
                     Cumple
@@ -157,14 +150,13 @@ export default function App() {
               </motion.h2>
             </div>
 
-            {/* Logo Inferior Pequeño (Adaptado a fondo negro) */}
+            {/* Logo Inferior Pequeño */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.8, duration: 0.6 }}
               className="absolute bottom-10 left-1/2 -translate-x-1/2 font-bold tracking-wider text-xs md:text-sm text-center"
             >
-                {/* CAMBIO: text-white para la parte principal */}
                 <span className="text-white">PRIME</span>
                 <span className="text-[#0074D9]">LOGIC</span>
                 <span className="text-white/60 ml-0.5 text-[10px]">LT</span>
@@ -283,9 +275,9 @@ export default function App() {
                   
                   <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
                     {[
-                      { icon: <ShieldCheck className="w-6 h-6 md:w-8 md:h-8" />, title: "Cero Deuda Técnica", desc: "Sistemas escritos desde cero. Código inmortal y escalable, sin plantillas." },
-                      { icon: <Zap className="w-6 h-6 md:w-8 md:h-8" />, title: "Velocidad Absoluta", desc: "Optimizamos el servidor para que tu plataforma cargue en milisegundos." },
-                      { icon: <Database className="w-6 h-6 md:w-8 md:h-8" />, title: "Arquitectura Elástica", desc: "Ingeniería preparada para hiper-crecimiento con bases de datos sólidas." }
+                      { icon: <ShieldCheck size={32} />, title: "Cero Deuda Técnica", desc: "Sistemas escritos desde cero. Código inmortal y escalable, sin plantillas." },
+                      { icon: <Zap size={32} />, title: "Velocidad Absoluta", desc: "Optimizamos el servidor para que tu plataforma cargue en milisegundos." },
+                      { icon: <Database size={32} />, title: "Arquitectura Elástica", desc: "Ingeniería preparada para hiper-crecimiento con bases de datos sólidas." }
                     ].map((item, i) => (
                       <motion.div key={i} variants={fadeUp} className="bg-white p-5 md:p-10 rounded-[1.2rem] md:rounded-[2rem] shadow-xl shadow-black/5 border border-[#8A95A5]/10 md:hover:-translate-y-2 transition-transform duration-500">
                         <div className="w-10 h-10 md:w-16 md:h-16 bg-[#F4F4F9] rounded-xl flex items-center justify-center text-[#0A192F] mb-3 md:mb-6">{item.icon}</div>
@@ -310,9 +302,9 @@ export default function App() {
                   
                   <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                     {[
-                      { title: "Landing Pages", icon: <Layers className="w-6 h-6 md:w-8 md:h-8"/>, desc: "Interfaces líquidas que capturan leads y venden por vos 24/7." },
-                      { title: "Plataformas Web App", icon: <MonitorSmartphone className="w-6 h-6 md:w-8 md:h-8"/>, desc: "Sistemas complejos, dashboards y SaaS con React." },
-                      { title: "Arquitectura Cloud", icon: <Code2 className="w-6 h-6 md:w-8 md:h-8"/>, desc: "Bases de datos estructuradas para no caerse jamás." }
+                      { title: "Landing Pages", icon: <Layers size={32}/>, desc: "Interfaces líquidas que capturan leads y venden por vos 24/7." },
+                      { title: "Plataformas Web App", icon: <MonitorSmartphone size={32}/>, desc: "Sistemas complejos, dashboards y SaaS con React." },
+                      { title: "Arquitectura Cloud", icon: <Code2 size={32}/>, desc: "Bases de datos estructuradas para no caerse jamás." }
                     ].map((item, i) => (
                       <motion.div key={i} variants={fadeUp} className="group p-5 md:p-10 bg-white/5 backdrop-blur-lg border border-white/10 rounded-[1.2rem] md:rounded-[2.5rem] md:hover:bg-[#0074D9]/10 transition-all duration-500">
                         <div className="w-10 h-10 md:w-16 md:h-16 bg-[#0074D9] rounded-xl flex items-center justify-center text-white mb-3 md:mb-8 shadow-lg">{item.icon}</div>
@@ -448,7 +440,7 @@ export default function App() {
             </motion.div>
           ) : (
             
-            /* --- SECCIÓN CONTACTO PREMIUM --- */
+            /* --- SECCIÓN CONTACTO PREMIUM (SUTIL) --- */
             <motion.section 
               key="contacto" 
               initial={{ opacity: 0, y: 30 }} 
