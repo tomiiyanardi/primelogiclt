@@ -421,7 +421,7 @@ export default function App() {
 
                   <footer className="relative z-10 w-full pt-8 text-center">
                       <div className="text-[8px] md:text-[11px] font-black uppercase tracking-[0.2em] text-white/60">
-                        © 2026 PRIME LOGIC LT · INGENIERÍA EN SISTEMAS
+                        © 2026 PRIME LOGIC LT · DERECHOS RESERVADOS · GODOY CRUZ, MENDOZA, ARGENTINA
                       </div>
                   </footer>
               </section>
