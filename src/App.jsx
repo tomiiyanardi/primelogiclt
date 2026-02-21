@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { 
   ChevronRight, LineChart, Layers, Cpu, MapPin, Mail, 
   Code2, MonitorSmartphone, MessageCircle, Instagram, 
-  ArrowLeft, CheckCircle, Menu, X, ShieldCheck, Zap, Database
+  ArrowLeft, CheckCircle, Menu, X, ShieldCheck, Zap, Database, AppWindow, Settings, SearchCode
 } from "lucide-react";
 
 /* --- VARIANTES DE ANIMACIÓN --- */
@@ -48,7 +48,6 @@ export default function App() {
   const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
   useEffect(() => {
-    // Tiempo ajustado para permitir que aparezca el logo al final
     const timer = setTimeout(() => {
       setLoading(false);
       isFirstVisit.current = false;
@@ -63,7 +62,7 @@ export default function App() {
     const windowHeight = window.innerHeight;
     const sectionIndex = Math.round(scrollTop / windowHeight);
     
-    if ([0, 2, 5].includes(sectionIndex)) {
+    if ([0, 2, 4, 6].includes(sectionIndex)) {
       setHeaderTheme("dark");
     } else {
       setHeaderTheme("light");
@@ -97,6 +96,8 @@ export default function App() {
   const headerBgClass = isDark ? "bg-[#0A192F]/40 border-white/10 shadow-black/20" : "bg-white/80 border-[#0A192F]/10 shadow-[#0A192F]/5";
   const headerTextClass = isDark ? "text-white" : "text-[#0A192F]";
   const headerMutedClass = isDark ? "text-white/70 hover:text-white" : "text-[#8A95A5] hover:text-[#0A192F]";
+
+  const techList = ["React JS", "•", "Node.js", "•", "Vite", "•", "PostgreSQL", "•", "TailwindCSS", "•", "AWS", "•", "Docker", "•", "Java", "•", "Spring Boot"];
 
   return (
     <div className="bg-[#0A192F] font-sans selection:bg-[#0074D9]/30 overflow-hidden h-[100dvh] w-full relative">
@@ -210,52 +211,76 @@ export default function App() {
           {view === "home" ? (
             <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               
-              {/* --- HERO SECTION --- */}
-              <section className="relative min-h-[100dvh] snap-start pt-24 md:pt-32 px-2 md:px-4 pb-4 flex flex-col items-center overflow-hidden">
+              {/* --- HERO SECTION MODIFICADO (TEXTO DISPERSO EN MÓVIL) --- */}
+              <section className="relative min-h-[100dvh] snap-start pt-20 md:pt-32 px-3 md:px-4 pb-4 flex flex-col items-center overflow-hidden">
                 <motion.div 
                   initial={{ y: 50, opacity: 0, scale: 0.98 }} 
                   animate={{ y: 0, opacity: 1, scale: 1 }}
                   style={{ scale: heroScale }} 
                   transition={{ duration: 0.8, delay: isFirstVisit.current ? 4.2 : 0.2, ease: [0.33, 1, 0.68, 1] }}
-                  className="relative w-full h-full flex-grow rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col justify-between group bg-[#0A192F]"
+                  className="relative w-full h-full flex-grow rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col bg-[#0A192F]"
                 >
-                  <video autoPlay loop muted playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000 z-0">
+                  <video autoPlay loop muted playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover scale-105 transition-transform duration-1000 z-0">
                     <source src="/cielo.mp4" type="video/mp4" />
                   </video>
                   <div className="absolute inset-0 bg-black/40 z-0"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/90 via-transparent to-transparent z-0"></div>
+                  
+                  {/* Gradiente más alto en móvil para que el texto resalte siempre sobre el video */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/95 via-[#0A192F]/40 to-transparent z-0"></div>
 
-                  <motion.div style={{ y: heroTextY, opacity: heroTextOpacity }} className="relative z-10 flex flex-col h-full justify-between pointer-events-none">
-                    <div className="flex-grow flex items-center justify-center pt-16 md:pt-20">
-                      <h1 className="text-[14vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-2xl">
-                        primelogic<span className="text-[4vw] md:text-5xl lg:text-7xl mt-[1vw] md:mt-4 lg:mt-8 ml-1 text-white/80">LT</span>
+                  {/* CONTENEDOR ABSOLUTO PARA DISTRIBUIR LOS TEXTOS PERFECTAMENTE */}
+                  <motion.div style={{ y: heroTextY, opacity: heroTextOpacity }} className="absolute inset-0 z-10 flex flex-col p-6 md:p-12 pointer-events-none">
+                    
+                    {/* TÍTULO: Arriba */}
+                    <div className="pt-16 md:pt-10 flex justify-center w-full shrink-0">
+                      <h1 className="text-[15vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-2xl">
+                        primelogic<span className="text-[4vw] md:text-5xl lg:text-7xl mt-[2vw] md:mt-4 lg:mt-8 ml-1 text-white/80">LT</span>
                       </h1>
                     </div>
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end p-5 md:p-12 gap-6 md:gap-4">
-                      <div className="max-w-2xl">
-                        <h2 className="text-xl sm:text-2xl md:text-5xl font-black text-white mb-2 md:mb-4 tracking-tight drop-shadow-lg">
+                    
+                    {/* TEXTOS INFERIORES: Distribuidos con mt-auto */}
+                    <div className="flex-grow flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end w-full pb-2 md:pb-0">
+                      
+                      {/* Bloque Subtítulo: Empujado hacia abajo, con margen abajo para separarse de Mendoza */}
+                      <div className="max-w-2xl mt-auto mb-10 md:mb-0">
+                        <h2 className="text-[28px] sm:text-3xl md:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight drop-shadow-lg leading-tight">
                           El cielo no es el límite.
                         </h2>
-                        <p className="text-white/90 text-xs sm:text-sm md:text-xl font-bold leading-relaxed drop-shadow-md">
+                        <p className="text-white/90 text-sm sm:text-base md:text-xl font-bold leading-relaxed drop-shadow-md">
                           Potenciar el negocio. <strong className="text-white font-black">Construimos motores financieros de tecnología pura</strong> que hacen escalar tu negocio.
                         </p>
                       </div>
-                      <div className="text-left md:text-right text-white/90 text-[9px] md:text-sm shrink-0 drop-shadow-md pb-2 md:pb-0">
+                      
+                      {/* Bloque Localización: Queda pegado al fondo absoluto */}
+                      <div className="text-left md:text-right text-white/90 text-[11px] md:text-sm shrink-0 drop-shadow-md pb-4 md:pb-0">
                         <p className="font-black text-white mb-0.5 md:mb-1">made in Mendoza, Argentina</p>
                         <p className="font-semibold">Hacia el resto del mundo</p>
                       </div>
+
                     </div>
                   </motion.div>
                 </motion.div>
               </section>
 
-              {/* --- LEYES --- */}
+              {/* --- LEYES & MARQUEE INFINITO --- */}
               <section className="min-h-[100dvh] snap-start flex flex-col bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20 relative">
-                <div className="py-3 md:py-10 border-y border-[#8A95A5]/20 bg-white overflow-hidden flex relative mb-8 shrink-0 shadow-sm">
+                
+                {/* Marquee Infinito Arreglado */}
+                <div className="py-3 md:py-10 border-y border-[#8A95A5]/20 bg-white overflow-hidden flex relative mb-8 shrink-0 shadow-sm w-full">
                   <div className="absolute left-0 top-0 w-8 md:w-32 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
                   <div className="absolute right-0 top-0 w-8 md:w-32 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
-                  <motion.div animate={{ x: [0, -1000] }} transition={{ repeat: Infinity, ease: "linear", duration: 20 }} className="flex gap-6 md:gap-16 items-center px-4 md:px-10 font-black text-sm md:text-2xl uppercase tracking-widest text-[#8A95A5]/40 whitespace-nowrap">
-                    <span>React JS</span> <span>•</span> <span>Node.js</span> <span>•</span> <span>Vite</span> <span>•</span> <span>PostgreSQL</span> <span>•</span> <span>TailwindCSS</span> <span>•</span> <span>AWS</span> <span>•</span> <span>Docker</span> <span>•</span> <span>React JS</span>
+                  
+                  <motion.div 
+                    animate={{ x: ["0%", "-50%"] }} 
+                    transition={{ repeat: Infinity, ease: "linear", duration: 30 }} 
+                    className="flex items-center whitespace-nowrap w-max"
+                  >
+                    <div className="flex gap-6 md:gap-16 items-center px-4 md:px-10 font-black text-sm md:text-2xl uppercase tracking-widest text-[#8A95A5]/40">
+                      {techList.map((item, idx) => <span key={idx}>{item}</span>)}
+                    </div>
+                    <div className="flex gap-6 md:gap-16 items-center px-4 md:px-10 font-black text-sm md:text-2xl uppercase tracking-widest text-[#8A95A5]/40">
+                      {techList.map((item, idx) => <span key={`dup-${idx}`}>{item}</span>)}
+                    </div>
                   </motion.div>
                 </div>
 
@@ -280,7 +305,34 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- SOLUCIONES (Ventana 3) --- */}
+              {/* --- NUEVA SECCIÓN: FILOSOFÍA DE DESARROLLO --- */}
+              <section className="min-h-[100dvh] snap-start flex flex-col justify-center px-4 md:px-6 bg-white relative pt-28 pb-12 md:pt-36 md:pb-20">
+                <div className="max-w-7xl mx-auto w-full my-auto">
+                  <div className="text-center mb-10 md:mb-20">
+                    <span className="text-[#0074D9] font-black tracking-widest uppercase text-[9px] md:text-sm mb-2 md:mb-4 block">Nuestra Promesa</span>
+                    <TypewriterText text="Filosofía de Trabajo." className="text-3xl sm:text-4xl md:text-6xl font-black mb-2 md:mb-6 tracking-tighter text-[#0A192F] justify-center" />
+                    <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-[#8A95A5] text-xs sm:text-sm md:text-xl max-w-2xl mx-auto font-bold px-4">
+                      Construimos herramientas digitales que se adaptan a tu negocio, no al revés.
+                    </motion.p>
+                  </div>
+                  
+                  <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+                    {[
+                      { title: "Diseño 100% Responsive", icon: <AppWindow className="w-8 h-8 md:w-10 md:h-10 text-[#0074D9]"/>, desc: "Tu sistema se verá y funcionará impecable en cualquier dispositivo. Desde monitores ultrawide hasta teléfonos móviles, la experiencia de usuario está garantizada." },
+                      { title: "Software a Medida", icon: <SearchCode className="w-8 h-8 md:w-10 md:h-10 text-[#0074D9]"/>, desc: "No usamos plantillas prefabricadas. Analizamos tu modelo de negocio y programamos soluciones únicas, pensadas exclusivamente para potenciar tu empresa." },
+                      { title: "Adaptabilidad Total", icon: <Settings className="w-8 h-8 md:w-10 md:h-10 text-[#0074D9]"/>, desc: "Nos ajustamos exactamente a lo que necesites. Tu plataforma puede evolucionar y escalar sumando nuevas funcionalidades sin limitaciones técnicas." }
+                    ].map((item, i) => (
+                      <motion.div key={i} variants={fadeUp} className="group p-6 md:p-10 bg-[#F4F4F9] rounded-[1.2rem] md:rounded-[2.5rem] hover:shadow-xl transition-all duration-500 border border-transparent hover:border-[#0074D9]/20">
+                        <div className="mb-4 md:mb-6">{item.icon}</div>
+                        <h3 className="text-lg md:text-2xl font-black text-[#0A192F] mb-2 md:mb-4">{item.title}</h3>
+                        <p className="text-[#8A95A5] font-semibold leading-relaxed text-[12px] md:text-base">{item.desc}</p>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </section>
+
+              {/* --- SOLUCIONES (Ventana) --- */}
               <section id="soluciones" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#0A192F] text-white relative pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#0074D9] to-transparent opacity-50"></div>
                 <div className="max-w-7xl mx-auto w-full my-auto">
@@ -307,7 +359,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- CASOS DE ÉXITO (Ventana 4) --- */}
+              {/* --- CASOS DE ÉXITO (Ventana) --- */}
               <section id="proyectos" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="max-w-7xl mx-auto w-full my-auto">
                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-16 gap-4 md:gap-6">
@@ -353,7 +405,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- NOSOTROS (Ventana 5) --- */}
+              {/* --- NOSOTROS (Ventana) --- */}
               <section id="nosotros" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="max-w-7xl mx-auto w-full bg-white rounded-[1.5rem] md:rounded-[3rem] shadow-sm border border-[#8A95A5]/10 overflow-hidden my-auto">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-16 items-center p-5 md:p-10">
@@ -385,7 +437,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- ATERRIZAJE NAVE (Ventana 6) --- */}
+              {/* --- ATERRIZAJE NAVE (Ventana) --- */}
               <section className="relative min-h-[100dvh] snap-start flex flex-col bg-[#0A192F] overflow-hidden pt-28 md:pt-36 pb-6 md:pb-8 px-5 md:px-16">
                   <div className="absolute inset-0 z-0">
                     <video autoPlay loop muted playsInline preload="auto" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-70">
