@@ -106,17 +106,15 @@ export default function App() {
         {loading && (
           <motion.div key="preloader" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }} className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden">
             
-            {/* Animación de Estrella Fugaz CORREGIDA para pasar por el medio en PC */}
             <motion.div
-              initial={{ x: "-30vw", y: "-10vh", opacity: 0 }}
-              animate={{ x: "130vw", y: "90vh", opacity: [0, 1, 1, 0] }}
+              initial={{ x: "-50vw", y: "-50vh", opacity: 0 }}
+              animate={{ x: "150vw", y: "150vh", opacity: [0, 1, 1, 0] }}
               transition={{ duration: 3, ease: "easeInOut", delay: 0.5 }}
-              className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[2px] bg-gradient-to-r from-transparent via-[#FFFACD] to-transparent -rotate-[25deg] pointer-events-none"
+              className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[2px] bg-gradient-to-r from-transparent via-[#FFFACD] to-transparent -rotate-45 pointer-events-none"
             >
                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 bg-[#FFFACD] rounded-full blur-[1px] shadow-[0_0_20px_2px_#FFFACD80]"></div>
             </motion.div>
 
-            {/* Secuencia de Texto Minimalista y Fina */}
             <div className="relative z-10 w-full px-4 flex flex-col items-center justify-center flex-grow pb-20">
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }} 
@@ -125,7 +123,6 @@ export default function App() {
                 className="text-xl sm:text-2xl md:text-3xl font-light text-white flex items-center justify-center gap-2 sm:gap-3 tracking-wide"
               >
                 <div className="relative inline-flex items-center justify-center">
-                  
                   <span className="relative z-10">
                     Pide
                     <motion.div 
@@ -135,7 +132,6 @@ export default function App() {
                       className="absolute top-1/2 left-0 w-full h-[1px] bg-white/80 -translate-y-1/2 origin-left z-20"
                     />
                   </span>
-                  
                   <motion.span 
                     initial={{ opacity: 0, y: 5, rotate: 0 }}
                     animate={{ opacity: 1, y: "-70%", rotate: -3 }}
@@ -145,34 +141,32 @@ export default function App() {
                     Cumple
                   </motion.span>
                 </div>
-
                 <span>un deseo.</span>
               </motion.h2>
             </div>
 
-            {/* Logo Inferior Pequeño */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.8, duration: 0.6 }}
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 font-bold tracking-wider text-xs md:text-sm text-center"
+              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2 font-bold tracking-wider text-xs md:text-sm text-center"
             >
-                <span className="text-white">PRIME</span>
-                <span className="text-[#0074D9]">LOGIC</span>
-                <span className="text-white/60 ml-0.5 text-[10px]">LT</span>
+                <img src="/logo.png" alt="Logo" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
+                <div>
+                  <span className="text-white">PRIME</span>
+                  <span className="text-[#0074D9]">LOGIC</span>
+                  <span className="text-white/60 ml-0.5 text-[10px]">LT</span>
+                </div>
             </motion.div>
-
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 2. HEADER LIQUID GLASS */}
+      {/* 2. HEADER LIQUID GLASS CON LOGO.PNG */}
       <header className={`fixed top-2 md:top-4 left-1/2 -translate-x-1/2 z-[90] w-[96%] max-w-[1400px] transition-all duration-500`}>
         <div className={`relative w-full px-3 md:px-6 py-2.5 md:py-3 rounded-full border backdrop-blur-2xl flex justify-between items-center transition-colors duration-700 ${headerBgClass} ${scrolled ? 'py-2 md:py-3' : 'py-3 md:py-5'}`}>
           <button onClick={() => navigateTo("home")} className={`flex items-center gap-2 md:gap-3 font-black text-base md:text-xl tracking-tighter shrink-0 transition-colors duration-500 ${headerTextClass}`}>
-            <div className={`w-6 h-6 md:w-8 md:h-8 rounded-[0.4rem] md:rounded-xl flex items-center justify-center shadow-lg transition-colors duration-500 ${isDark ? 'bg-[#0074D9] text-white' : 'bg-[#0A192F] text-white'}`}>
-              <span className="text-[7px] md:text-[10px]">LT</span>
-            </div>
+            <img src="/logo.png" alt="Logo" className="w-7 h-7 md:w-9 md:h-9 object-contain" />
             <span className="hidden sm:inline">PRIME<span className="text-[#0074D9]">LOGIC</span></span>
             <span className="sm:hidden tracking-wider">PRIME<span className="text-[#0074D9]">LOGIC</span></span>
           </button>
@@ -216,8 +210,8 @@ export default function App() {
           {view === "home" ? (
             <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               
-              {/* --- HERO SECTION (Ventana 1) --- */}
-              <section className="relative min-h-[100dvh] snap-start pt-20 md:pt-28 px-2 md:px-4 pb-2 md:pb-4 flex flex-col items-center overflow-hidden">
+              {/* --- HERO SECTION --- */}
+              <section className="relative min-h-[100dvh] snap-start pt-24 md:pt-32 px-2 md:px-4 pb-4 flex flex-col items-center overflow-hidden">
                 <motion.div 
                   initial={{ y: 50, opacity: 0, scale: 0.98 }} 
                   animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -232,13 +226,11 @@ export default function App() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/90 via-transparent to-transparent z-0"></div>
 
                   <motion.div style={{ y: heroTextY, opacity: heroTextOpacity }} className="relative z-10 flex flex-col h-full justify-between pointer-events-none">
-                    
                     <div className="flex-grow flex items-center justify-center pt-16 md:pt-20">
                       <h1 className="text-[14vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-2xl">
                         primelogic<span className="text-[4vw] md:text-5xl lg:text-7xl mt-[1vw] md:mt-4 lg:mt-8 ml-1 text-white/80">LT</span>
                       </h1>
                     </div>
-
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end p-5 md:p-12 gap-6 md:gap-4">
                       <div className="max-w-2xl">
                         <h2 className="text-xl sm:text-2xl md:text-5xl font-black text-white mb-2 md:mb-4 tracking-tight drop-shadow-lg">
@@ -257,9 +249,9 @@ export default function App() {
                 </motion.div>
               </section>
 
-              {/* --- LEYES & MARQUEE (Ventana 2) --- */}
-              <section className="min-h-[100dvh] snap-start flex flex-col justify-center bg-[#F4F4F9] pt-24 pb-12 md:pt-28 md:pb-20 relative">
-                <div className="py-3 md:py-10 border-y border-[#8A95A5]/20 bg-white overflow-hidden flex relative mb-8 md:mb-16 shrink-0 shadow-sm">
+              {/* --- LEYES --- */}
+              <section className="min-h-[100dvh] snap-start flex flex-col bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20 relative">
+                <div className="py-3 md:py-10 border-y border-[#8A95A5]/20 bg-white overflow-hidden flex relative mb-8 shrink-0 shadow-sm">
                   <div className="absolute left-0 top-0 w-8 md:w-32 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
                   <div className="absolute right-0 top-0 w-8 md:w-32 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
                   <motion.div animate={{ x: [0, -1000] }} transition={{ repeat: Infinity, ease: "linear", duration: 20 }} className="flex gap-6 md:gap-16 items-center px-4 md:px-10 font-black text-sm md:text-2xl uppercase tracking-widest text-[#8A95A5]/40 whitespace-nowrap">
@@ -267,33 +259,32 @@ export default function App() {
                   </motion.div>
                 </div>
 
-                <div className="px-4 md:px-6 max-w-7xl mx-auto w-full">
+                <div className="px-4 md:px-6 max-w-7xl mx-auto w-full my-auto">
                   <div className="text-center mb-8 md:mb-16">
                     <span className="text-[#0074D9] font-black tracking-widest uppercase text-[9px] md:text-sm mb-2 md:mb-4 block">Nuestro Diferencial</span>
                     <TypewriterText text="Las 3 Leyes de PrimeLogic." className="text-2xl sm:text-3xl md:text-6xl font-black text-[#0A192F] tracking-tighter justify-center" />
                   </div>
-                  
-                  <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
                     {[
-                      { icon: <ShieldCheck size={32} />, title: "Cero Deuda Técnica", desc: "Sistemas escritos desde cero. Código inmortal y escalable, sin plantillas." },
-                      { icon: <Zap size={32} />, title: "Velocidad Absoluta", desc: "Optimizamos el servidor para que tu plataforma cargue en milisegundos." },
-                      { icon: <Database size={32} />, title: "Arquitectura Elástica", desc: "Ingeniería preparada para hiper-crecimiento con bases de datos sólidas." }
+                      { icon: <ShieldCheck className="w-6 h-6 md:w-8 md:h-8" />, title: "Cero Deuda Técnica", desc: "Sistemas escritos desde cero. Código inmortal y escalable." },
+                      { icon: <Zap className="w-6 h-6 md:w-8 md:h-8" />, title: "Velocidad Absoluta", desc: "Optimizamos el servidor para que tu plataforma cargue en milisegundos." },
+                      { icon: <Database className="w-6 h-6 md:w-8 md:h-8" />, title: "Arquitectura Elástica", desc: "Ingeniería preparada para hiper-crecimiento sólido." }
                     ].map((item, i) => (
-                      <motion.div key={i} variants={fadeUp} className="bg-white p-5 md:p-10 rounded-[1.2rem] md:rounded-[2rem] shadow-xl shadow-black/5 border border-[#8A95A5]/10 md:hover:-translate-y-2 transition-transform duration-500">
+                      <motion.div key={i} variants={fadeUp} className="bg-white p-5 md:p-10 rounded-[1.2rem] md:rounded-[2rem] shadow-xl border border-[#8A95A5]/10">
                         <div className="w-10 h-10 md:w-16 md:h-16 bg-[#F4F4F9] rounded-xl flex items-center justify-center text-[#0A192F] mb-3 md:mb-6">{item.icon}</div>
                         <h3 className="text-lg md:text-2xl font-black text-[#0A192F] mb-1 md:mb-4">{item.title}</h3>
                         <p className="text-[#8A95A5] font-bold text-xs md:text-base leading-relaxed">{item.desc}</p>
                       </motion.div>
                     ))}
-                  </motion.div>
+                  </div>
                 </div>
               </section>
 
               {/* --- SOLUCIONES (Ventana 3) --- */}
-              <section id="soluciones" className="min-h-[100dvh] snap-start flex flex-col justify-center px-4 md:px-6 bg-[#0A192F] text-white relative pt-28 pb-12 md:pt-32 md:pb-20">
+              <section id="soluciones" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#0A192F] text-white relative pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#0074D9] to-transparent opacity-50"></div>
-                <div className="max-w-7xl mx-auto w-full">
-                  <div className="text-center mb-10 md:mb-24">
+                <div className="max-w-7xl mx-auto w-full my-auto">
+                  <div className="text-center mb-10 md:mb-20">
                     <TypewriterText text="Armamento Digital." className="text-3xl sm:text-4xl md:text-7xl font-black mb-2 md:mb-6 tracking-tighter text-white justify-center" />
                     <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-white/80 text-xs sm:text-sm md:text-xl max-w-2xl mx-auto font-bold px-4">
                       Soluciones desarrolladas para dominar el entorno web.
@@ -302,9 +293,9 @@ export default function App() {
                   
                   <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                     {[
-                      { title: "Landing Pages", icon: <Layers size={32}/>, desc: "Interfaces líquidas que capturan leads y venden por vos 24/7." },
-                      { title: "Plataformas Web App", icon: <MonitorSmartphone size={32}/>, desc: "Sistemas complejos, dashboards y SaaS con React." },
-                      { title: "Arquitectura Cloud", icon: <Code2 size={32}/>, desc: "Bases de datos estructuradas para no caerse jamás." }
+                      { title: "Landing Pages", icon: <Layers className="w-6 h-6 md:w-8 md:h-8"/>, desc: "Interfaces líquidas que capturan leads y venden por vos 24/7." },
+                      { title: "Plataformas Web App", icon: <MonitorSmartphone className="w-6 h-6 md:w-8 md:h-8"/>, desc: "Sistemas complejos, dashboards y SaaS con React." },
+                      { title: "Arquitectura Cloud", icon: <Code2 className="w-6 h-6 md:w-8 md:h-8"/>, desc: "Bases de datos estructuradas para no caerse jamás." }
                     ].map((item, i) => (
                       <motion.div key={i} variants={fadeUp} className="group p-5 md:p-10 bg-white/5 backdrop-blur-lg border border-white/10 rounded-[1.2rem] md:rounded-[2.5rem] md:hover:bg-[#0074D9]/10 transition-all duration-500">
                         <div className="w-10 h-10 md:w-16 md:h-16 bg-[#0074D9] rounded-xl flex items-center justify-center text-white mb-3 md:mb-8 shadow-lg">{item.icon}</div>
@@ -317,8 +308,8 @@ export default function App() {
               </section>
 
               {/* --- CASOS DE ÉXITO (Ventana 4) --- */}
-              <section id="proyectos" className="min-h-[100dvh] snap-start flex flex-col justify-center px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-32 md:pb-20">
-                <div className="max-w-7xl mx-auto w-full">
+              <section id="proyectos" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
+                <div className="max-w-7xl mx-auto w-full my-auto">
                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-16 gap-4 md:gap-6">
                       <div>
                         <TypewriterText text="Sistemas en Acción." className="text-3xl sm:text-4xl md:text-7xl font-black text-[#0A192F] tracking-tighter mb-2 md:mb-4 justify-start" />
@@ -363,8 +354,8 @@ export default function App() {
               </section>
 
               {/* --- NOSOTROS (Ventana 5) --- */}
-              <section id="nosotros" className="min-h-[100dvh] snap-start flex flex-col justify-center px-4 md:px-6 bg-[#F4F4F9] pt-24 pb-12 md:pt-32 md:pb-20">
-                <div className="max-w-7xl mx-auto w-full bg-white rounded-[1.5rem] md:rounded-[3rem] shadow-sm border border-[#8A95A5]/10 overflow-hidden">
+              <section id="nosotros" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
+                <div className="max-w-7xl mx-auto w-full bg-white rounded-[1.5rem] md:rounded-[3rem] shadow-sm border border-[#8A95A5]/10 overflow-hidden my-auto">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-16 items-center p-5 md:p-10">
                     <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }}>
                       <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-6xl font-black text-[#0A192F] mb-3 md:mb-8 tracking-tighter">
@@ -395,7 +386,7 @@ export default function App() {
               </section>
 
               {/* --- ATERRIZAJE NAVE (Ventana 6) --- */}
-              <section className="relative min-h-[100dvh] snap-start flex flex-col bg-[#0A192F] overflow-hidden">
+              <section className="relative min-h-[100dvh] snap-start flex flex-col bg-[#0A192F] overflow-hidden pt-28 md:pt-36 pb-6 md:pb-8 px-5 md:px-16">
                   <div className="absolute inset-0 z-0">
                     <video autoPlay loop muted playsInline preload="auto" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-70">
                       <source src="/nave.mp4" type="video/mp4" />
@@ -404,7 +395,7 @@ export default function App() {
                     <div className="absolute inset-x-0 top-0 h-20 md:h-40 bg-gradient-to-b from-[#0A192F] to-transparent z-0"></div>
                   </div>
 
-                  <div className="relative z-10 flex-grow flex flex-col items-start justify-center pt-24 md:pt-28 pb-12 md:pb-16 px-5 md:px-16 max-w-[1400px] mx-auto w-full">
+                  <div className="relative z-10 flex-grow flex flex-col items-start justify-center max-w-[1400px] mx-auto w-full my-auto">
                     <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }} className="text-left max-w-4xl flex flex-col items-start">
                       <motion.span variants={fadeUp} className="inline-block px-3 py-1.5 md:px-4 md:py-1.5 text-[9px] md:text-xs font-black tracking-widest uppercase rounded-full border border-white/30 text-white mb-3 md:mb-4 bg-white/10 backdrop-blur-md shadow-lg">
                         Fase final del proyecto
@@ -428,28 +419,26 @@ export default function App() {
                     </motion.div>
                   </div>
 
-                  <footer className="relative z-10 w-full py-4 md:py-6 px-4 border-t border-white/10 bg-[#0A192F]/40 backdrop-blur-md shrink-0">
-                    <div className="max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
+                  <footer className="relative z-10 w-full pt-8 text-center">
                       <div className="text-[8px] md:text-[11px] font-black uppercase tracking-[0.2em] text-white/60">
                         © 2026 PRIME LOGIC LT · INGENIERÍA EN SISTEMAS
                       </div>
-                    </div>
                   </footer>
               </section>
 
             </motion.div>
           ) : (
             
-            /* --- SECCIÓN CONTACTO PREMIUM (SUTIL) --- */
+            /* --- SECCIÓN CONTACTO PREMIUM LUZ AZUL GIRATORIA Y FONDO AZUL --- */
             <motion.section 
               key="contacto" 
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.98 }} 
               transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
-              className="relative min-h-[100dvh] snap-start flex flex-col items-center justify-center bg-[#F4F4F9] p-2 md:p-4 overflow-hidden"
+              className="relative min-h-[100dvh] snap-start flex flex-col items-center bg-[#0A192F] px-4 md:px-8 pt-28 pb-12 overflow-hidden"
             >
-              <div className="relative w-full h-full min-h-[90dvh] max-w-[1600px] rounded-[1.2rem] md:rounded-[2.5rem] overflow-hidden bg-[#0A192F] shadow-2xl flex items-center justify-center p-4 md:p-12">
+              <div className="relative w-full flex-grow max-w-[1400px] rounded-[1.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col items-center justify-center p-6 md:p-12 border border-white/5 my-auto">
                 
                 <div className="absolute inset-0 z-0">
                   <video autoPlay loop muted playsInline preload="auto" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-50 mix-blend-lighten z-0">
@@ -458,49 +447,53 @@ export default function App() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/80 to-[#0A192F]/30 z-0"></div>
                 </div>
 
-                <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col justify-center h-full pt-14 md:pt-0">
-                  <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center">
+                <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col justify-center h-full">
+                  
+                  <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center flex-grow">
                     
-                    {/* TÍTULO GIGANTE LET'S TALK */}
+                    {/* TEXTO ACHICADO */}
                     <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.6, duration: 0.8 }} className="order-1 lg:order-2 text-center lg:text-left">
-                      <h2 className="text-[18vw] md:text-[8rem] font-black text-white mb-1 md:mb-4 tracking-tighter leading-none drop-shadow-2xl">
-                        Let's <br className="hidden lg:block"/> talk.
+                      <h2 className="text-[14vw] md:text-[6.5rem] font-black text-white mb-2 md:mb-4 tracking-tighter leading-none drop-shadow-2xl">
+                        Iniciá el <br className="hidden lg:block"/> sistema.
                       </h2>
-                      <p className="text-white/90 text-[11px] md:text-xl font-bold max-w-md mx-auto lg:mx-0 drop-shadow-md px-2 md:px-0">
-                        Contanos sobre tu empresa. Tomás y Luciano te asesorarán sin compromiso.
+                      <p className="text-white/90 text-xs md:text-lg font-bold max-w-md mx-auto lg:mx-0 drop-shadow-md px-2 md:px-0">
+                        Contactate con nosotros. A la brevedad te responderemos y cotizaremos tu proyecto sin compromiso.
                       </p>
                     </motion.div>
 
-                    {/* TARJETA CONTACTO PREMIUM (SUTIL) */}
-                    <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.4, duration: 0.8 }} className="order-2 lg:order-1 relative w-full rounded-[1.2rem] md:rounded-[3rem] overflow-hidden p-[1px] bg-gradient-to-br from-white/10 via-[#0074D9]/30 to-white/5 shadow-2xl shadow-black/20 group">
+                    {/* TARJETA CONTACTO ACHICADA LIGERAMENTE */}
+                    <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.4, duration: 0.8 }} className="order-2 lg:order-1 relative w-full max-w-md mx-auto rounded-[1.2rem] md:rounded-[2.5rem] overflow-hidden p-[3px] shadow-[0_0_40px_-5px_rgba(0,116,217,0.4)] group">
                       
-                      {/* Sheen Effect */}
-                      <motion.div
-                        animate={{ x: ['-100%', '100%'] }}
-                        transition={{ repeat: Infinity, duration: 5, ease: "linear" }}
-                        className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent z-0 pointer-events-none"
-                      />
+                      {/* LUZ FUERTE AZUL GIRATORIA */}
+                      <div className="absolute inset-0 z-0 overflow-hidden rounded-[1.2rem] md:rounded-[2.5rem]">
+                        <motion.div 
+                          animate={{ rotate: [0, 360] }}
+                          transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                          className="absolute top-1/2 left-1/2 w-[250%] h-[250%] origin-center -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_40%,#00E5FF_80%,#0074D9_100%)] z-0"
+                        />
+                      </div>
 
-                      <div className="relative z-10 bg-[#0A192F]/70 backdrop-blur-xl p-5 md:p-10 rounded-[calc(1.2rem-1px)] md:rounded-[calc(3rem-1px)] h-full w-full">
-                        <h3 className="text-lg md:text-3xl font-black text-white mb-1 tracking-tighter">¿Preparados para el despegue?</h3>
-                        <p className="text-white/70 font-bold text-[10px] md:text-sm mb-4 md:mb-8">Seleccioná tu canal. Respondemos rápido.</p>
+                      <div className="relative z-10 bg-[#0A192F]/95 backdrop-blur-xl p-5 md:p-8 rounded-[calc(1.2rem-3px)] md:rounded-[calc(2.5rem-3px)] h-full w-full">
+                        <h3 className="text-lg md:text-2xl font-black text-white mb-1 tracking-tighter">¿Preparados para el despegue?</h3>
+                        <p className="text-white/70 font-bold text-[10px] md:text-xs mb-5 md:mb-6">Respondemos en menos de 24hs.</p>
 
-                        <div className="flex flex-col gap-2.5 md:gap-4">
-                          <ContactCardHorizontal icon={<MessageCircle className="w-4 h-4 md:w-5 md:h-5"/>} title="WhatsApp" value="+54 261 2533823" link="https://wa.me/2612533823" color="text-green-500" bgColor="bg-green-500/10" />
-                          <ContactCardHorizontal icon={<Mail className="w-4 h-4 md:w-5 md:h-5"/>} title="Email" value="primelogiclt@gmail.com" link="mailto:primelogiclt@gmail.com" color="text-[#0074D9]" bgColor="bg-[#0074D9]/10" />
-                          <ContactCardHorizontal icon={<Instagram className="w-4 h-4 md:w-5 md:h-5"/>} title="Instagram" value="@primelogiclt" link="https://instagram.com/primelogiclt" color="text-pink-500" bgColor="bg-pink-500/10" />
+                        <div className="flex flex-col gap-3 md:gap-4">
+                          <ContactCardHorizontal icon={<MessageCircle className="w-5 h-5 md:w-5 md:h-5"/>} title="WhatsApp" value="+54 261 2533823" link="https://wa.me/2612533823" color="text-green-500" bgColor="bg-green-500/10" />
+                          <ContactCardHorizontal icon={<Mail className="w-5 h-5 md:w-5 md:h-5"/>} title="Email" value="primelogiclt@gmail.com" link="https://mail.google.com/mail/?view=cm&fs=1&to=primelogiclt@gmail.com" color="text-[#0074D9]" bgColor="bg-[#0074D9]/10" />
+                          <ContactCardHorizontal icon={<Instagram className="w-5 h-5 md:w-5 md:h-5"/>} title="Instagram" value="@primelogiclt" link="https://instagram.com/primelogiclt" color="text-pink-500" bgColor="bg-pink-500/10" />
                         </div>
                       </div>
                     </motion.div>
 
-                    {/* BOTON VOLVER */}
-                    <div className="order-3 col-span-1 lg:col-span-2 flex justify-center lg:justify-start lg:absolute lg:bottom-12 lg:right-12">
-                      <button onClick={() => navigateTo("home")} className="inline-flex items-center gap-2 text-white/70 font-black text-[9px] md:text-xs uppercase tracking-widest hover:text-white transition-all bg-white/5 border border-white/20 px-5 md:px-6 py-2.5 md:py-3 rounded-full backdrop-blur-md hover:bg-white/10">
-                        <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" /> Volver al Inicio
-                      </button>
-                    </div>
-
                   </div>
+                  
+                  {/* BOTON VOLVER: Sutil, debajo de todo y centrado */}
+                  <div className="w-full flex justify-center mt-10 md:mt-16 relative z-20">
+                    <button onClick={() => navigateTo("home")} className="group inline-flex items-center gap-2 text-white/50 font-bold text-[10px] md:text-sm uppercase tracking-widest hover:text-white transition-colors duration-300">
+                      <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300" /> Volver al Inicio
+                    </button>
+                  </div>
+
                 </div>
               </div>
             </motion.section>
@@ -513,14 +506,13 @@ export default function App() {
 
 function ContactCardHorizontal({ icon, title, value, link, color, bgColor }) {
   return (
-    <a href={link} target="_blank" rel="noreferrer" className="group flex items-center gap-3 md:gap-5 p-2.5 md:p-4 rounded-[0.8rem] md:rounded-[1.5rem] border border-white/5 hover:border-white/20 md:hover:bg-white/5 transition-all duration-300 bg-[#0A192F]/40 md:bg-[#0A192F]/30 backdrop-blur-md relative overflow-hidden">
-      
-      <div className={`w-9 h-9 md:w-14 md:h-14 shrink-0 ${bgColor} ${color} rounded-full flex items-center justify-center md:group-hover:scale-110 shadow-sm transition-transform duration-300 relative z-10 border border-white/10`}>
+    <a href={link} target="_blank" rel="noreferrer" className="group flex items-center gap-4 md:gap-5 p-3 md:p-4 rounded-[1rem] md:rounded-[1.2rem] border border-white/5 hover:border-white/20 transition-all duration-300 bg-[#0A192F]/40 backdrop-blur-md">
+      <div className={`w-10 h-10 md:w-12 md:h-12 shrink-0 ${bgColor} ${color} rounded-full flex items-center justify-center md:group-hover:scale-110 shadow-sm transition-transform duration-300 relative z-10 border border-white/10`}>
         {icon}
       </div>
       <div className="text-left overflow-hidden relative z-10">
-        <h3 className="text-xs md:text-lg font-black text-white mb-0.5">{title}</h3>
-        <span className={`text-[8px] md:text-[11px] font-black ${color} uppercase tracking-widest block truncate transition-colors opacity-80 md:group-hover:opacity-100`}>{value}</span>
+        <h3 className="text-sm md:text-base font-black text-white mb-0.5">{title}</h3>
+        <span className={`text-[9px] md:text-[10px] font-black ${color} uppercase tracking-widest block truncate`}>{value}</span>
       </div>
     </a>
   );
