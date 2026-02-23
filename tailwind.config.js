@@ -8,6 +8,9 @@ export default {
     extend: {
       colors: {
         primary: "#3b82f6", // Un azul profesional para PrimeLogic
+      },
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
       }
     },
   },

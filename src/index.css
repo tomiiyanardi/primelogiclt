@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+}
+
+body, html {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #0A192F; 
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A192F;
+}
+::-webkit-scrollbar-thumb {
+  background: #0074D9;
+  border-radius: 10px;
+}
