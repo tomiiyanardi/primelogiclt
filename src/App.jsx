@@ -211,37 +211,38 @@ export default function App() {
           {view === "home" ? (
             <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               
-              {/* --- HERO SECTION MODIFICADO: PANTALLA COMPLETA EN MÓVIL --- */}
-              {/* Cambios: pt-0 px-0 pb-0 en movil, pt-32 px-4 pb-4 en desktop */}
-              <section className="relative min-h-[100dvh] snap-start pt-0 md:pt-32 px-0 md:px-4 pb-0 md:pb-4 flex flex-col items-center overflow-hidden">
+              {/* --- HERO SECTION MODIFICADO (TEXTO DISPERSO EN MÓVIL) --- */}
+              <section className="relative min-h-[100dvh] snap-start pt-20 md:pt-32 px-3 md:px-4 pb-4 flex flex-col items-center overflow-hidden">
                 <motion.div 
                   initial={{ y: 50, opacity: 0, scale: 0.98 }} 
                   animate={{ y: 0, opacity: 1, scale: 1 }}
                   style={{ scale: heroScale }} 
                   transition={{ duration: 0.8, delay: isFirstVisit.current ? 4.2 : 0.2, ease: [0.33, 1, 0.68, 1] }}
-                  // Cambios: rounded-none en movil, rounded-[2.5rem] en desktop
-                  className="relative w-full h-full flex-grow rounded-none md:rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col bg-[#0A192F]"
+                  className="relative w-full h-full flex-grow rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col bg-[#0A192F]"
                 >
                   <video autoPlay loop muted playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover scale-105 transition-transform duration-1000 z-0">
                     <source src="/cielo.mp4" type="video/mp4" />
                   </video>
                   <div className="absolute inset-0 bg-black/40 z-0"></div>
                   
+                  {/* Gradiente más alto en móvil para que el texto resalte siempre sobre el video */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/95 via-[#0A192F]/40 to-transparent z-0"></div>
 
+                  {/* CONTENEDOR ABSOLUTO PARA DISTRIBUIR LOS TEXTOS PERFECTAMENTE */}
                   <motion.div style={{ y: heroTextY, opacity: heroTextOpacity }} className="absolute inset-0 z-10 flex flex-col p-6 md:p-12 pointer-events-none">
                     
-                    {/* TÍTULO: Empujado hacia abajo para salvar el header en celular */}
-                    <div className="pt-28 md:pt-10 flex justify-center w-full shrink-0">
+                    {/* TÍTULO: Arriba */}
+                    <div className="pt-16 md:pt-10 flex justify-center w-full shrink-0">
                       <h1 className="text-[15vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-2xl">
                         primelogic<span className="text-[4vw] md:text-5xl lg:text-7xl mt-[2vw] md:mt-4 lg:mt-8 ml-1 text-white/80">LT</span>
                       </h1>
                     </div>
                     
-                    {/* TEXTOS INFERIORES: Distribuidos con mt-auto para usar todo el espacio */}
-                    <div className="flex-grow flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end w-full pb-4 md:pb-0">
+                    {/* TEXTOS INFERIORES: Distribuidos con mt-auto */}
+                    <div className="flex-grow flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end w-full pb-2 md:pb-0">
                       
-                      <div className="max-w-2xl mt-auto mb-8 md:mb-0">
+                      {/* Bloque Subtítulo: Empujado hacia abajo, con margen abajo para separarse de Mendoza */}
+                      <div className="max-w-2xl mt-auto mb-10 md:mb-0">
                         <h2 className="text-[28px] sm:text-3xl md:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight drop-shadow-lg leading-tight">
                           El cielo no es el límite.
                         </h2>
@@ -250,6 +251,7 @@ export default function App() {
                         </p>
                       </div>
                       
+                      {/* Bloque Localización: Queda pegado al fondo absoluto */}
                       <div className="text-left md:text-right text-white/90 text-[11px] md:text-sm shrink-0 drop-shadow-md pb-4 md:pb-0">
                         <p className="font-black text-white mb-0.5 md:mb-1">made in Mendoza, Argentina</p>
                         <p className="font-semibold">Hacia el resto del mundo</p>
@@ -263,6 +265,7 @@ export default function App() {
               {/* --- LEYES & MARQUEE INFINITO --- */}
               <section className="min-h-[100dvh] snap-start flex flex-col bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20 relative">
                 
+                {/* Marquee Infinito Arreglado */}
                 <div className="py-3 md:py-10 border-y border-[#8A95A5]/20 bg-white overflow-hidden flex relative mb-8 shrink-0 shadow-sm w-full">
                   <div className="absolute left-0 top-0 w-8 md:w-32 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
                   <div className="absolute right-0 top-0 w-8 md:w-32 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
@@ -329,7 +332,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- SOLUCIONES (Ventana 3) --- */}
+              {/* --- SOLUCIONES (Ventana) --- */}
               <section id="soluciones" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#0A192F] text-white relative pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#0074D9] to-transparent opacity-50"></div>
                 <div className="max-w-7xl mx-auto w-full my-auto">
@@ -356,7 +359,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- CASOS DE ÉXITO (Ventana 4) --- */}
+              {/* --- CASOS DE ÉXITO (Ventana) --- */}
               <section id="proyectos" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="max-w-7xl mx-auto w-full my-auto">
                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-16 gap-4 md:gap-6">
@@ -402,7 +405,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- NOSOTROS (Ventana 5) --- */}
+              {/* --- NOSOTROS (Ventana) --- */}
               <section id="nosotros" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="max-w-7xl mx-auto w-full bg-white rounded-[1.5rem] md:rounded-[3rem] shadow-sm border border-[#8A95A5]/10 overflow-hidden my-auto">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-16 items-center p-5 md:p-10">
@@ -434,7 +437,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- ATERRIZAJE NAVE (Ventana 6) --- */}
+              {/* --- ATERRIZAJE NAVE (Ventana) --- */}
               <section className="relative min-h-[100dvh] snap-start flex flex-col bg-[#0A192F] overflow-hidden pt-28 md:pt-36 pb-6 md:pb-8 px-5 md:px-16">
                   <div className="absolute inset-0 z-0">
                     <video autoPlay loop muted playsInline preload="auto" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-70">
@@ -478,17 +481,16 @@ export default function App() {
             </motion.div>
           ) : (
             
-            /* --- SECCIÓN CONTACTO --- */
+            /* --- SECCIÓN CONTACTO PREMIUM LUZ AZUL GIRATORIA Y FONDO AZUL --- */
             <motion.section 
               key="contacto" 
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.98 }} 
               transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
-              // Pantalla completa también para contacto en móvil
-              className="relative min-h-[100dvh] snap-start flex flex-col items-center bg-[#0A192F] px-0 md:px-8 pt-0 md:pt-28 pb-0 md:pb-12 overflow-hidden"
+              className="relative min-h-[100dvh] snap-start flex flex-col items-center bg-[#0A192F] px-4 md:px-8 pt-28 pb-12 overflow-hidden"
             >
-              <div className="relative w-full flex-grow max-w-[1400px] rounded-none md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col items-center justify-center p-6 md:p-12 pt-28 md:pt-12 border-none md:border border-white/5 my-auto">
+              <div className="relative w-full flex-grow max-w-[1400px] rounded-[1.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col items-center justify-center p-6 md:p-12 border border-white/5 my-auto">
                 
                 <div className="absolute inset-0 z-0">
                   <video autoPlay loop muted playsInline preload="auto" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-50 mix-blend-lighten z-0">
@@ -501,8 +503,8 @@ export default function App() {
                   
                   <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center flex-grow">
                     
-                    {/* TEXTO */}
-                    <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.6, duration: 0.8 }} className="order-1 lg:order-2 text-center lg:text-left mt-8 md:mt-0">
+                    {/* TEXTO ACHICADO */}
+                    <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.6, duration: 0.8 }} className="order-1 lg:order-2 text-center lg:text-left">
                       <h2 className="text-[14vw] md:text-[6.5rem] font-black text-white mb-2 md:mb-4 tracking-tighter leading-none drop-shadow-2xl">
                         Iniciá el <br className="hidden lg:block"/> sistema.
                       </h2>
@@ -511,8 +513,10 @@ export default function App() {
                       </p>
                     </motion.div>
 
-                    {/* TARJETA CONTACTO */}
+                    {/* TARJETA CONTACTO ACHICADA LIGERAMENTE */}
                     <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.4, duration: 0.8 }} className="order-2 lg:order-1 relative w-full max-w-md mx-auto rounded-[1.2rem] md:rounded-[2.5rem] overflow-hidden p-[3px] shadow-[0_0_40px_-5px_rgba(0,116,217,0.4)] group">
+                      
+                      {/* LUZ FUERTE AZUL GIRATORIA */}
                       <div className="absolute inset-0 z-0 overflow-hidden rounded-[1.2rem] md:rounded-[2.5rem]">
                         <motion.div 
                           animate={{ rotate: [0, 360] }}
@@ -536,7 +540,7 @@ export default function App() {
                   </div>
                   
                   {/* BOTON VOLVER: Sutil, debajo de todo y centrado */}
-                  <div className="w-full flex justify-center mt-10 md:mt-16 pb-8 md:pb-0 relative z-20">
+                  <div className="w-full flex justify-center mt-10 md:mt-16 relative z-20">
                     <button onClick={() => navigateTo("home")} className="group inline-flex items-center gap-2 text-white/50 font-bold text-[10px] md:text-sm uppercase tracking-widest hover:text-white transition-colors duration-300">
                       <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300" /> Volver al Inicio
                     </button>
