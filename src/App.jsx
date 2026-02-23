@@ -34,20 +34,13 @@ const TypewriterText = ({ text, className }) => {
 
 /* --- COMPONENTE DE MAPA INTERACTIVO MUNDIAL (3D) --- */
 const InteractiveMap = () => {
-  // Usamos un JSON global confiable
   const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
-  
-  // Coordenadas de Godoy Cruz, Mendoza
   const mendozaCoords = [-68.84, -32.92];
-  
-  // Estado para la rotación del globo. Empezamos centrados en Mendoza.
-  // La rotación en la proyección ortográfica usa [-longitud, -latitud, roll]
   const [rotation, setRotation] = useState([68.84, 32.92, 0]);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const rotationStart = useRef([0, 0, 0]);
 
-  // Manejadores de eventos para hacer el mapa arrastrable (Mouse y Touch)
   const handlePointerDown = (e) => {
     setIsDragging(true);
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -63,10 +56,8 @@ const InteractiveMap = () => {
     const deltaX = clientX - dragStart.current.x;
     const deltaY = clientY - dragStart.current.y;
     
-    // Ajustamos la sensibilidad matemática del giro
     const newRotation = [
       rotationStart.current[0] + deltaX * 0.4,
-      // Limitamos el giro vertical para que no se dé vuelta por completo
       Math.max(-90, Math.min(90, rotationStart.current[1] - deltaY * 0.4)),
       0
     ];
@@ -80,7 +71,7 @@ const InteractiveMap = () => {
   return (
     <div 
       className="w-full h-full min-h-[350px] md:min-h-[500px] flex flex-col items-center justify-center p-4 cursor-grab active:cursor-grabbing"
-      style={{ touchAction: "none" }} /* Bloquea el scroll de la página al girar el mapa en el celular */
+      style={{ touchAction: "none" }}
       onMouseDown={handlePointerDown}
       onMouseMove={handlePointerMove}
       onMouseUp={handlePointerUp}
@@ -93,18 +84,16 @@ const InteractiveMap = () => {
         projection="geoOrthographic"
         projectionConfig={{
           rotate: rotation,
-          scale: 300 // Escala base para el tamaño del globo
+          scale: 300
         }}
         className="w-full h-full max-h-[500px]"
       >
-        {/* Fondo del globo terráqueo y grilla */}
         <Sphere stroke="#233554" strokeWidth={0.5} fill="rgba(10, 25, 47, 0.5)" />
         <Graticule stroke="#233554" strokeWidth={0.3} opacity={0.4} />
         
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => {
-              // En este JSON específico, el nombre viene en properties.name
               const isArgentina = geo.properties.name === "Argentina";
               return (
                 <Geography
@@ -124,7 +113,6 @@ const InteractiveMap = () => {
           }
         </Geographies>
 
-        {/* Marcador en Godoy Cruz, Mendoza */}
         <Marker coordinates={mendozaCoords}>
           <motion.circle
             r={8}
@@ -158,7 +146,6 @@ export default function App() {
   const scrollRef = useRef(null);
   const isFirstVisit = useRef(true);
 
-  // Progreso de Scroll
   const { scrollYProgress } = useScroll({ container: scrollRef });
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   
@@ -181,7 +168,6 @@ export default function App() {
     const windowHeight = window.innerHeight;
     const sectionIndex = Math.round(scrollTop / windowHeight);
     
-    // Ajustado para las secciones oscuras (secciones 0, 2, 4, 6 y 7)
     if ([0, 2, 4, 6, 7].includes(sectionIndex)) {
       setHeaderTheme("dark");
     } else {
@@ -231,16 +217,13 @@ export default function App() {
   ];
 
   return (
-    // overscroll-none bloquea el marco gris/blanco nativo de iOS al llegar al limite
     <div className="bg-[#0A192F] font-sans selection:bg-[#0074D9]/30 overflow-hidden h-[100dvh] w-full relative overscroll-none">
       
-      {/* --- BARRA DE PROGRESO DE SCROLL --- */}
       <motion.div 
         className="fixed top-0 left-0 right-0 h-1 bg-[#0074D9] origin-left z-[100]" 
         style={{ scaleX }} 
       />
 
-      {/* 1. PRE-LOADER */}
       <AnimatePresence>
         {loading && (
           <motion.div key="preloader" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }} className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden">
@@ -300,26 +283,26 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 2. HEADER */}
       <header className={`fixed top-2 md:top-4 left-1/2 -translate-x-1/2 z-[90] w-[96%] max-w-[1400px] transition-all duration-500`}>
         <div className={`relative w-full px-3 md:px-6 py-2.5 md:py-3 rounded-full border backdrop-blur-2xl flex justify-between items-center transition-colors duration-700 ${headerBgClass} ${scrolled ? 'py-2 md:py-3' : 'py-3 md:py-5'}`}>
-          <button aria-label="Ir al inicio" onClick={() => navigateTo("home")} className={`flex items-center gap-2 md:gap-3 font-black text-base md:text-xl tracking-tighter shrink-0 transition-colors duration-500 ${headerTextClass}`}>
+          <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home"); }} className={`flex items-center gap-2 md:gap-3 font-black text-base md:text-xl tracking-tighter shrink-0 transition-colors duration-500 ${headerTextClass}`}>
             <img src="/logo.png" alt="Logo de PrimeLogic LT" className="w-7 h-7 md:w-9 md:h-9 object-contain" />
             <span className="hidden sm:inline">PRIME<span className="text-[#0074D9]">LOGIC</span></span>
             <span className="sm:hidden tracking-wider">PRIME<span className="text-[#0074D9]">LOGIC</span></span>
-          </button>
+          </a>
           
+          {/* SEO FIX: Enlaces internos convertidos a etiquetas <a> nativas */}
           <nav aria-label="Menú principal" className="hidden md:flex gap-8 text-[11px] font-black uppercase tracking-[0.2em]">
-            <button onClick={() => navigateTo("home")} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Inicio <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></button>
-            <button onClick={() => navigateTo("home", "soluciones")} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Soluciones <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></button>
-            <button onClick={() => navigateTo("home", "proyectos")} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Proyectos <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></button>
-            <button onClick={() => navigateTo("home", "nosotros")} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Nosotros <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></button>
+            <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home", "inicio"); }} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Inicio <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></a>
+            <a href="#soluciones" onClick={(e) => { e.preventDefault(); navigateTo("home", "soluciones"); }} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Soluciones <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></a>
+            <a href="#proyectos" onClick={(e) => { e.preventDefault(); navigateTo("home", "proyectos"); }} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Proyectos <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></a>
+            <a href="#nosotros" onClick={(e) => { e.preventDefault(); navigateTo("home", "nosotros"); }} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Nosotros <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></a>
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
-            <button onClick={() => navigateTo("contacto")} className="bg-[#0074D9] text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-black text-[9px] md:text-xs hover:bg-[#005bb5] hover:shadow-[0_0_20px_rgba(0,116,217,0.6)] transition-all active:scale-95 shadow-lg shadow-[#0074D9]/30">
+            <a href="#contacto" onClick={(e) => { e.preventDefault(); navigateTo("contacto"); }} className="bg-[#0074D9] text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-black text-[9px] md:text-xs hover:bg-[#005bb5] hover:shadow-[0_0_20px_rgba(0,116,217,0.6)] transition-all active:scale-95 shadow-lg shadow-[#0074D9]/30">
               Agendar Demo
-            </button>
+            </a>
             <button aria-label="Abrir menú móvil" aria-expanded={mobileMenu} onClick={() => setMobileMenu(!mobileMenu)} className={`md:hidden p-1.5 transition-colors duration-500 ${headerTextClass}`}>
               {mobileMenu ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -330,25 +313,26 @@ export default function App() {
           {mobileMenu && (
             <motion.div initial={{ opacity: 0, y: -20, scale: 0.95 }} animate={{ opacity: 1, y: 10, scale: 1 }} exit={{ opacity: 0, y: -20, scale: 0.95 }} className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-3xl rounded-[1.5rem] p-6 border border-white/40 shadow-2xl md:hidden mt-2 z-[100]">
               <nav aria-label="Menú de navegación móvil" className="flex flex-col gap-6 text-center font-black uppercase tracking-widest text-xs text-[#8A95A5]">
-                <button onClick={() => navigateTo("home")} className="hover:text-[#0A192F] py-2">Inicio</button>
-                <button onClick={() => navigateTo("home", "soluciones")} className="hover:text-[#0A192F] py-2">Soluciones</button>
-                <button onClick={() => navigateTo("home", "proyectos")} className="hover:text-[#0A192F] py-2">Proyectos</button>
-                <button onClick={() => navigateTo("home", "nosotros")} className="hover:text-[#0A192F] py-2">Nosotros</button>
+                <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home", "inicio"); }} className="hover:text-[#0A192F] py-2">Inicio</a>
+                <a href="#soluciones" onClick={(e) => { e.preventDefault(); navigateTo("home", "soluciones"); }} className="hover:text-[#0A192F] py-2">Soluciones</a>
+                <a href="#proyectos" onClick={(e) => { e.preventDefault(); navigateTo("home", "proyectos"); }} className="hover:text-[#0A192F] py-2">Proyectos</a>
+                <a href="#nosotros" onClick={(e) => { e.preventDefault(); navigateTo("home", "nosotros"); }} className="hover:text-[#0A192F] py-2">Nosotros</a>
               </nav>
             </motion.div>
           )}
         </AnimatePresence>
       </header>
 
-      {/* CONTENEDOR PRINCIPAL - overscroll-y-none y WebkitOverflowScrolling aseguran la suavidad y eliminan bordes en Safari/iOS */}
       <main ref={scrollRef} onScroll={handleScroll} className="h-[100dvh] w-full overflow-y-auto overflow-x-hidden snap-y snap-proximity md:snap-mandatory scroll-smooth relative z-10 overscroll-y-none" style={{ WebkitOverflowScrolling: "touch" }}>
         
+        {/* SEO FIX 1: Título H1 Oculto pero legible para Google */}
+        <h1 className="sr-only">PrimeLogic LT - Agencia de Desarrollo de Software a Medida y Diseño Web</h1>
+
         <AnimatePresence mode="wait">
           {view === "home" ? (
             <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               
-              {/* --- HERO SECTION --- */}
-              <section className="relative min-h-[100dvh] snap-start pt-0 md:pt-32 px-0 md:px-4 pb-0 md:pb-4 flex flex-col items-center overflow-hidden">
+              <section id="inicio" className="relative min-h-[100dvh] snap-start pt-0 md:pt-32 px-0 md:px-4 pb-0 md:pb-4 flex flex-col items-center overflow-hidden">
                 <motion.div 
                   initial={{ y: 50, opacity: 0, scale: 0.98 }} 
                   animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -364,12 +348,13 @@ export default function App() {
 
                   <motion.div style={{ y: heroTextY, opacity: heroTextOpacity }} className="absolute inset-0 z-10 flex flex-col p-6 md:p-12 pointer-events-none">
                     <div className="pt-28 md:pt-10 flex justify-center w-full shrink-0">
-                      <h1 className="text-[15vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-2xl">
+                      <div className="text-[15vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-2xl">
                         primelogic<span className="text-[4vw] md:text-5xl lg:text-7xl mt-[2vw] md:mt-4 lg:mt-8 ml-1 text-white/80">LT</span>
-                      </h1>
+                      </div>
                     </div>
                     <div className="flex-grow flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end w-full pb-8 md:pb-0 relative">
                       <div className="max-w-2xl mt-auto mb-10 md:mb-0">
+                        {/* SEO FIX 2: Mantenemos el estilo pero optimizamos el H2 */}
                         <h2 className="text-[28px] sm:text-3xl md:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight drop-shadow-lg leading-tight">
                           El cielo no es el límite.
                         </h2>
@@ -390,7 +375,6 @@ export default function App() {
                 </motion.div>
               </section>
 
-              {/* --- LEYES & TECNOLOGÍAS --- */}
               <section className="min-h-[100dvh] snap-start flex flex-col bg-[#F4F4F9] pt-24 pb-12 md:pt-36 md:pb-20 relative">
                 <div className="w-full bg-white border-y border-[#8A95A5]/20 py-6 md:py-8 mb-8 md:mb-12 shadow-sm flex flex-col overflow-hidden relative shrink-0">
                   <span className="text-center text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#8A95A5] mb-5 md:mb-8">
@@ -420,7 +404,10 @@ export default function App() {
                 <div className="px-4 md:px-6 max-w-7xl mx-auto w-full my-auto">
                   <div className="text-center mb-8 md:mb-16">
                     <span className="text-[#0074D9] font-black tracking-widest uppercase text-[9px] md:text-sm mb-2 md:mb-4 block">Nuestro Diferencial</span>
-                    <TypewriterText text="Las 3 Leyes de PrimeLogic." className="text-2xl sm:text-3xl md:text-6xl font-black text-[#0A192F] tracking-tighter justify-center" />
+                    {/* SEO FIX 2: Envolvemos en etiqueta H2 semántica */}
+                    <h2 className="flex justify-center text-2xl sm:text-3xl md:text-6xl font-black text-[#0A192F] tracking-tighter">
+                      <TypewriterText text="Las 3 Leyes de PrimeLogic." />
+                    </h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
                     {[
@@ -440,12 +427,13 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- FILOSOFÍA DE TRABAJO --- */}
               <section className="min-h-[100dvh] snap-start flex flex-col justify-center px-4 md:px-6 bg-white relative pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="max-w-7xl mx-auto w-full my-auto">
                   <div className="text-center mb-10 md:mb-20">
                     <span className="text-[#0074D9] font-black tracking-widest uppercase text-[9px] md:text-sm mb-2 md:mb-4 block">Nuestra Promesa</span>
-                    <TypewriterText text="Filosofía de Trabajo." className="text-3xl sm:text-4xl md:text-6xl font-black mb-2 md:mb-6 tracking-tighter text-[#0A192F] justify-center" />
+                    <h2 className="flex justify-center text-3xl sm:text-4xl md:text-6xl font-black mb-2 md:mb-6 tracking-tighter text-[#0A192F]">
+                      <TypewriterText text="Filosofía de Trabajo." />
+                    </h2>
                     <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-[#8A95A5] text-xs sm:text-sm md:text-xl max-w-2xl mx-auto font-bold px-4">
                       Construimos herramientas digitales que se adaptan a tu negocio, no al revés.
                     </motion.p>
@@ -466,12 +454,13 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- SOLUCIONES --- */}
               <section id="soluciones" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#0A192F] text-white relative pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#0074D9] to-transparent opacity-50"></div>
                 <div className="max-w-7xl mx-auto w-full my-auto">
                   <div className="text-center mb-10 md:mb-20">
-                    <TypewriterText text="Armamento Digital." className="text-3xl sm:text-4xl md:text-7xl font-black mb-2 md:mb-6 tracking-tighter text-white justify-center" />
+                    <h2 className="flex justify-center text-3xl sm:text-4xl md:text-7xl font-black mb-2 md:mb-6 tracking-tighter text-white">
+                      <TypewriterText text="Armamento Digital." />
+                    </h2>
                     <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-white/80 text-xs sm:text-sm md:text-xl max-w-2xl mx-auto font-bold px-4">
                       Soluciones desarrolladas para dominar el entorno web.
                     </motion.p>
@@ -492,12 +481,13 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- PROYECTOS --- */}
               <section id="proyectos" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="max-w-7xl mx-auto w-full my-auto">
                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-16 gap-4 md:gap-6">
                       <div>
-                        <TypewriterText text="Sistemas en Acción." className="text-3xl sm:text-4xl md:text-7xl font-black text-[#0A192F] tracking-tighter mb-2 md:mb-4 justify-start" />
+                        <h2 className="flex justify-start text-3xl sm:text-4xl md:text-7xl font-black text-[#0A192F] tracking-tighter mb-2 md:mb-4">
+                          <TypewriterText text="Sistemas en Acción." />
+                        </h2>
                         <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-[#8A95A5] font-bold text-xs sm:text-sm md:text-xl max-w-xl">
                           Lo que construimos no se rompe. Explorá cómo la ingeniería LT impacta en la industria.
                         </motion.p>
@@ -547,7 +537,6 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- NOSOTROS / HISTORIA --- */}
               <section id="nosotros" className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20">
                 <div className="max-w-7xl mx-auto w-full bg-white rounded-[1.5rem] md:rounded-[3rem] shadow-sm border border-[#8A95A5]/10 overflow-hidden my-auto hover:shadow-2xl transition-shadow duration-700">
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-16 items-center p-5 md:p-10">
@@ -561,7 +550,7 @@ export default function App() {
                       <motion.ul variants={staggerContainer} className="space-y-3 md:space-y-6">
                         {["Atención directa con los fundadores.", "Agilidad radical: De idea a código en semanas.", "Foco obsesivo en arquitectura limpia."].map((text, i) => (
                           <motion.li key={i} variants={fadeUp} className="flex items-center gap-2 md:gap-4 text-[#0A192F] font-black text-[10px] sm:text-xs md:text-lg group cursor-default">
-                            <CheckCircle className="text-[#0074D9] shrink-0 w-4 h-4 md:w-6 md:h-6 group-hover:scale-125 transition-transform duration-300" /> {text}
+                            <CheckCircle className="text-[#0074D9] shrink-0 w-4 h-4 md:w-6 md:h-6 group-hover:scale-125 transition-transform duration-300" aria-hidden="true"/> {text}
                           </motion.li>
                         ))}
                       </motion.ul>
@@ -576,8 +565,7 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- UBICACIÓN (CON MAPA MUNDIAL GIRATORIO) --- */}
-              <section className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#0A192F] relative pt-24 pb-12 md:pt-36 md:pb-20 overflow-hidden">
+              <section className="min-h-[100dvh] snap-start flex flex-col px-4 md:px-6 bg-[#0A192F] relative pt-24 pb-12 md:pt-36 md:pb-20 overflow-hidden text-white">
                 <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-12 my-auto">
                   <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }} className="w-full md:w-1/2 text-center md:text-left z-10">
                     <motion.span variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#0074D9]/30 text-[#00E5FF] font-black tracking-widest uppercase text-[9px] md:text-xs mb-6 bg-[#0074D9]/10">
@@ -591,7 +579,7 @@ export default function App() {
                     </motion.p>
                   </motion.div>
 
-                  <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} viewport={{ once: false, amount: 0.3 }} className="w-full md:w-1/2 relative bg-[#0A192F] rounded-[2.5rem] border border-white/10 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,116,217,0.1)]">
+                  <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} viewport={{ once: false, amount: 0.3 }} className="w-full md:w-1/2 relative bg-white/5 rounded-[2.5rem] border border-white/10 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,116,217,0.1)]">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#0074D9]/10 to-transparent z-0 pointer-events-none"></div>
                     <div className="relative z-10 w-full h-full">
                       <InteractiveMap />
@@ -600,7 +588,6 @@ export default function App() {
                 </div>
               </section>
 
-              {/* --- ATERRIZAJE NAVE --- */}
               <section className="relative min-h-[100dvh] snap-start flex flex-col bg-[#0A192F] overflow-hidden pt-28 md:pt-36 pb-6 md:pb-8 px-5 md:px-16">
                   <div className="absolute inset-0 z-0">
                     <video autoPlay loop muted playsInline preload="metadata" poster="/nave-poster.jpg" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-70">
@@ -620,13 +607,13 @@ export default function App() {
                       <motion.p variants={fadeUp} className="text-white/90 text-[11px] sm:text-sm md:text-2xl font-bold mb-5 md:mb-8 drop-shadow-md max-w-2xl">
                         Dejemos los conceptos en el aire. Las transformamos en plataformas reales, sólidas y altamente rentables.
                       </motion.p>
-                      <motion.button variants={fadeUp} onClick={() => navigateTo("contacto")} className="group flex items-center gap-2 md:gap-3 text-white font-bold text-sm sm:text-base md:text-2xl transition-all">
+                      <a href="#contacto" onClick={(e) => { e.preventDefault(); navigateTo("contacto"); }} className="group flex items-center gap-2 md:gap-3 text-white font-bold text-sm sm:text-base md:text-2xl transition-all">
                         <span className="relative pb-0.5 md:pb-1">
                           Contactar al Equipo
                           <div className="absolute bottom-0 left-0 w-0 h-[1px] md:h-[2px] bg-[#0074D9] group-hover:w-full group-hover:shadow-[0_0_10px_#0074D9] transition-all duration-300"></div>
                         </span>
                         <ChevronRight className="text-[#0074D9] transform group-hover:translate-x-2 transition-transform duration-300 w-4 h-4 md:w-6 md:h-6" aria-hidden="true" />
-                      </motion.button>
+                      </a>
                     </motion.div>
                   </div>
                   <footer className="relative z-10 w-full pt-8 text-center">
@@ -640,6 +627,7 @@ export default function App() {
           ) : (
             /* --- CONTACTO --- */
             <motion.section 
+              id="contacto"
               key="contacto" 
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
@@ -669,16 +657,16 @@ export default function App() {
                         <p className="text-white/70 font-bold text-[10px] md:text-xs mb-5 md:mb-6">Respondemos en menos de 24hs.</p>
                         <div className="flex flex-col gap-3 md:gap-4">
                           <ContactCardHorizontal icon={<MessageCircle size={20} />} title="WhatsApp" value="+54 261 2533823" link="https://wa.me/2612533823" color="text-green-500" bgColor="bg-green-500/10" />
-                          <ContactCardHorizontal icon={<Mail size={20} />} title="Email" value="primelogiclt@gmail.com" link="https://mail.google.com/mail/?view=cm&fs=1&to=primelogiclt@gmail.com" color="text-[#0074D9]" bgColor="bg-[#0074D9]/10" />
+                          <ContactCardHorizontal icon={<Mail size={20} />} title="Email" value="primelogiclt@gmail.com" link="mailto:primelogiclt@gmail.com" color="text-[#0074D9]" bgColor="bg-[#0074D9]/10" />
                           <ContactCardHorizontal icon={<Instagram size={20} />} title="Instagram" value="@primelogiclt" link="https://instagram.com/primelogiclt" color="text-pink-500" bgColor="bg-pink-500/10" />
                         </div>
                       </div>
                     </motion.div>
                   </div>
                   <div className="w-full flex justify-center mt-10 md:mt-16 pb-8 md:pb-0 relative z-20">
-                    <button aria-label="Volver al inicio" onClick={() => navigateTo("home")} className="group inline-flex items-center gap-2 text-white/50 font-bold text-[10px] md:text-sm uppercase tracking-widest hover:text-white transition-colors duration-300">
+                    <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home"); }} className="group inline-flex items-center gap-2 text-white/50 font-bold text-[10px] md:text-sm uppercase tracking-widest hover:text-white transition-colors duration-300">
                       <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300" aria-hidden="true" /> Volver al Inicio
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
