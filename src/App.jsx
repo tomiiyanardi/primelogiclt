@@ -3,14 +3,15 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "fra
 import { 
   ChevronRight, LineChart, Layers, Cpu, MapPin, Mail, 
   Code2, MonitorSmartphone, MessageCircle, Instagram, 
-  ArrowLeft, CheckCircle, Menu, X, ShieldCheck, Zap, Database, AppWindow, Settings, SearchCode, ChevronDown, Globe
+  ArrowLeft, CheckCircle, Menu, X, ShieldCheck, Zap, Database, AppWindow, Settings, SearchCode, ChevronDown, Globe,
+  Calendar, Clock, LayoutDashboard, CreditCard, Users
 } from "lucide-react";
 import { ComposableMap, Geographies, Geography, Marker, Sphere, Graticule } from "react-simple-maps";
 
 /* --- VARIANTES DE ANIMACIÓN --- */
 const fadeUp = {
-  hidden: { opacity: 0, y: 40, filter: "blur(5px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] } }
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] } }
 };
 
 const staggerContainer = {
@@ -36,6 +37,7 @@ const TypewriterText = ({ text, className }) => {
 const InteractiveMap = () => {
   const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
   const mendozaCoords = [-68.84, -32.92];
+  
   const [rotation, setRotation] = useState([68.84, 32.92, 0]);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
@@ -43,18 +45,15 @@ const InteractiveMap = () => {
 
   const handlePointerDown = (e) => {
     setIsDragging(true);
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    dragStart.current = { x: clientX, y: clientY };
+    dragStart.current = { x: e.clientX, y: e.clientY };
     rotationStart.current = rotation;
+    e.target.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e) => {
     if (!isDragging) return;
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    const deltaX = clientX - dragStart.current.x;
-    const deltaY = clientY - dragStart.current.y;
+    const deltaX = e.clientX - dragStart.current.x;
+    const deltaY = e.clientY - dragStart.current.y;
     
     const newRotation = [
       rotationStart.current[0] + deltaX * 0.4,
@@ -64,21 +63,18 @@ const InteractiveMap = () => {
     setRotation(newRotation);
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (e) => {
     setIsDragging(false);
+    e.target.releasePointerCapture(e.pointerId);
   };
 
   return (
     <div 
-      className="w-full h-full min-h-[350px] md:min-h-[500px] flex flex-col items-center justify-center p-4 cursor-grab active:cursor-grabbing"
-      style={{ touchAction: "none" }}
-      onMouseDown={handlePointerDown}
-      onMouseMove={handlePointerMove}
-      onMouseUp={handlePointerUp}
-      onMouseLeave={handlePointerUp}
-      onTouchStart={handlePointerDown}
-      onTouchMove={handlePointerMove}
-      onTouchEnd={handlePointerUp}
+      className="w-full h-full min-h-[350px] md:min-h-[500px] flex flex-col items-center justify-center p-4 cursor-grab active:cursor-grabbing touch-none"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
     >
       <ComposableMap
         projection="geoOrthographic"
@@ -138,7 +134,7 @@ const InteractiveMap = () => {
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState("home");
+  const [view, setView] = useState("home"); 
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [headerTheme, setHeaderTheme] = useState("dark");
@@ -161,30 +157,38 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (view !== "home") {
+      setHeaderTheme("dark");
+    }
+  }, [view]);
+
   const handleScroll = (e) => {
     const scrollTop = e.target.scrollTop;
     setScrolled(scrollTop > 30);
     
-    const windowHeight = window.innerHeight;
-    const sectionIndex = Math.round(scrollTop / windowHeight);
-    
-    if ([0, 2, 4, 6, 7].includes(sectionIndex)) {
-      setHeaderTheme("dark");
-    } else {
-      setHeaderTheme("light");
+    if (view === "home") {
+      const windowHeight = window.innerHeight;
+      const sectionIndex = Math.round(scrollTop / windowHeight);
+      
+      if ([0, 2, 4, 6, 7].includes(sectionIndex)) {
+        setHeaderTheme("dark");
+      } else {
+        setHeaderTheme("light");
+      }
     }
   };
 
   const navigateTo = (newView, sectionId = null) => {
     setMobileMenu(false);
     
-    if (newView === "home" && view === "contacto") {
+    if (newView === "home" && view !== "home") {
       setView("home");
-      setHeaderTheme("dark");
+      setHeaderTheme("dark"); 
       setTimeout(() => {
-        const el = document.getElementById(sectionId);
+        const el = document.getElementById(sectionId || "inicio");
         if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+      }, 100);
     } else if (newView === "home") {
       if (sectionId) {
         const el = document.getElementById(sectionId);
@@ -194,12 +198,13 @@ export default function App() {
       }
     } else {
       setView(newView);
-      setHeaderTheme("dark");
+      setHeaderTheme("dark"); 
+      if (scrollRef.current) scrollRef.current.scrollTo({ top: 0 }); 
     }
   };
 
   const isDark = headerTheme === "dark";
-  const headerBgClass = isDark ? "bg-[#0A192F]/40 border-white/10 shadow-black/20" : "bg-white/80 border-[#0A192F]/10 shadow-[#0A192F]/5";
+  const headerBgClass = isDark ? "bg-[#0A192F]/40 border-white/10 shadow-black/20 backdrop-blur-md" : "bg-white/90 border-[#0A192F]/10 shadow-[#0A192F]/5 backdrop-blur-md";
   const headerTextClass = isDark ? "text-white" : "text-[#0A192F]";
   const headerMutedClass = isDark ? "text-white/70 hover:text-white" : "text-[#8A95A5] hover:text-[#0A192F]";
 
@@ -284,14 +289,13 @@ export default function App() {
       </AnimatePresence>
 
       <header className={`fixed top-2 md:top-4 left-1/2 -translate-x-1/2 z-[90] w-[96%] max-w-[1400px] transition-all duration-500`}>
-        <div className={`relative w-full px-3 md:px-6 py-2.5 md:py-3 rounded-full border backdrop-blur-2xl flex justify-between items-center transition-colors duration-700 ${headerBgClass} ${scrolled ? 'py-2 md:py-3' : 'py-3 md:py-5'}`}>
-          <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home"); }} className={`flex items-center gap-2 md:gap-3 font-black text-base md:text-xl tracking-tighter shrink-0 transition-colors duration-500 ${headerTextClass}`}>
+        <div className={`relative w-full px-3 md:px-6 py-2.5 md:py-3 rounded-full border flex justify-between items-center transition-colors duration-700 ${headerBgClass} ${scrolled ? 'py-2 md:py-3' : 'py-3 md:py-5'}`}>
+          <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home", "inicio"); }} className={`flex items-center gap-2 md:gap-3 font-black text-base md:text-xl tracking-tighter shrink-0 transition-colors duration-500 ${headerTextClass}`}>
             <img src="/logo.png" alt="Logo de PrimeLogic LT" className="w-7 h-7 md:w-9 md:h-9 object-contain" />
             <span className="hidden sm:inline">PRIME<span className="text-[#0074D9]">LOGIC</span></span>
             <span className="sm:hidden tracking-wider">PRIME<span className="text-[#0074D9]">LOGIC</span></span>
           </a>
           
-          {/* SEO FIX: Enlaces internos convertidos a etiquetas <a> nativas */}
           <nav aria-label="Menú principal" className="hidden md:flex gap-8 text-[11px] font-black uppercase tracking-[0.2em]">
             <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home", "inicio"); }} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Inicio <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></a>
             <a href="#soluciones" onClick={(e) => { e.preventDefault(); navigateTo("home", "soluciones"); }} className={`relative group transition-colors duration-300 ${headerMutedClass}`}>Soluciones <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0074D9] transition-all group-hover:w-full"></span></a>
@@ -300,7 +304,7 @@ export default function App() {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
-            <a href="#contacto" onClick={(e) => { e.preventDefault(); navigateTo("contacto"); }} className="bg-[#0074D9] text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-black text-[9px] md:text-xs hover:bg-[#005bb5] hover:shadow-[0_0_20px_rgba(0,116,217,0.6)] transition-all active:scale-95 shadow-lg shadow-[#0074D9]/30">
+            <a href="#contacto" onClick={(e) => { e.preventDefault(); navigateTo("contacto"); }} className="bg-[#0074D9] text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-black text-[9px] md:text-xs hover:bg-[#005bb5] hover:shadow-[0_0_20px_rgba(0,116,217,0.6)] transition-all active:scale-95 shadow-lg shadow-[#0074D9]/30 whitespace-nowrap">
               Agendar Demo
             </a>
             <button aria-label="Abrir menú móvil" aria-expanded={mobileMenu} onClick={() => setMobileMenu(!mobileMenu)} className={`md:hidden p-1.5 transition-colors duration-500 ${headerTextClass}`}>
@@ -325,56 +329,67 @@ export default function App() {
 
       <main ref={scrollRef} onScroll={handleScroll} className="h-[100dvh] w-full overflow-y-auto overflow-x-hidden snap-y snap-proximity md:snap-mandatory scroll-smooth relative z-10 overscroll-y-none" style={{ WebkitOverflowScrolling: "touch" }}>
         
-        {/* SEO FIX 1: Título H1 Oculto pero legible para Google */}
         <h1 className="sr-only">PrimeLogic LT - Agencia de Desarrollo de Software a Medida y Diseño Web</h1>
 
         <AnimatePresence mode="wait">
-          {view === "home" ? (
+          {view === "home" && (
             <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               
-              <section id="inicio" className="relative min-h-[100dvh] snap-start pt-0 md:pt-32 px-0 md:px-4 pb-0 md:pb-4 flex flex-col items-center overflow-hidden">
+              {/* --- HERO SECTION MODIFICADA A PANTALLA COMPLETA --- */}
+              <section id="inicio" className="relative min-h-[100dvh] w-full snap-start flex flex-col items-center overflow-hidden bg-[#0A192F]">
+                
+                {/* 1. FONDO VIDEO PANTALLA COMPLETA (Edge-to-Edge) */}
                 <motion.div 
-                  initial={{ y: 50, opacity: 0, scale: 0.98 }} 
-                  animate={{ y: 0, opacity: 1, scale: 1 }}
-                  style={{ scale: heroScale }} 
-                  transition={{ duration: 0.8, delay: isFirstVisit.current ? 4.2 : 0.2, ease: [0.33, 1, 0.68, 1] }}
-                  className="relative w-full h-full flex-grow rounded-none md:rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col bg-[#0A192F]"
+                  initial={{ opacity: 0, scale: 1.05 }} 
+                  animate={{ opacity: 1, scale: 1 }}
+                  style={{ scale: heroScale }} // Aplica el parallax de forma elegante
+                  transition={{ duration: 1.2, delay: isFirstVisit.current ? 4.2 : 0.2, ease: "easeOut" }}
+                  className="absolute inset-0 w-full h-full z-0"
                 >
-                  <video autoPlay loop muted playsInline preload="metadata" poster="/cielo-poster.jpg" className="absolute inset-0 w-full h-full object-cover scale-105 transition-transform duration-1000 z-0">
+                  <video autoPlay loop muted playsInline preload="metadata" poster="/cielo-poster.jpg" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none">
                     <source src="/cielo.mp4" type="video/mp4" />
                   </video>
+                  {/* Capas oscuras para contrastar perfecto el menú superior y los textos */}
                   <div className="absolute inset-0 bg-black/40 z-0"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/95 via-[#0A192F]/40 to-transparent z-0"></div>
-
-                  <motion.div style={{ y: heroTextY, opacity: heroTextOpacity }} className="absolute inset-0 z-10 flex flex-col p-6 md:p-12 pointer-events-none">
-                    <div className="pt-28 md:pt-10 flex justify-center w-full shrink-0">
-                      <div className="text-[15vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-2xl">
-                        primelogic<span className="text-[4vw] md:text-5xl lg:text-7xl mt-[2vw] md:mt-4 lg:mt-8 ml-1 text-white/80">LT</span>
-                      </div>
-                    </div>
-                    <div className="flex-grow flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end w-full pb-8 md:pb-0 relative">
-                      <div className="max-w-2xl mt-auto mb-10 md:mb-0">
-                        {/* SEO FIX 2: Mantenemos el estilo pero optimizamos el H2 */}
-                        <h2 className="text-[28px] sm:text-3xl md:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight drop-shadow-lg leading-tight">
-                          El cielo no es el límite.
-                        </h2>
-                        <p className="text-white/90 text-sm sm:text-base md:text-xl font-bold leading-relaxed drop-shadow-md">
-                          Potenciar el negocio. <strong className="text-white font-black">Construimos motores financieros de tecnología pura</strong> que hacen escalar tu negocio.
-                        </p>
-                      </div>
-                      <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="hidden md:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-col items-center text-white/50">
-                        <span className="text-[10px] uppercase tracking-widest font-bold mb-2">Scroll</span>
-                        <ChevronDown size={20} aria-hidden="true" />
-                      </motion.div>
-                      <div className="text-left md:text-right text-white/90 text-[11px] md:text-sm shrink-0 drop-shadow-md">
-                        <p className="font-black text-white mb-0.5 md:mb-1">made in Mendoza, Argentina</p>
-                        <p className="font-semibold">Hacia el resto del mundo</p>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F]/80 via-transparent to-[#0A192F]/90 z-0"></div>
                 </motion.div>
+
+                {/* 2. LOS TEXTOS ORIGINALES UBICADOS SOBRE EL VIDEO */}
+                <motion.div 
+                  style={{ y: heroTextY, opacity: heroTextOpacity }} 
+                  className="relative z-10 flex flex-col w-full h-[100dvh] max-w-[1400px] mx-auto p-6 md:p-12 pointer-events-none"
+                >
+                  <div className="pt-28 md:pt-20 flex justify-center w-full shrink-0">
+                    <div className="text-[15vw] md:text-[9rem] lg:text-[13rem] font-black text-white tracking-tighter leading-none flex items-start drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+                      primelogic<span className="text-[4vw] md:text-5xl lg:text-7xl mt-[2vw] md:mt-4 lg:mt-8 ml-1 text-white/80">LT</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-grow flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end w-full pb-8 md:pb-4 relative">
+                    <div className="max-w-2xl mt-auto mb-10 md:mb-0">
+                      <h2 className="text-[28px] sm:text-3xl md:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] leading-tight">
+                        El cielo no es el límite.
+                      </h2>
+                      <p className="text-white/90 text-sm sm:text-base md:text-xl font-bold leading-relaxed drop-shadow-[0_4px_15px_rgba(0,0,0,0.9)]">
+                        Potenciar el negocio. <strong className="text-white font-black">Construimos motores financieros de tecnología pura</strong> que hacen escalar tu negocio.
+                      </p>
+                    </div>
+                    
+                    <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 flex-col items-center text-white/60 drop-shadow-md">
+                      <span className="text-[10px] uppercase tracking-widest font-bold mb-2">Scroll</span>
+                      <ChevronDown size={20} aria-hidden="true" />
+                    </motion.div>
+                    
+                    <div className="text-left md:text-right text-white/90 text-[11px] md:text-sm shrink-0 drop-shadow-[0_4px_15px_rgba(0,0,0,0.9)]">
+                      <p className="font-black text-white mb-0.5 md:mb-1">made in Mendoza, Argentina</p>
+                      <p className="font-semibold">Hacia el resto del mundo</p>
+                    </div>
+                  </div>
+                </motion.div>
+
               </section>
 
+              {/* SECCIONES INTACTAS */}
               <section className="min-h-[100dvh] snap-start flex flex-col bg-[#F4F4F9] pt-24 pb-12 md:pt-36 md:pb-20 relative">
                 <div className="w-full bg-white border-y border-[#8A95A5]/20 py-6 md:py-8 mb-8 md:mb-12 shadow-sm flex flex-col overflow-hidden relative shrink-0">
                   <span className="text-center text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#8A95A5] mb-5 md:mb-8">
@@ -404,7 +419,6 @@ export default function App() {
                 <div className="px-4 md:px-6 max-w-7xl mx-auto w-full my-auto">
                   <div className="text-center mb-8 md:mb-16">
                     <span className="text-[#0074D9] font-black tracking-widest uppercase text-[9px] md:text-sm mb-2 md:mb-4 block">Nuestro Diferencial</span>
-                    {/* SEO FIX 2: Envolvemos en etiqueta H2 semántica */}
                     <h2 className="flex justify-center text-2xl sm:text-3xl md:text-6xl font-black text-[#0A192F] tracking-tighter">
                       <TypewriterText text="Las 3 Leyes de PrimeLogic." />
                     </h2>
@@ -489,50 +503,42 @@ export default function App() {
                           <TypewriterText text="Sistemas en Acción." />
                         </h2>
                         <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-[#8A95A5] font-bold text-xs sm:text-sm md:text-xl max-w-xl">
-                          Lo que construimos no se rompe. Explorá cómo la ingeniería LT impacta en la industria.
+                          Lo que construimos no se rompe. Explorá cómo la ingeniería de PrimeLogic impacta en la industria con nuestros últimos casos de éxito.
                         </motion.p>
                       </div>
                       <button onClick={() => navigateTo("contacto")} className="bg-[#0A192F] text-white px-5 md:px-8 py-2.5 md:py-4 rounded-full font-black text-[9px] md:text-sm hover:bg-[#0074D9] hover:shadow-[0_0_20px_rgba(0,116,217,0.4)] transition-all shrink-0">
                         Quiero un sistema así
                       </button>
                    </div>
-                   <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-                      <motion.div variants={fadeUp} className="group relative h-[180px] md:h-[450px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden shadow-2xl cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="Dashboard" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/40 to-transparent opacity-90 group-hover:opacity-100 group-hover:bg-[#0A192F]/80 transition-all duration-500"></div>
-                        <div className="absolute bottom-3 md:bottom-6 left-4 md:left-6 right-4 md:right-6 group-hover:translate-y-4 group-hover:opacity-0 transition-all duration-500">
-                           <span className="text-[#0074D9] font-black text-[8px] md:text-xs uppercase tracking-widest mb-0.5 md:mb-2 block">Fintech App</span>
-                           <h3 className="text-white font-black text-sm md:text-2xl">Dashboard Financiero</h3>
+                   
+                   <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                      
+                      <motion.div onClick={() => navigateTo("proyecto_alcorta")} variants={fadeUp} className="group relative h-[250px] md:h-[500px] rounded-[1.2rem] md:rounded-[2.5rem] overflow-hidden shadow-xl cursor-pointer">
+                        <img src="/alcortadescartablepantallas.png" alt="Dashboard de Alcorta Descartable" loading="lazy" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/60 to-transparent opacity-90 group-hover:opacity-100 group-hover:bg-[#0A192F]/80 transition-all duration-500"></div>
+                        <div className="absolute bottom-4 md:bottom-8 left-5 md:left-8 right-5 md:right-8 group-hover:translate-y-4 group-hover:opacity-0 transition-all duration-500">
+                           <span className="text-[#00E5FF] font-black text-[9px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 block">Dashboard & Gestión</span>
+                           <h3 className="text-white font-black text-xl md:text-4xl leading-tight">Alcorta <br className="hidden md:block"/> Descartable</h3>
                         </div>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                          <span className="text-white font-bold text-[10px] md:text-sm mb-2 bg-[#0074D9] px-3 py-1 rounded-full">Ver Caso de Estudio</span>
-                          <span className="text-white/70 font-black text-[8px] md:text-xs uppercase tracking-widest">React • Node • AWS</span>
-                        </div>
-                      </motion.div>
-                      <motion.div variants={fadeUp} className="group relative h-[180px] md:h-[450px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden shadow-2xl cursor-pointer hidden md:block">
-                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800" alt="Ecommerce" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/40 to-transparent opacity-90 group-hover:opacity-100 group-hover:bg-[#0A192F]/80 transition-all duration-500"></div>
-                        <div className="absolute bottom-3 md:bottom-6 left-4 md:left-6 right-4 md:right-6 group-hover:translate-y-4 group-hover:opacity-0 transition-all duration-500">
-                           <span className="text-green-400 font-black text-[8px] md:text-xs uppercase tracking-widest mb-0.5 md:mb-2 block">E-Commerce</span>
-                           <h3 className="text-white font-black text-sm md:text-2xl">Plataforma Automotriz</h3>
-                        </div>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                          <span className="text-white font-bold text-[10px] md:text-sm mb-2 bg-[#0074D9] px-3 py-1 rounded-full">Ver Caso de Estudio</span>
-                          <span className="text-white/70 font-black text-[8px] md:text-xs uppercase tracking-widest">Vite • PostgreSQL • Docker</span>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none px-4 text-center">
+                          <span className="text-white font-bold text-xs md:text-base mb-3 bg-[#0074D9] px-4 py-2 rounded-full flex items-center gap-2">Ver Caso de Estudio <ChevronRight size={16}/></span>
+                          <span className="text-white/80 font-black text-[9px] md:text-sm uppercase tracking-widest leading-relaxed">Contabilidad • Stock • Historial de Ventas</span>
                         </div>
                       </motion.div>
-                      <motion.div variants={fadeUp} className="group relative h-[180px] md:h-[450px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden shadow-2xl cursor-pointer md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Logistica" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/40 to-transparent opacity-90 group-hover:opacity-100 group-hover:bg-[#0A192F]/80 transition-all duration-500"></div>
-                        <div className="absolute bottom-3 md:bottom-6 left-4 md:left-6 right-4 md:right-6 group-hover:translate-y-4 group-hover:opacity-0 transition-all duration-500">
-                           <span className="text-purple-400 font-black text-[8px] md:text-xs uppercase tracking-widest mb-0.5 md:mb-2 block">Enterprise</span>
-                           <h3 className="text-white font-black text-sm md:text-2xl">Software SaaS Médico</h3>
+
+                      <motion.div onClick={() => navigateTo("proyecto_curva")} variants={fadeUp} className="group relative h-[250px] md:h-[500px] rounded-[1.2rem] md:rounded-[2.5rem] overflow-hidden shadow-xl cursor-pointer">
+                        <img src="/curvaunopantallas.png" alt="Plataforma Curva Uno" loading="lazy" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/60 to-transparent opacity-90 group-hover:opacity-100 group-hover:bg-[#0A192F]/80 transition-all duration-500"></div>
+                        <div className="absolute bottom-4 md:bottom-8 left-5 md:left-8 right-5 md:right-8 group-hover:translate-y-4 group-hover:opacity-0 transition-all duration-500">
+                           <span className="text-[#00E5FF] font-black text-[9px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 block">Reserva de Simuladores</span>
+                           <h3 className="text-white font-black text-xl md:text-4xl leading-tight">Curva Uno <br className="hidden md:block"/> Booking System</h3>
                         </div>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                          <span className="text-white font-bold text-[10px] md:text-sm mb-2 bg-[#0074D9] px-3 py-1 rounded-full">Ver Caso de Estudio</span>
-                          <span className="text-white/70 font-black text-[8px] md:text-xs uppercase tracking-widest">Java • Spring Boot • React</span>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none px-4 text-center">
+                          <span className="text-white font-bold text-xs md:text-base mb-3 bg-[#0074D9] px-4 py-2 rounded-full flex items-center gap-2">Ver Caso de Estudio <ChevronRight size={16}/></span>
+                          <span className="text-white/80 font-black text-[9px] md:text-sm uppercase tracking-widest leading-relaxed">Google Auth • ABM • Pagos MercadoPago</span>
                         </div>
                       </motion.div>
+
                    </motion.div>
                 </div>
               </section>
@@ -624,10 +630,11 @@ export default function App() {
               </section>
 
             </motion.div>
-          ) : (
-            /* --- CONTACTO --- */
+          )}
+
+          {/* --- VISTA: CONTACTO --- */}
+          {view === "contacto" && (
             <motion.section 
-              id="contacto"
               key="contacto" 
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
@@ -664,20 +671,60 @@ export default function App() {
                     </motion.div>
                   </div>
                   <div className="w-full flex justify-center mt-10 md:mt-16 pb-8 md:pb-0 relative z-20">
-                    <a href="#inicio" onClick={(e) => { e.preventDefault(); navigateTo("home"); }} className="group inline-flex items-center gap-2 text-white/50 font-bold text-[10px] md:text-sm uppercase tracking-widest hover:text-white transition-colors duration-300">
+                    <button onClick={() => navigateTo("home", "proyectos")} className="group inline-flex items-center gap-2 text-white/50 font-bold text-[10px] md:text-sm uppercase tracking-widest hover:text-white transition-colors duration-300">
                       <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300" aria-hidden="true" /> Volver al Inicio
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
             </motion.section>
           )}
+
+          {/* --- VISTA: PROYECTO ALCORTA --- */}
+          {view === "proyecto_alcorta" && (
+            <ProjectDetailView 
+              key="alcorta"
+              title="Alcorta Descartable"
+              category="Dashboard Administrativo Integral"
+              time="4 Semanas"
+              image="/alcortadescartablepantallas.png"
+              description="Sistema a medida para gestión centralizada y administración. Ideal para empresas del rubro de cotillon y descartables que necesitan precisión absoluta. Proveemos una interfaz intuitiva que elimina el uso de planillas genéricas y automatiza los flujos financieros diarios. Pudiendo registrar todas las ventas que se realizan diariamnente, contabilizando cada movimiento en tiempo real. Además, el sistema incluye un módulo de gestión de stock con alertas inteligentes para evitar faltantes o excesos, y un historial completo de ventas con métricas detalladas para optimizar la toma de decisiones estratégicas."
+              features={[
+                { icon: <LineChart size={18}/>, text: "Contabilidad automatizada y balances en tiempo real." },
+                { icon: <Database size={18}/>, text: "Gestión de Stock inteligente con alertas de reposición." },
+                { icon: <CheckCircle size={18}/>, text: "Historial completo de ventas y métricas de rendimiento." },
+                { icon: <ShieldCheck size={18}/>, text: "Base de datos robusta, segura y escalable." }
+              ]}
+              onBack={() => navigateTo("home", "proyectos")}
+            />
+          )}
+
+          {/* --- VISTA: PROYECTO CURVA UNO --- */}
+          {view === "proyecto_curva" && (
+            <ProjectDetailView 
+              key="curva"
+              title="Curva Uno"
+              category="Sistema de Reservas & Dashboard"
+              time="6 Semanas"
+              image="/curvaunopantallas.png"
+              description="Emprendimiento mendocino, donde desarrollamos una plataforma integral de reservas para centro de simuladores de carreras, con toda la lógica necesaria para el correcto funcionamiento del mismo. Construimos una experiencia de usuario fluida (Landing Page orientada a conversión) combinada con un backend potente para administrar cada butaca y horario del local comercial. Ademas un completo control para el modo ADMIN con ABM de usuarios, horarios, reservas y registros contables. El sistema incluye autenticación segura con Google Auth y una pasarela de pagos automatizada con MercadoPago, garantizando una experiencia de usuario fluida y confiable."
+              features={[
+                { icon: <Users size={18}/>, text: "Inicio de sesión seguro mediante autenticación de Google Auth." },
+                { icon: <Calendar size={18}/>, text: "Gestión de reservas de simuladores y selección de butacas." },
+                { icon: <CreditCard size={18}/>, text: "Integración de pasarela de pagos automatizada con MercadoPago." },
+                { icon: <LayoutDashboard size={18}/>, text: "Panel Admin: ABM de usuarios, horarios y registros contables." }
+              ]}
+              onBack={() => navigateTo("home", "proyectos")}
+            />
+          )}
+
         </AnimatePresence>
       </main>
     </div>
   );
 }
 
+// Subcomponente para contacto
 function ContactCardHorizontal({ icon, title, value, link, color, bgColor }) {
   return (
     <a href={link} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 md:gap-5 p-3 md:p-4 rounded-[1rem] md:rounded-[1.2rem] border border-white/5 hover:border-white/20 transition-all duration-300 bg-[#0A192F]/40 backdrop-blur-md hover:bg-[#0A192F]/80">
@@ -689,5 +736,82 @@ function ContactCardHorizontal({ icon, title, value, link, color, bgColor }) {
         <span className={`text-[9px] md:text-[10px] font-black ${color} uppercase tracking-widest block truncate group-hover:translate-x-1 transition-transform duration-300 delay-75`}>{value}</span>
       </div>
     </a>
+  );
+}
+
+// COMPONENTE PROYECTO
+function ProjectDetailView({ title, category, time, image, description, features, onBack }) {
+  return (
+    <motion.section 
+      initial={{ opacity: 0, y: 30 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      exit={{ opacity: 0, scale: 0.98 }} 
+      transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
+      className="relative min-h-[100dvh] flex flex-col items-center bg-[#0A192F] px-4 md:px-8 pt-32 md:pt-40 pb-12 overflow-y-auto overflow-x-hidden"
+    >
+      <div className="w-full max-w-5xl mx-auto flex flex-col">
+        
+        {/* BOTÓN DE VOLVER MEJORADO */}
+        <div className="mb-8 md:mb-12 w-full flex justify-start">
+          <button 
+            onClick={onBack} 
+            className="group flex items-center gap-3 bg-[#0074D9]/10 hover:bg-[#0074D9]/20 border border-[#0074D9]/30 text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full font-black text-[10px] md:text-xs uppercase tracking-widest transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-[0_0_20px_rgba(0,116,217,0.3)]"
+          >
+            <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 text-[#00E5FF] transform group-hover:-translate-x-1 transition-transform duration-300" aria-hidden="true" />
+            Volver a Proyectos
+          </button>
+        </div>
+
+        {/* Header del Proyecto */}
+        <div className="mb-8 md:mb-12">
+          <span className="inline-block px-3 py-1.5 md:px-4 md:py-1.5 text-[9px] md:text-xs font-black tracking-widest uppercase rounded-full border border-[#0074D9]/30 text-[#00E5FF] mb-4 bg-[#0074D9]/10 shadow-[0_0_15px_rgba(0,116,217,0.2)]">
+            {category}
+          </span>
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter leading-tight mb-4 md:mb-6">
+            {title}
+          </h2>
+          <div className="flex items-center gap-2 text-white/60 font-bold text-xs md:text-sm uppercase tracking-widest">
+            <Clock size={16} className="text-[#0074D9]"/> Tiempo de desarrollo: <span className="text-white">{time}</span>
+          </div>
+        </div>
+
+        {/* Imagen del Proyecto */}
+        <div className="w-full rounded-[1.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 mb-12 md:mb-16 relative">
+          <div className="aspect-video w-full relative group bg-[#112240]">
+            <img src={image} alt={`Captura de pantalla de ${title}`} className="w-full h-full object-cover object-top" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] to-transparent opacity-30"></div>
+          </div>
+        </div>
+
+        {/* Detalles e Info */}
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-20 items-start pb-20">
+          <div>
+            <h3 className="text-xl md:text-3xl font-black text-white mb-4 tracking-tighter">Sobre el proyecto</h3>
+            <p className="text-white/70 text-sm md:text-lg leading-relaxed font-medium">
+              {description}
+            </p>
+          </div>
+          
+          <div className="bg-white/5 backdrop-blur-md rounded-[1.5rem] p-6 md:p-10 border border-white/10 shadow-2xl">
+            <h3 className="text-lg md:text-2xl font-black text-white mb-6 tracking-tighter flex items-center gap-2">
+              <Code2 className="text-[#0074D9]"/> Características Clave
+            </h3>
+            <ul className="space-y-4 md:space-y-6">
+              {features.map((feature, idx) => (
+                <li key={idx} className="flex items-start gap-3 md:gap-4 group">
+                  <div className="mt-0.5 text-[#00E5FF] group-hover:scale-125 transition-transform duration-300 shrink-0">
+                    {feature.icon}
+                  </div>
+                  <span className="text-white/80 font-semibold text-xs md:text-base leading-snug group-hover:text-white transition-colors">
+                    {feature.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </motion.section>
   );
 }
