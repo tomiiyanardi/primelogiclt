@@ -5,6 +5,12 @@ import Hero from "../components/Hero";
 import { fadeUp, staggerContainer, TypewriterText } from "../utils/animations";
 import InteractiveMap from "../components/InteractiveMap";
 
+// IMPORTACIONES NUEVAS PARA EL CARRUSEL INFINITO
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+
 // Los logos de tecnologías
 const techLogos = [
   { name: "React JS", url: "https://cdn.simpleicons.org/react" },
@@ -55,10 +61,12 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       
-      {/* ESTILO PARA OCULTAR LA BARRA DE SCROLL EN EL CARRUSEL */}
+      {/* ESTILO PARA LOS PUNTITOS DEL CARRUSEL Y SCROLL */}
       <style>{`
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .swiper-pagination-bullet { background: #0074D9 !important; opacity: 0.5; }
+        .swiper-pagination-bullet-active { background: #00E5FF !important; opacity: 1; }
       `}</style>
 
       <Hero heroScale={heroScale} heroTextY={heroTextY} heroTextOpacity={heroTextOpacity} isFirstVisit={isFirstVisit} />
@@ -171,7 +179,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
         </div>
       </section>
 
-      {/* PROYECTOS - EL NUEVO CARRUSEL HORIZONTAL */}
+      {/* PROYECTOS - CARRUSEL INFINITO CON SWIPER */}
       <section id="proyectos" className="min-h-[100dvh] snap-start flex flex-col bg-[#F4F4F9] pt-28 pb-12 md:pt-36 md:pb-20 overflow-hidden">
         <div className="max-w-7xl mx-auto w-full px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 md:mb-8 gap-4 md:gap-6">
@@ -189,49 +197,71 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
           </div>
         </div>
 
-        {/* CONTENEDOR DEL CARRUSEL SWIPEABLE */}
-        <div className="w-full mt-4 md:mt-8">
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-10 pb-12 pt-4 px-4 md:px-12 lg:px-[calc((100vw-1280px)/2)] scroll-smooth hide-scrollbar">
+        {/* SWIPER CONTAINER */}
+        <div className="w-full mt-4 md:mt-8 px-0 lg:px-[calc((100vw-1280px)/2)]">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            loop={true} // Infinito
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false, // Sigue girando aunque el usuario lo toque
+            }}
+            pagination={{ clickable: true, dynamicBullets: true }}
+            centeredSlides={true}
+            spaceBetween={20}
+            slidesPerView={1.15} // En móvil muestra 1 y un pedacito
+            grabCursor={true}
+            className="w-full pb-14 pt-4" // pb-14 da espacio para los puntitos
+            breakpoints={{
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+                centeredSlides: false
+              },
+              1024: {
+                slidesPerView: 2.5,
+                spaceBetween: 40,
+                centeredSlides: false
+              },
+            }}
+          >
             {proyectosData.map((proy) => (
-              <motion.div 
-                key={proy.id}
-                onClick={() => navigateTo(proy.id)} 
-                variants={fadeUp} 
-                initial="hidden" 
-                whileInView="show" 
-                viewport={{ once: true, amount: 0.2 }}
-                className="group relative w-[85vw] md:w-[700px] lg:w-[900px] shrink-0 snap-center rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl cursor-pointer aspect-video bg-[#112240] border border-[#8A95A5]/20"
-              >
-                <img 
-                  src={proy.image} 
-                  alt={proy.title.replace('\n', ' ')} 
-                  loading="lazy" 
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/40 to-transparent opacity-90 group-hover:opacity-100 group-hover:bg-[#0A192F]/70 transition-all duration-500"></div>
-                <div className="absolute bottom-5 md:bottom-10 left-5 md:left-10 right-5 md:right-10 group-hover:translate-y-4 group-hover:opacity-0 transition-all duration-500">
-                  <span className="text-[#00E5FF] font-black text-[9px] md:text-sm uppercase tracking-widest mb-1 md:mb-3 block shadow-black drop-shadow-md">
-                    {proy.category}
-                  </span>
-                  <h3 className="text-white font-black text-2xl md:text-5xl leading-tight drop-shadow-xl">
-                    {proy.title.split('\n').map((line, j) => (
-                      <React.Fragment key={j}>
-                        {line}<br className="hidden md:block"/>
-                      </React.Fragment>
-                    ))}
-                  </h3>
-                </div>
-                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none px-4 text-center">
-                  <span className="text-white font-bold text-xs md:text-lg mb-3 bg-[#0074D9] px-6 py-3 rounded-full flex items-center gap-2 shadow-2xl">
-                    Ver Caso de Estudio <ChevronRight size={20}/>
-                  </span>
-                  <span className="text-white/90 font-black text-[10px] md:text-sm uppercase tracking-widest leading-relaxed drop-shadow-md">
-                    {proy.tags}
-                  </span>
-                </div>
-              </motion.div>
+              <SwiperSlide key={proy.id} className="h-auto">
+                <motion.div 
+                  onClick={() => navigateTo(proy.id)} 
+                  className="group relative w-full h-full min-h-[250px] md:min-h-[400px] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-xl cursor-pointer bg-[#112240] border border-[#8A95A5]/20 aspect-video md:aspect-auto"
+                >
+                  <img 
+                    src={proy.image} 
+                    alt={proy.title.replace('\n', ' ')} 
+                    loading="lazy" 
+                    className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/40 to-transparent opacity-90 group-hover:opacity-100 group-hover:bg-[#0A192F]/70 transition-all duration-500"></div>
+                  <div className="absolute bottom-5 md:bottom-10 left-5 md:left-8 right-5 md:right-8 group-hover:translate-y-4 group-hover:opacity-0 transition-all duration-500">
+                    <span className="text-[#00E5FF] font-black text-[9px] md:text-sm uppercase tracking-widest mb-1 md:mb-3 block shadow-black drop-shadow-md">
+                      {proy.category}
+                    </span>
+                    <h3 className="text-white font-black text-2xl md:text-4xl lg:text-5xl leading-tight drop-shadow-xl">
+                      {proy.title.split('\n').map((line, j) => (
+                        <React.Fragment key={j}>
+                          {line}<br className="hidden md:block"/>
+                        </React.Fragment>
+                      ))}
+                    </h3>
+                  </div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none px-4 text-center">
+                    <span className="text-white font-bold text-xs md:text-lg mb-3 bg-[#0074D9] px-6 py-3 rounded-full flex items-center gap-2 shadow-2xl">
+                      Ver Caso de Estudio <ChevronRight size={20}/>
+                    </span>
+                    <span className="text-white/90 font-black text-[10px] md:text-sm uppercase tracking-widest leading-relaxed drop-shadow-md">
+                      {proy.tags}
+                    </span>
+                  </div>
+                </motion.div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </section>
 
@@ -287,8 +317,8 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
         </div>
       </section>
 
-      {/* FOOTER */}
-      <section className="relative min-h-[100dvh] snap-start flex flex-col bg-transparent overflow-hidden pt-28 md:pt-36 pb-6 md:pb-8 px-5 md:px-16">
+      {/* FOOTER - ACÁ VOLVEMOS AL bg-[#0A192F] PARA TAPAR LAS PARTÍCULAS TRAS EL VIDEO */}
+      <section className="relative min-h-[100dvh] snap-start flex flex-col bg-[#0A192F] overflow-hidden pt-28 md:pt-36 pb-6 md:pb-8 px-5 md:px-16">
         <div className="absolute inset-0 z-0">
           <video autoPlay loop muted playsInline preload="metadata" poster="/nave-poster.jpg" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-70">
             <source src="/nave.mp4" type="video/mp4" />

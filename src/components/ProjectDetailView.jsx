@@ -9,7 +9,6 @@ export default function ProjectDetailView({ title, category, time, image, descri
       animate={{ opacity: 1, y: 0 }} 
       exit={{ opacity: 0, scale: 0.98 }} 
       transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} 
-      // ¡ACÁ! Le puse un negro casi transparente para oscurecer la vista pero ver las estrellas
       className="relative min-h-[100dvh] flex flex-col items-center bg-black/40 px-4 md:px-8 pt-32 md:pt-40 pb-12 overflow-y-auto overflow-x-hidden backdrop-blur-[2px]"
     >
       <div className="w-full max-w-5xl mx-auto flex flex-col relative z-10">
