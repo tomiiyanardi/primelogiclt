@@ -65,8 +65,8 @@ const SMOKE_FRAG = `
 
     // Viñeta suave
     float vig = 1.0 - smoothstep(0.1, 0.7, length(uv));
-    float alpha = f * vig * 0.07;
-    gl_FragColor = vec4(vec3(0.7, 0.82, 1.0) * alpha, alpha);
+    float alpha = f * vig * 0.028;
+    gl_FragColor = vec4(vec3(0.75, 0.78, 0.82) * alpha, alpha);
   }
 `;
 
@@ -137,9 +137,10 @@ function FlowField({ count = 8000 }) {
       life[i] = 0;
       maxL[i] = 140 + Math.random() * 220;
       const t = Math.random();
-      colors[i*3]   = 0.0;
-      colors[i*3+1] = 0.78 + t * 0.22;
-      colors[i*3+2] = 1.0;
+      // Blanco puro con levísima temperatura fría — sin saturación visible
+      colors[i*3]   = 0.82 + t * 0.18;  // R alto → casi blanco
+      colors[i*3+1] = 0.85 + t * 0.15;  // G igual
+      colors[i*3+2] = 0.88 + t * 0.12;  // B ligerísimo toque frío
     };
 
     for (let i = 0; i < count; i++) {
@@ -182,8 +183,9 @@ function FlowField({ count = 8000 }) {
       // Alpha por ciclo de vida (fade in/out)
       const t = life[i] / maxL[i];
       const a = t < 0.12 ? t / 0.12 : t > 0.78 ? (1 - t) / 0.22 : 1.0;
-      col[i*3+1] = 0.75 + a * 0.25;
-      col[i*3+2] = 0.6  + a * 0.4;
+      col[i*3]   = 0.78 + a * 0.22;
+      col[i*3+1] = 0.80 + a * 0.20;
+      col[i*3+2] = 0.82 + a * 0.18;
 
       const hw = W / 2 + 50, hh = H / 2 + 50;
       if (life[i] >= maxL[i] || Math.abs(pos[i*3]) > hw || Math.abs(pos[i*3+1]) > hh) {
@@ -205,7 +207,7 @@ function FlowField({ count = 8000 }) {
         size={1.4}
         vertexColors
         transparent
-        opacity={0.65}
+        opacity={0.28}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
         sizeAttenuation={false}
