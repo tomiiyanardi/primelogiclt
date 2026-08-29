@@ -11,7 +11,9 @@ import Hero from "../components/Hero";
 import ProjectsCarousel from "../components/ProjectsCarousel";
 import MinimalistParticles from "../components/MinimalistParticles";
 import { fadeUp, staggerContainer, TypewriterText } from "../utils/animations";
-import InteractiveMap from "../components/InteractiveMap";
+
+// Lazy load para el mapa (mejora radicalmente el tiempo de carga inicial en celulares)
+const InteractiveMap = React.lazy(() => import('../components/InteractiveMap'));
 
 // Stack de tecnologías verificado (logos limpios y funcionales)
 const techLogos = [
@@ -217,7 +219,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
             <h2 className="flex justify-center text-3xl sm:text-4xl md:text-6xl font-black mb-2 tracking-tighter text-white">
               <TypewriterText text="Armamento Digital." />
             </h2>
-            <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-white/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-bold px-4">
+            <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.5 }} className="text-white/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-bold px-4">
               Construimos cualquier tipo de software, web o aplicación a medida. Si tu empresa lo necesita, nosotros lo hacemos realidad.
             </motion.p>
           </div>
@@ -227,7 +229,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
             variants={staggerContainer} 
             initial="hidden" 
             whileInView="show" 
-            viewport={{ once: false, amount: 0.1 }} 
+            viewport={{ once: true, amount: 0.1 }} 
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-4.5"
           >
             {solucionesList.map((item, i) => (
@@ -276,7 +278,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
               <h2 className="flex justify-start text-2xl sm:text-3xl md:text-5xl font-black text-[#0A192F] tracking-tighter mb-1.5">
                 <TypewriterText text="Sistemas en Acción." />
               </h2>
-              <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-[#8A95A5] font-bold text-xs sm:text-sm md:text-base max-w-xl">
+              <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.5 }} className="text-[#8A95A5] font-bold text-xs sm:text-sm md:text-base max-w-xl">
                 Explorá nuestros desarrollos reales: desde control de accesos QR y cajas en .NET hasta plataformas de reservas y e-commerce.
               </motion.p>
             </div>
@@ -308,7 +310,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
             <h2 className="flex justify-center text-2xl sm:text-3xl md:text-5xl font-black mb-2 tracking-tighter text-[#0A192F]">
               <TypewriterText text="De la Idea a Producción." />
             </h2>
-            <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.5 }} className="text-[#8A95A5] text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-bold px-4">
+            <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.5 }} className="text-[#8A95A5] text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-bold px-4">
               Un proceso transparente y ágil para transformar tus necesidades comerciales en software rentable y robusto.
             </motion.p>
           </div>
@@ -317,7 +319,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
             variants={staggerContainer} 
             initial="hidden" 
             whileInView="show" 
-            viewport={{ once: false, amount: 0.1 }} 
+            viewport={{ once: true, amount: 0.1 }} 
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"
           >
             {[
@@ -370,7 +372,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
         <div className="max-w-7xl mx-auto w-full bg-white rounded-[1.6rem] md:rounded-[2.5rem] shadow-md border border-[#8A95A5]/15 overflow-hidden my-auto hover:shadow-2xl transition-shadow duration-700">
           <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center p-5 sm:p-8 md:p-10">
             
-            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }}>
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
               <span className="inline-block px-3 py-1 text-[#0074D9] bg-[#0074D9]/10 rounded-full font-black tracking-widest uppercase text-[10px] md:text-xs mb-2">
                 Los Fundadores
               </span>
@@ -409,7 +411,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
               variants={fadeUp} 
               initial="hidden" 
               whileInView="show" 
-              viewport={{ once: false, amount: 0.3 }} 
+              viewport={{ once: true, amount: 0.3 }} 
               className="relative h-[240px] sm:h-[300px] md:h-[400px] w-full rounded-[1.2rem] md:rounded-[2rem] bg-gradient-to-br from-[#0A192F] to-[#112240] overflow-hidden group shadow-xl flex flex-col justify-center items-center p-6 text-center border border-[#0074D9]/30"
             >
               <div className="absolute top-0 left-0 w-full h-full opacity-15 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#00E5FF] via-transparent to-transparent pointer-events-none" />
@@ -437,7 +439,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
         <MinimalistParticles withBackground={false} interactive={false} density={0.8} />
 
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-8 my-auto relative z-10">
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }} className="w-full md:w-1/2 text-center md:text-left z-10">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} className="w-full md:w-1/2 text-center md:text-left z-10">
             <motion.span variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#0074D9]/40 text-[#00E5FF] font-black tracking-widest uppercase text-[10px] md:text-xs mb-4 bg-[#0074D9]/15 backdrop-blur-md">
               <MapPin size={13} /> Hecho en Mendoza, Argentina
             </motion.span>
@@ -453,12 +455,14 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
             initial={{ opacity: 0, scale: 0.9 }} 
             whileInView={{ opacity: 1, scale: 1 }} 
             transition={{ duration: 0.8 }} 
-            viewport={{ once: false, amount: 0.3 }} 
+            viewport={{ once: true, amount: 0.3 }} 
             className="w-full md:w-1/2 relative bg-[#0A192F]/70 rounded-[2rem] border border-white/15 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,116,217,0.2)]"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#0074D9]/10 to-transparent z-0 pointer-events-none" />
             <div className="relative z-10 w-full h-full">
-              <InteractiveMap />
+              <React.Suspense fallback={<div className="w-full h-full min-h-[350px] md:min-h-[500px] flex items-center justify-center"><div className="w-8 h-8 border-4 border-[#0074D9] border-t-transparent rounded-full animate-spin"></div></div>}>
+                <InteractiveMap />
+              </React.Suspense>
             </div>
           </motion.div>
         </div>
@@ -474,7 +478,7 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
         </div>
 
         <div className="relative z-10 flex-grow flex flex-col items-start justify-center max-w-[1400px] mx-auto w-full my-auto">
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }} className="text-left max-w-4xl flex flex-col items-start">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} className="text-left max-w-4xl flex flex-col items-start">
             <motion.span variants={fadeUp} className="inline-block px-3 py-1 text-[10px] md:text-xs font-black tracking-widest uppercase rounded-full border border-white/30 text-white mb-3 bg-white/10 backdrop-blur-md shadow-lg">
               Comenzá hoy tu proyecto
             </motion.span>
