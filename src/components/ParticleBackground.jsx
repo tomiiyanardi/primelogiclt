@@ -33,7 +33,10 @@ function perlin(x, y) {
 export default function ParticleBackground() {
   const canvasRef = useRef(null);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   useEffect(() => {
+    if (isMobile) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: true });
@@ -185,6 +188,8 @@ export default function ParticleBackground() {
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
+
+  if (isMobile) return null;
 
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">

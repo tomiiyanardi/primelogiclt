@@ -20,6 +20,13 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [headerTheme, setHeaderTheme] = useState("dark");
   const [isEstimatorOpen, setIsEstimatorOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const scrollRef = useRef(null);
   const isFirstVisit = useRef(true);
@@ -83,8 +90,8 @@ export default function App() {
 
   return (
     <div className="bg-transparent font-sans selection:bg-[#0074D9]/30 overflow-hidden h-[100dvh] w-full relative overscroll-none text-white">  
-      {/* ── CANVAS DE FONDO GLOBAL ── */}
-      <ParticleBackground />
+      {/* ── CANVAS DE FONDO GLOBAL (DESACTIVADO EN MÓVIL POR RENDIMIENTO) ── */}
+      {!isMobile && <ParticleBackground />}
 
       {/* ── BARRA DE PROGRESO DE SCROLL ── */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#0074D9] to-[#00E5FF] origin-left z-[100]" style={{ scaleX }} />

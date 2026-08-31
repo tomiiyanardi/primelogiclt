@@ -41,7 +41,10 @@ export default function MinimalistParticles({
 }) {
   const canvasRef = useRef(null);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   useEffect(() => {
+    if (isMobile) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -376,6 +379,8 @@ export default function MinimalistParticles({
       }
     };
   }, [density, interactive, packets, withBackground]);
+
+  if (isMobile) return null;
 
   return (
     <canvas
