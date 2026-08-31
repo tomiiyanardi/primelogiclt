@@ -51,8 +51,6 @@ export default function ParticleBackground() {
 
     const mouse = { x: -9999, y: -9999, active: false };
 
-    const isMobile = window.innerWidth < 768;
-
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;

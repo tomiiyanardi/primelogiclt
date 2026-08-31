@@ -80,8 +80,6 @@ export default function MinimalistParticles({
 
     const rand = (a, b) => a + Math.random() * (b - a);
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
     const resize = () => {
       const parent = canvas.parentElement;
       width = parent ? parent.offsetWidth : canvas.offsetWidth;
