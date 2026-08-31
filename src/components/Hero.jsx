@@ -3,11 +3,10 @@ import { motion } from "framer-motion";
 import { ChevronDown, ArrowRight, Sparkles, MapPin } from "lucide-react";
 
 export default function Hero({ heroScale, heroTextY, heroTextOpacity, isFirstVisit, onOpenEstimator, navigateTo }) {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
-    check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
