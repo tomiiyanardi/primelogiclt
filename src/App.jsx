@@ -35,7 +35,7 @@ export default function App() {
     const timer = setTimeout(() => {
       setLoading(false);
       isFirstVisit.current = false;
-    }, 4000);
+    }, 1600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -89,20 +89,20 @@ export default function App() {
       {/* ── BARRA DE PROGRESO DE SCROLL ── */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#0074D9] to-[#00E5FF] origin-left z-[100]" style={{ scaleX }} />
 
-      {/* ── PRELOADER INTELIGENTE ── */}
+      {/* ── PRELOADER INTELIGENTE Y FLUIDO ── */}
       <AnimatePresence>
         {loading && (
           <motion.div 
             key="preloader" 
             initial={{ opacity: 1 }} 
-            exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }} 
+            exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }} 
             className="fixed inset-0 z-[100] bg-[#050D1A] flex flex-col items-center justify-center overflow-hidden"
           >
             {/* Destello de cometa / luz */}
             <motion.div 
               initial={{ x: "-50vw", y: "-50vh", opacity: 0 }} 
               animate={{ x: "150vw", y: "150vh", opacity: [0, 1, 1, 0] }} 
-              transition={{ duration: 2.8, ease: "easeInOut", delay: 0.4 }} 
+              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.1 }} 
               className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[2px] bg-gradient-to-r from-transparent via-[#00E5FF] to-transparent -rotate-45 pointer-events-none"
             >
                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 bg-[#00E5FF] rounded-full blur-[1px] shadow-[0_0_25px_4px_#00E5FF80]"></div>
@@ -110,15 +110,15 @@ export default function App() {
 
             <div className="relative z-10 w-full px-4 flex flex-col items-center justify-center flex-grow pb-16">
               <motion.h2 
-                initial={{ opacity: 0, y: 20 }} 
+                initial={{ opacity: 0, y: 15 }} 
                 animate={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.8, delay: 0.6 }} 
+                transition={{ duration: 0.4, delay: 0.2 }} 
                 className="text-xl sm:text-2xl md:text-4xl font-light text-white flex items-center justify-center gap-2 sm:gap-3 tracking-wide"
               >
                 <div className="relative inline-flex items-center justify-center">
                   <span className="relative z-10 font-normal">Pide</span>
-                  <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.5, delay: 1.8, ease: "easeInOut" }} className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0074D9] -translate-y-1/2 origin-left z-20" />
-                  <motion.span initial={{ opacity: 0, y: 5, rotate: 0 }} animate={{ opacity: 1, y: "-80%", rotate: -3 }} transition={{ duration: 0.5, delay: 2.2, ease: "backOut" }} className="absolute left-0 -top-1 text-[#00E5FF] text-[0.85em] z-30 font-bold whitespace-nowrap">
+                  <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.35, delay: 0.6, ease: "easeInOut" }} className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0074D9] -translate-y-1/2 origin-left z-20" />
+                  <motion.span initial={{ opacity: 0, y: 5, rotate: 0 }} animate={{ opacity: 1, y: "-80%", rotate: -3 }} transition={{ duration: 0.35, delay: 0.8, ease: "backOut" }} className="absolute left-0 -top-1 text-[#00E5FF] text-[0.85em] z-30 font-bold whitespace-nowrap">
                     Cumple
                   </motion.span>
                 </div>
@@ -127,9 +127,9 @@ export default function App() {
             </div>
 
             <motion.div 
-              initial={{ opacity: 0, y: 20 }} 
+              initial={{ opacity: 0, y: 10 }} 
               animate={{ opacity: 1, y: 0 }} 
-              transition={{ delay: 2.5, duration: 0.6 }} 
+              transition={{ delay: 0.9, duration: 0.4 }} 
               className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 font-bold tracking-wider text-xs md:text-sm text-center"
             >
                 <img src="/logo.png" alt="Logo de PrimeLogic LT" className="w-7 h-7 md:w-9 md:h-9 object-contain" />

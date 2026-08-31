@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from "framer-motion";
 import { 
   ShieldCheck, Zap, Database, AppWindow, SearchCode, Settings, 
@@ -89,6 +89,29 @@ const solucionesList = [
 ];
 
 export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity, isFirstVisit, onOpenEstimator }) {
+  const [isMobile, setIsMobile] = useState(false);
+  const [footerNear, setFooterNear] = useState(false);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+    const el = footerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setFooterNear(true);
+      }
+    }, { rootMargin: '300px' });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isMobile]);
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       
@@ -469,11 +492,26 @@ export default function Home({ navigateTo, heroScale, heroTextY, heroTextOpacity
       </section>
 
       {/* ── FOOTER / CTA FINAL ── */}
-      <section className="relative min-h-[100dvh] snap-start flex flex-col justify-between bg-[#0A192F] overflow-hidden pt-20 md:pt-24 pb-6 px-5 md:px-16">
+      <section ref={footerRef} className="relative min-h-[100dvh] snap-start flex flex-col justify-between bg-[#0A192F] overflow-hidden pt-20 md:pt-24 pb-6 px-5 md:px-16">
         <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline preload="metadata" poster="/nave-poster.jpg" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-65">
-            <source src="/nave.mp4" type="video/mp4" />
-          </video>
+          {isMobile ? (
+            <img 
+              src="/nave-poster.jpg" 
+              alt="Fondo nave PrimeLogic" 
+              className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-65"
+              loading="lazy"
+            />
+          ) : footerNear ? (
+            <video autoPlay loop muted playsInline preload="auto" poster="/nave-poster.jpg" className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-65">
+              <source src="/nave.mp4" type="video/mp4" />
+            </video>
+          ) : (
+            <img 
+              src="/nave-poster.jpg" 
+              alt="Fondo nave PrimeLogic" 
+              className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-65"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F] via-[#0A192F]/60 to-[#0A192F] z-0" />
         </div>
 

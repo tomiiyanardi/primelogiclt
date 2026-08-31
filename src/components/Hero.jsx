@@ -1,30 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { ChevronDown, ArrowRight, Sparkles, MapPin } from "lucide-react";
 
 export default function Hero({ heroScale, heroTextY, heroTextOpacity, isFirstVisit, onOpenEstimator, navigateTo }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
     <section id="inicio" className="relative h-[100dvh] max-h-[100dvh] w-full snap-start flex flex-col justify-between overflow-hidden bg-[#0A192F]">
       
-      {/* VIDEO DE FONDO */}
+      {/* FONDO HERO: PÓSTER INSTANTÁNEO EN MÓVILES / VIDEO FLUIDO EN DESKTOP */}
       <motion.div 
         initial={{ opacity: 0, scale: 1.05 }} 
         animate={{ opacity: 1, scale: 1 }} 
         style={{ scale: heroScale }} 
-        transition={{ duration: 1.2, delay: isFirstVisit.current ? 4.2 : 0.2, ease: "easeOut" }} 
+        transition={{ duration: 0.8, delay: isFirstVisit.current ? 1.4 : 0.1, ease: "easeOut" }} 
         className="absolute inset-0 w-full h-full z-0 pointer-events-none"
       >
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          preload="metadata" 
-          poster="/cielo-poster.jpg" 
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="/cielo.mp4" type="video/mp4" />
-        </video>
+        {isMobile ? (
+          <img 
+            src="/cielo-poster.jpg" 
+            alt="Fondo PrimeLogic LT" 
+            className="absolute inset-0 w-full h-full object-cover z-0" 
+            loading="eager"
+            fetchPriority="high"
+          />
+        ) : (
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            preload="auto" 
+            poster="/cielo-poster.jpg" 
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          >
+            <source src="/cielo.mp4" type="video/mp4" />
+          </video>
+        )}
         
         <div className="absolute inset-0 bg-black/45 z-0" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F]/85 via-transparent to-[#0A192F] z-0" />

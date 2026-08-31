@@ -48,6 +48,8 @@ export default function ParticleBackground() {
 
     const mouse = { x: -9999, y: -9999, active: false };
 
+    const isMobile = window.innerWidth < 768;
+
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
@@ -56,8 +58,9 @@ export default function ParticleBackground() {
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    // Cantidad equilibrada de partículas para 60fps constante
-    const particleCount = Math.floor(Math.min(width, height) / 4.5);
+    // Cantidad equilibrada de partículas: reducida en móviles para garantizar 60fps constante
+    const divisor = width < 768 ? 14 : 5;
+    const particleCount = Math.min(width < 768 ? 35 : 120, Math.floor(Math.min(width, height) / divisor));
     const particles = [];
 
     const spawnParticle = () => ({
@@ -65,11 +68,11 @@ export default function ParticleBackground() {
       y: Math.random() * height,
       vx: 0,
       vy: 0,
-      radius: Math.random() * 1.4 + 0.6,
+      radius: Math.random() * 1.3 + 0.6,
       baseAlpha: Math.random() * 0.22 + 0.08,
       life: Math.random() * 200,
       maxLife: Math.random() * 250 + 150,
-      speed: Math.random() * 0.7 + 0.4,
+      speed: Math.random() * 0.6 + 0.35,
       hue: Math.random() < 0.3 ? '#00E5FF' : '#0074D9'
     });
 
@@ -87,12 +90,25 @@ export default function ParticleBackground() {
       mouse.active = false;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseleave', handleMouseLeave);
+    }
 
     let frame = 0;
+    let isPaused = false;
+
+    const handleVisibilityChange = () => {
+      isPaused = document.hidden;
+      if (!isPaused) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     const render = (now) => {
+      if (isPaused) return;
       const dt = Math.min(32, now - lastTime) / 16.6667;
       lastTime = now;
       frame += 0.003;
@@ -107,10 +123,10 @@ export default function ParticleBackground() {
         // Ángulo de flujo mediante Perlin Noise
         const angle = perlin(p.x * SCALE + frame, p.y * SCALE + frame) * Math.PI * 3.5;
 
-        // Atracción sutil al mouse
+        // Atracción sutil al mouse solo en desktop
         let pullX = 0;
         let pullY = 0;
-        if (mouse.active) {
+        if (!isMobile && mouse.active) {
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy) + 1;
@@ -161,8 +177,11 @@ export default function ParticleBackground() {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseleave', handleMouseLeave);
+      }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

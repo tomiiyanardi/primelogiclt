@@ -13,7 +13,7 @@ export const staggerContainer = {
 export const TypewriterText = ({ text, className }) => {
   const letters = text.split("");
   return (
-    <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.2 }} className={`inline-flex flex-wrap ${className}`}>
+    <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} className={`inline-flex flex-wrap ${className}`}>
       {letters.map((char, index) => (
         <motion.span key={index} variants={fadeUp} className="inline-block">
           {char === " " ? "\u00A0" : char}

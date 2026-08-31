@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, Mail, Instagram, ArrowLeft, Copy, Check, Sparkles, Send } from "lucide-react";
 import ContactCardHorizontal from "../components/ContactCardHorizontal";
@@ -6,6 +6,14 @@ import MinimalistParticles from "../components/MinimalistParticles";
 
 export default function Contacto({ navigateTo, onOpenEstimator }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("primelogiclt@gmail.com");
@@ -22,23 +30,32 @@ export default function Contacto({ navigateTo, onOpenEstimator }) {
       className="relative min-h-[100dvh] snap-start flex flex-col items-center bg-[#071324] px-0 md:px-8 pt-0 md:pt-24 pb-0 md:pb-12 overflow-hidden"
     >
       {/* CANVAS DE PARTÍCULAS INTERACTIVO DE FONDO */}
-      <MinimalistParticles withBackground={false} interactive={true} density={0.85} className="opacity-75" />
+      <MinimalistParticles withBackground={false} interactive={!isMobile} density={0.85} className="opacity-75" />
 
       <div className="relative w-full flex-grow max-w-[1400px] rounded-none md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col items-center justify-center p-6 md:p-12 pt-24 md:pt-12 border-none md:border border-white/10 my-auto">
         
-        {/* Video de fondo con atmósfera */}
+        {/* Fondo con atmósfera: póster optimizado en móvil / video en desktop */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            preload="metadata" 
-            poster="/humonave-poster.jpg" 
-            className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-35 mix-blend-lighten z-0"
-          >
-            <source src="/humonave.mp4" type="video/mp4" />
-          </video>
+          {isMobile ? (
+            <img 
+              src="/humonave-poster.jpg" 
+              alt="Fondo Contacto" 
+              className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-35 mix-blend-lighten z-0"
+              loading="lazy"
+            />
+          ) : (
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              preload="auto" 
+              poster="/humonave-poster.jpg" 
+              className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-35 mix-blend-lighten z-0"
+            >
+              <source src="/humonave.mp4" type="video/mp4" />
+            </video>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-[#071324] via-[#071324]/85 to-[#071324]/40 z-0" />
         </div>
 

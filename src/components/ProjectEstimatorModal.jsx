@@ -21,20 +21,20 @@ const projectTypes = [
 ];
 
 const featureOptions = [
-  { id: 'caja_arqueo', label: '💰 Control de Caja & Arqueo Diario', icon: <Receipt size={14} /> },
-  { id: 'facturacion_afip', label: '🧾 Facturación Electrónica / AFIP', icon: <Receipt size={14} /> },
-  { id: 'pagos_online', label: '💳 Cobro Online (MercadoPago / Stripe)', icon: <CreditCard size={14} /> },
-  { id: 'checkin_qr', label: '📲 Check-in con QR / Control Acceso', icon: <QrCode size={14} /> },
-  { id: 'stock_alertas', label: '📦 Gestión de Stock & Alertas', icon: <Database size={14} /> },
-  { id: 'padron_clientes', label: '👥 Padrón de Clientes / Socios / Pacientes', icon: <Users size={14} /> },
-  { id: 'notificaciones_wsp', label: '💬 Notificaciones WhatsApp / Email', icon: <BellRing size={14} /> },
-  { id: 'metricas_reportes', label: '📊 Reportes & Métricas en Vivo', icon: <LayoutDashboard size={14} /> },
-  { id: 'roles_permisos', label: '🔐 Roles y Permisos de Empleados', icon: <ShieldCheck size={14} /> },
-  { id: 'adaptable_mobile', label: '📱 100% Adaptable a Celular y Tablet', icon: <Smartphone size={14} /> },
-  { id: 'multi_sucursal', label: '🏢 Multi-sucursal / Multi-caja', icon: <Building2 size={14} /> },
-  { id: 'cloud_backup', label: '☁️ Base de Datos Cloud & Backup Seguro', icon: <Database size={14} /> },
-  { id: 'import_excel', label: '📁 Importar datos desde Excel', icon: <FileSpreadsheet size={14} /> },
-  { id: 'turnos_agenda', label: '⏱️ Calendario de Turnos & Recordatorios', icon: <CalendarClock size={14} /> }
+  { id: 'caja_arqueo', label: 'Control de Caja & Arqueo Diario', icon: <Receipt className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'facturacion_afip', label: 'Facturación Electrónica / AFIP', icon: <Receipt className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'pagos_online', label: 'Cobro Online (MercadoPago / Stripe)', icon: <CreditCard className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'checkin_qr', label: 'Check-in QR & Control de Acceso', icon: <QrCode className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'stock_alertas', label: 'Gestión de Stock & Alertas', icon: <Database className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'padron_clientes', label: 'Padrón de Clientes / Socios', icon: <Users className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'notificaciones_wsp', label: 'Notificaciones WhatsApp / Email', icon: <BellRing className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'metricas_reportes', label: 'Reportes & Métricas en Vivo', icon: <LayoutDashboard className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'roles_permisos', label: 'Roles y Permisos de Usuarios', icon: <ShieldCheck className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'adaptable_mobile', label: '100% Adaptable a Celular y Tablet', icon: <Smartphone className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'multi_sucursal', label: 'Multi-sucursal / Multi-caja', icon: <Building2 className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'cloud_backup', label: 'Base de Datos Cloud & Backups', icon: <Database className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'import_excel', label: 'Importación / Exportación Excel', icon: <FileSpreadsheet className="w-4 h-4 shrink-0 text-[#00E5FF]" /> },
+  { id: 'turnos_agenda', label: 'Calendario de Turnos & Reservas', icon: <CalendarClock className="w-4 h-4 shrink-0 text-[#00E5FF]" /> }
 ];
 
 const timelineOptions = [
@@ -64,13 +64,13 @@ export default function ProjectEstimatorModal({ isOpen, onClose }) {
     const timelineObj = timelineOptions.find(t => t.id === selectedTimeline);
     const featuresList = selectedFeatures.map(f => featureOptions.find(opt => opt.id === f)?.label).filter(Boolean);
 
-    const message = `🚀 *Consulta de Proyecto - PrimeLogic LT*%0A%0A` +
-      `👤 *Nombre:* ${clientName.trim() || 'Cliente interesado'}%0A` +
-      (clientCompany.trim() ? `🏢 *Empresa/Rubro:* ${clientCompany.trim()}%0A` : '') +
-      `📌 *Tipo de Sistema Requerido:* ${typeObj ? typeObj.label : 'A definir'}%0A` +
-      `⏱️ *Plazo Deseado:* ${timelineObj ? timelineObj.label : 'A coordinar'}%0A` +
-      `⚙️ *Módulos y Funcionalidades Solicitadas:*%0A${featuresList.map(feat => ` • ${feat}`).join('%0A')}%0A` +
-      (clientDetails.trim() ? `%0A📝 *Detalles Adicionales:* ${encodeURIComponent(clientDetails.trim())}%0A` : '') +
+    const message = `*Consulta de Proyecto - PrimeLogic LT*%0A%0A` +
+      `*Nombre:* ${clientName.trim() || 'Cliente interesado'}%0A` +
+      (clientCompany.trim() ? `*Empresa/Rubro:* ${clientCompany.trim()}%0A` : '') +
+      `*Tipo de Sistema Requerido:* ${typeObj ? typeObj.label : 'A definir'}%0A` +
+      `*Plazo Deseado:* ${timelineObj ? timelineObj.label : 'A coordinar'}%0A` +
+      `*Módulos y Funcionalidades Solicitadas:*%0A${featuresList.map(feat => ` - ${feat}`).join('%0A')}%0A` +
+      (clientDetails.trim() ? `%0A*Detalles Adicionales:* ${encodeURIComponent(clientDetails.trim())}%0A` : '') +
       `%0AHola Tomás y Luciano, quiero agendar una reunión para cotizar este desarrollo con ustedes.`;
 
     window.open(`https://wa.me/542612533823?text=${message}`, '_blank');
@@ -170,7 +170,10 @@ export default function ProjectEstimatorModal({ isOpen, onClose }) {
                             : 'bg-white/5 border-white/10 text-white/75 hover:bg-white/10'
                         }`}
                       >
-                        <span className="truncate pr-1 text-[11px] sm:text-xs">{feat.label}</span>
+                        <div className="flex items-center gap-2 min-w-0 pr-1">
+                          {feat.icon}
+                          <span className="truncate text-[11px] sm:text-xs">{feat.label}</span>
+                        </div>
                         <div className={`w-4 h-4 rounded flex items-center justify-center shrink-0 border ${
                           isChecked ? 'bg-[#0074D9] border-[#00E5FF]' : 'border-white/30'
                         }`}>

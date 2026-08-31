@@ -77,6 +77,8 @@ export default function MinimalistParticles({
 
     const rand = (a, b) => a + Math.random() * (b - a);
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
     const resize = () => {
       const parent = canvas.parentElement;
       width = parent ? parent.offsetWidth : canvas.offsetWidth;
@@ -92,11 +94,12 @@ export default function MinimalistParticles({
     let nextId = 0;
 
     const buildParticles = () => {
-      const base = Math.floor(Math.min(width, height) / 14) * density;
+      const effectiveDensity = (width < 768 ? 0.4 : 1) * density;
+      const base = Math.floor(Math.min(width, height) / 14) * effectiveDensity;
       particles = [];
       nextId = 0;
       LAYERS.forEach((layer, layerIndex) => {
-        const n = Math.max(4, Math.floor(base * layer.count));
+        const n = Math.max(2, Math.floor(base * layer.count));
         for (let i = 0; i < n; i++) {
           particles.push({
             id: nextId++,
@@ -182,7 +185,7 @@ export default function MinimalistParticles({
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       }
       ctx.fillStyle = hexToRgba(p.color, alpha);
-      if (p.layer === 2) {
+      if (!isMobile && p.layer === 2) {
         ctx.shadowBlur = 6;
         ctx.shadowColor = p.color;
       } else {
@@ -200,15 +203,15 @@ export default function MinimalistParticles({
 
     // ---------- Paquetes de datos viajando por una conexión ----------
     const maybeSpawnPacket = (a, b) => {
-      if (!packets) return;
-      if (packetList.length > 40) return;
+      if (!packets || isMobile) return;
+      if (packetList.length > 30) return;
       if (Math.random() < 0.0025) {
         packetList.push({ a, b, t: 0, speed: rand(0.006, 0.014) });
       }
     };
 
     const updateAndDrawPackets = () => {
-      if (!packets) return;
+      if (!packets || isMobile) return;
       packetList = packetList.filter((pk) => pk.t <= 1);
       for (const pk of packetList) {
         pk.t += pk.speed;
@@ -225,7 +228,18 @@ export default function MinimalistParticles({
       }
     };
 
+    let isPaused = false;
+    const handleVisibilityChange = () => {
+      isPaused = document.hidden;
+      if (!isPaused && !prefersReducedMotion) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     const render = (now) => {
+      if (isPaused) return;
       const dt = Math.min(48, now - lastTime) / 16.6667; // normalizado a ~60fps
       lastTime = now;
 
@@ -243,7 +257,7 @@ export default function MinimalistParticles({
         if (p.y < -10) p.y = height + 10;
         else if (p.y > height + 10) p.y = -10;
 
-        if (interactive && mouse.active) {
+        if (interactive && !isMobile && mouse.active) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
           const distSq = dx * dx + dy * dy;
@@ -276,7 +290,7 @@ export default function MinimalistParticles({
           const dy = p.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < maxDist) {
-            const lineAlpha = (1 - dist / maxDist) * 0.22;
+            const lineAlpha = (1 - dist / maxDist) * (isMobile ? 0.15 : 0.22);
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -288,8 +302,8 @@ export default function MinimalistParticles({
         }
       }
 
-      // red activa alrededor del cursor
-      if (interactive && mouse.active) {
+      // red activa alrededor del cursor en desktop
+      if (interactive && !isMobile && mouse.active) {
         for (const p of particles) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
@@ -340,23 +354,23 @@ export default function MinimalistParticles({
       window.addEventListener('resize', resize);
     }
 
-    if (interactive) {
+    if (interactive && !isMobile) {
       window.addEventListener('pointermove', handlePointerMove);
       window.addEventListener('pointerleave', handlePointerLeave);
     }
 
     animationFrameId = requestAnimationFrame(render);
     if (prefersReducedMotion) {
-      // dibuja un único frame estático y no anima más
       cancelAnimationFrame(animationFrameId);
       render(performance.now());
     }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (resizeObserver) resizeObserver.disconnect();
       else window.removeEventListener('resize', resize);
-      if (interactive) {
+      if (interactive && !isMobile) {
         window.removeEventListener('pointermove', handlePointerMove);
         window.removeEventListener('pointerleave', handlePointerLeave);
       }
