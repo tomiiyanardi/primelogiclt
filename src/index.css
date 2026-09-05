@@ -2,21 +2,24 @@
 
 @theme {
   --font-sans: "Plus Jakarta Sans", sans-serif;
+  --color-brand-blue: #132e4c;
+  --color-brand-black: #000000;
+  --color-brand-white: #ffffff;
 }
 
 body, html {
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #0A192F; 
-  color: #FFFFFF;
+  background-color: #ffffff; 
+  color: #000000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: rgba(0, 116, 217, 0.35);
-  color: #FFFFFF;
+  background: rgba(19, 46, 76, 0.35);
+  color: #132e4c;
 }
 
 /* Custom Scrollbar */
@@ -25,25 +28,30 @@ body, html {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #071324;
+  background: #f0f0f0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0074D9;
+  background: #132e4c;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00E5FF;
+  background: #000000;
 }
 
 /* Swiper Customizations */
 .swiper-pagination-bullet {
-  background: #0074D9 !important;
+  background: #132e4c !important;
   opacity: 0.4 !important;
   transition: all 0.3s ease !important;
 }
 .swiper-pagination-bullet-active {
-  background: #00E5FF !important;
+  background: #000000 !important;
   opacity: 1 !important;
   width: 22px !important;
   border-radius: 6px !important;
+}
+
+/* Enable continuous linear swiping for Clients carousel */
+.swiper-wrapper {
+  transition-timing-function: linear !important;
 }

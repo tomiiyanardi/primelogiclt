@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/fiber": "^9.6.1",
     "@tailwindcss/postcss": "^4.2.0",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
     "prop-types": "^15.8.1",
@@ -19,6 +20,7 @@
     "react-dom": "^19.2.0",
     "react-simple-maps": "^3.0.0",
     "swiper": "^12.2.0",
+    "tailwind-merge": "^3.6.0",
     "three": "^0.184.0"
   },
   "devDependencies": {
