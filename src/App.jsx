@@ -1,28 +1,27 @@
-import React from 'react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import OfferingsSection from './components/OfferingsSection';
-import ProductsSection from './components/ProductsSection';
-import AboutSection from './components/AboutSection';
-import ClientsSection from './components/ClientsSection';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Home from './pages/Home';
+import ProjectDetail from './pages/ProjectDetail';
 import './index.css';
+
+// Componente para volver al inicio de la página al cambiar de ruta
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 function App() {
   return (
-    <div className="font-sans antialiased text-brand-black bg-brand-white selection:bg-brand-blue/30 selection:text-brand-blue">
-      <Header />
-      <main className="pt-20"> {/* Add padding top to account for fixed header */}
-        <HeroSection />
-        <OfferingsSection />
-        <ProductsSection />
-        <AboutSection />
-        <ClientsSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/proyecto/:id" element={<ProjectDetail />} />
+      </Routes>
+    </>
   );
 }
 
