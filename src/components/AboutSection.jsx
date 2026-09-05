@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const AboutSection = () => {
   return (
@@ -7,16 +8,39 @@ const AboutSection = () => {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
           
           {/* Image */}
-          <div className="flex-1 flex justify-center lg:justify-start order-2 lg:order-1">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex-1 flex justify-center lg:justify-start order-2 lg:order-1 relative w-full"
+          >
+            {/* INYECTAR_IMAGEN_AQUI: Foto de Tomás y Luciano o asset representativo */}
+            {/* Si utilizas jon2.png coméntalo o reemplázalo */}
+            <div className="absolute inset-0 bg-brand-blue/5 rounded-[3rem] -z-10 transform -rotate-2 scale-105"></div>
+            
             <img 
               src="/jon2.png" 
-              alt="Jon trabajando enfocado" 
-              className="w-full max-w-md object-contain drop-shadow-2xl"
+              alt="Personaje o fundadores" 
+              className="w-full max-w-md object-contain drop-shadow-2xl hover:-translate-y-2 transition-transform duration-500"
             />
-          </div>
+            
+            {/* Placeholder de comentario */}
+            {/* 
+            <div className="w-full max-w-md aspect-[3/4] border-2 border-dashed border-brand-blue/40 rounded-[3rem] flex items-center justify-center bg-brand-blue/5">
+              <span className="text-brand-blue font-bold text-center">Espacio reservado para<br/>Personaje / Imagen</span>
+            </div>
+            */}
+          </motion.div>
 
           {/* Text Content */}
-          <div className="flex-1 order-1 lg:order-2 space-y-12">
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex-1 order-1 lg:order-2 space-y-12"
+          >
             <div>
               <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">¿Quiénes Somos?</h2>
               <p className="text-4xl font-extrabold text-brand-black mb-6">
@@ -28,22 +52,22 @@ const AboutSection = () => {
             </div>
 
             <div className="space-y-10">
-              <div>
+              <motion.div whileHover={{ scale: 1.02 }} className="p-4 rounded-2xl hover:bg-brand-blue/5 transition-colors">
                 <h3 className="text-lg font-bold text-brand-blue uppercase tracking-wider mb-3">Misión</h3>
                 <p className="text-gray-600 font-light leading-relaxed">
-                  Implementar, desarrollar, y soportar sistemas e infraestructuras de IT para solucionar y/o ayudar a clientes a que el negocio mejore. Sumergiéndonos en el mismo como si fuese propio, compartiendo el mismo interés de beneficios. (Querer que el negocio del cliente esté bien como si fuese nuestro negocio).
+                  Implementar, desarrollar, y soportar sistemas e infraestructuras de IT para solucionar y/o ayudar a clientes a que el negocio mejore. Sumergiéndonos en el mismo como si fuese propio, compartiendo el mismo interés de beneficios.
                 </p>
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div whileHover={{ scale: 1.02 }} className="p-4 rounded-2xl hover:bg-brand-blue/5 transition-colors">
                 <h3 className="text-lg font-bold text-brand-blue uppercase tracking-wider mb-3">Visión</h3>
                 <p className="text-gray-600 font-light leading-relaxed">
                   Ser referencia regional de sistemas de alta calidad, donde seamos conocidos por implementar soluciones innovadoras, y poder solucionar problemas tecnológicos complejos.
                 </p>
-              </div>
+              </motion.div>
             </div>
 
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
