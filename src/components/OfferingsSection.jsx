@@ -8,10 +8,10 @@ const OfferingsSection = () => {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
           {/* Text Side - Clean Typography Layout */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -30, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
             className="flex-1 space-y-12"
           >
             <div>
@@ -54,23 +54,17 @@ const OfferingsSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex-1 flex justify-center lg:justify-end w-full relative"
           >
-            {/* INYECTAR_IMAGEN_AQUI: Personaje o asset para la sección 'Qué Ofrecemos' */}
-            {/* Si utilizas jon1.png coméntalo o reemplázalo con el personaje oficial */}
             
             <div className="absolute inset-0 bg-brand-blue/5 rounded-3xl -z-10 transform rotate-3 scale-105"></div>
             
-            <img 
-              src="/jon1.png" 
-              alt="Personaje o Ingeniero" 
-              className="w-full max-w-md lg:max-w-lg object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            <motion.img 
+              src="/offerings-char.png" 
+              alt="Personaje Offerings" 
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+              className="w-full max-w-md lg:max-w-lg object-contain drop-shadow-2xl mix-blend-multiply cursor-pointer hover:scale-105"
             />
 
-            {/* Placeholder de comentario para reemplazar fácilmente */}
-            {/* 
-            <div className="w-full max-w-md aspect-[3/4] border-2 border-dashed border-brand-blue/40 rounded-3xl flex items-center justify-center bg-brand-blue/5">
-              <span className="text-brand-blue font-bold text-center">Espacio reservado para<br/>Personaje / Imagen</span>
-            </div>
-            */}
           </motion.div>
         </div>
       </div>

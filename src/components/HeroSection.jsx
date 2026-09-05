@@ -6,10 +6,19 @@ const HeroSection = () => {
     <section className="min-h-screen bg-brand-white text-brand-black flex flex-col justify-center items-center pt-20 px-8 relative overflow-hidden">
       <div className="max-w-4xl w-full text-center z-10 flex flex-col items-center relative">
         
-        {/* INYECTAR_IMAGEN_AQUI: Personaje o asset del Hero (ej. mascota 3D flotando) */}
-        <div className="absolute -top-10 -right-4 md:-right-16 lg:-right-32 w-24 h-24 md:w-32 md:h-32 border-2 border-dashed border-brand-blue/30 rounded-2xl flex items-center justify-center opacity-60">
-          <span className="text-[10px] md:text-xs text-brand-blue font-bold text-center">Placeholder<br/>Personaje</span>
-        </div>
+        {/* Personaje animado inyectado */}
+        <motion.img 
+          src="/hero-char.png" 
+          alt="Personaje Hero" 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1, y: [0, -15, 0] }}
+          transition={{ 
+            opacity: { duration: 0.8 },
+            scale: { duration: 0.8 },
+            y: { repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0.8 } 
+          }}
+          className="absolute -top-32 -right-4 md:-right-24 lg:-right-40 w-40 md:w-56 lg:w-72 h-auto drop-shadow-xl z-20 mix-blend-multiply"
+        />
 
         <motion.img 
           initial={{ opacity: 0, y: 20 }}
@@ -20,10 +29,10 @@ const HeroSection = () => {
           className="w-32 md:w-40 h-auto mb-10"
         />
         <motion.h1 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl md:text-6xl font-extrabold tracking-tight mb-8 text-brand-blue"
+          initial={{ opacity: 0, y: 40, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2, type: "spring", bounce: 0.4 }}
+          className="text-5xl md:text-7xl font-black mb-6 tracking-tight"
         >
           Primelogic LT
         </motion.h1>

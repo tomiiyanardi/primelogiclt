@@ -15,30 +15,23 @@ const AboutSection = () => {
             transition={{ duration: 0.6 }}
             className="flex-1 flex justify-center lg:justify-start order-2 lg:order-1 relative w-full"
           >
-            {/* INYECTAR_IMAGEN_AQUI: Foto de Tomás y Luciano o asset representativo */}
-            {/* Si utilizas jon2.png coméntalo o reemplázalo */}
             <div className="absolute inset-0 bg-brand-blue/5 rounded-[3rem] -z-10 transform -rotate-2 scale-105"></div>
             
-            <img 
-              src="/jon2.png" 
-              alt="Personaje o fundadores" 
-              className="w-full max-w-md object-contain drop-shadow-2xl hover:-translate-y-2 transition-transform duration-500"
+            <motion.img 
+              src="/about-char.png" 
+              alt="Personaje About" 
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+              className="w-full max-w-md object-contain drop-shadow-2xl mix-blend-multiply cursor-pointer hover:scale-105 transition-transform"
             />
-            
-            {/* Placeholder de comentario */}
-            {/* 
-            <div className="w-full max-w-md aspect-[3/4] border-2 border-dashed border-brand-blue/40 rounded-[3rem] flex items-center justify-center bg-brand-blue/5">
-              <span className="text-brand-blue font-bold text-center">Espacio reservado para<br/>Personaje / Imagen</span>
-            </div>
-            */}
           </motion.div>
 
           {/* Text Content */}
           <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
             className="flex-1 order-1 lg:order-2 space-y-12"
           >
             <div>
@@ -47,7 +40,7 @@ const AboutSection = () => {
                 El motor detrás de la lógica
               </p>
               <p className="text-lg text-gray-600 font-light leading-relaxed">
-                Somos dos amigos con ganas de ir para adelante. Nos apasiona sumergirnos en los desafíos de nuestros clientes y construir la infraestructura que necesitan para crecer. No somos solo un proveedor, somos parte de tu equipo.
+                Somos dos amigos con ganas de potenciar negocios reales a través de la tecnología. Nos apasiona involucrarnos profundamente en los desafíos de cada cliente para diseñar y construir la infraestructura exacta que necesitan para escalar. No buscamos ser un proveedor más; nos convertimos en el engranaje tecnológico de tu equipo.
               </p>
             </div>
 

@@ -7,6 +7,14 @@ import Footer from '../components/Footer';
 
 // Datos temporales simulados. Luego puedes mover esto a un archivo de datos.
 const projectDataMock = {
+  "importadoralyl": {
+    name: "Importadora LYL",
+    description: "Desarrollo completo de una plataforma de E-Commerce especializada en la distribución de tecnología y equipos de alta gama. Implementamos un diseño minimalista, un catálogo dinámico y un sistema de contacto rápido vía WhatsApp para cerrar ventas de forma segura y directa, optimizando toda la logística de la empresa.",
+    technologies: ["Next.js", "Tailwind CSS", "E-Commerce"],
+    images: ["/lyl-1.png", "/lyl-2.png", "/lyl-3.png"],
+    color: "from-gray-50 to-gray-200",
+    url: "https://www.importadorlyl.com.ar/"
+  },
   "sfcervantes": {
     name: "SportFitness Cervantes",
     description: "Desarrollo de un sistema de gestión integral para la sede Cervantes, incluyendo control de acceso, gestión de socios y pagos automatizados. Mejoramos la eficiencia administrativa en un 40%.",
@@ -83,13 +91,25 @@ const ProjectDetail = () => {
 
             <div>
               <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Tecnologías</h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-8">
                 {project.technologies.map((tech, idx) => (
                   <span key={idx} className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 font-medium">
                     {tech}
                   </span>
                 ))}
               </div>
+              
+              {project.url && (
+                <a 
+                  href={project.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-brand-black text-brand-white rounded-xl font-bold hover:bg-brand-blue hover:scale-105 transition-all shadow-lg group"
+                >
+                  Visitar Proyecto
+                  <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </a>
+              )}
             </div>
             
           </motion.div>
@@ -108,18 +128,10 @@ const ProjectDetail = () => {
             <div className="space-y-8">
               {project.images.map((img, idx) => (
                 <div key={idx} className={`w-full aspect-video bg-gradient-to-br ${project.color} rounded-3xl overflow-hidden border border-black/5 shadow-lg group relative`}>
-                  {/* INYECTAR_IMAGEN_AQUI: Reemplazar el src con la captura real */}
-                  {/* <img src={img} alt={`Captura ${idx + 1}`} className="w-full h-full object-cover" /> */}
                   
-                  {/* Placeholder Visual */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center opacity-50 group-hover:opacity-100 transition-opacity">
-                    <div className="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center mb-4 shadow-sm backdrop-blur-sm">
-                      <ExternalLink className="w-6 h-6 text-brand-blue" />
-                    </div>
-                    <span className="text-sm font-bold text-gray-600 uppercase tracking-widest">
-                      Placeholder Imagen {idx + 1}
-                    </span>
-                  </div>
+                  {/* Imagen Real */}
+                  <img src={img} alt={`Captura ${idx + 1}`} className="w-full h-full object-cover" />
+                  
                 </div>
               ))}
             </div>

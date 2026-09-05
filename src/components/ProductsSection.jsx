@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const ProductsSection = () => {
   const products = [
@@ -57,10 +58,13 @@ const ProductsSection = () => {
           </div>
 
           <div className="hidden lg:flex w-1/3 justify-center sticky top-32">
-             <img 
-              src="/jon3.png" 
-              alt="Jon mostrando soluciones tecnológicas" 
-              className="w-full max-w-sm object-contain drop-shadow-xl opacity-90"
+            {/* Personaje Products */}
+            <motion.img 
+              src="/products-char.png" 
+              alt="Personaje mostrando soluciones tecnológicas" 
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              className="w-full max-w-sm lg:max-w-md object-contain drop-shadow-2xl mix-blend-multiply cursor-pointer hover:scale-105 transition-transform"
             />
           </div>
         </div>
