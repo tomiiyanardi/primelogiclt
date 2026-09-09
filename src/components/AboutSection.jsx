@@ -18,7 +18,7 @@ const AboutSection = () => {
             <div className="absolute inset-0 bg-brand-blue/5 rounded-[3rem] -z-10 transform -rotate-2 scale-105"></div>
             
             <motion.img 
-              src="/about-char.png" 
+              src="/Personaje2.png" 
               alt="Personaje About" 
               animate={{ y: [0, -8, 0] }}
               transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}

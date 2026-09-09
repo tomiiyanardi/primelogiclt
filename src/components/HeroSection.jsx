@@ -8,7 +8,7 @@ const HeroSection = () => {
         
         {/* Personaje animado inyectado */}
         <motion.img 
-          src="/hero-char.png" 
+          src="/Personaje1.png" 
           alt="Personaje Hero" 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1, y: [0, -15, 0] }}
@@ -17,7 +17,7 @@ const HeroSection = () => {
             scale: { duration: 0.8 },
             y: { repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0.8 } 
           }}
-          className="absolute -top-32 -right-4 md:-right-24 lg:-right-40 w-40 md:w-56 lg:w-72 h-auto drop-shadow-xl z-20 mix-blend-multiply"
+          className="absolute -top-36 -right-10 md:-right-32 lg:-right-56 w-64 md:w-80 lg:w-[30rem] h-auto drop-shadow-xl z-20 mix-blend-multiply"
         />
 
         <motion.img 

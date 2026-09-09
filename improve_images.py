@@ -1,42 +1,57 @@
-import sys
-from PIL import Image, ImageEnhance, ImageFilter
+from collections import deque
+from pathlib import Path
+
+from PIL import Image
 
 def process_image(input_path, output_path):
     try:
-        img = Image.open(input_path).convert("RGBA")
-        
-        # Increase quality (Sharpening & Contrast)
-        enhancer = ImageEnhance.Contrast(img)
-        img = enhancer.enhance(1.1)
-        img = img.filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))
-        
-        # Remove white background
-        data = img.getdata()
-        new_data = []
-        for item in data:
-            # item is (R, G, B, A)
-            # If the pixel is close to white, make it transparent
-            if item[0] > 230 and item[1] > 230 and item[2] > 230:
-                new_data.append((255, 255, 255, 0)) # Transparent
-            else:
-                new_data.append(item)
-                
-        img.putdata(new_data)
-        
-        # We can also resize (upscale) slightly using Lanczos for better quality
-        width, height = img.size
-        img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
-        
-        img.save(output_path, "PNG")
+        image = Image.open(input_path).convert("RGBA")
+        pixels = image.load()
+        width, height = image.size
+
+        def is_checkerboard_pixel(x, y):
+            red, green, blue, _ = pixels[x, y]
+            return max(red, green, blue) - min(red, green, blue) <= 18 and min(red, green, blue) >= 145
+
+        # Flood-fill only neutral, bright pixels connected to the image border.
+        # This preserves light details enclosed by the character's outlines.
+        background = bytearray(width * height)
+        queue = deque()
+
+        for x in range(width):
+            queue.extend(((x, 0), (x, height - 1)))
+        for y in range(height):
+            queue.extend(((0, y), (width - 1, y)))
+
+        while queue:
+            x, y = queue.popleft()
+            index = y * width + x
+            if background[index] or not is_checkerboard_pixel(x, y):
+                continue
+            background[index] = 1
+            for next_x, next_y in (
+                (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1),
+                (x - 1, y - 1), (x + 1, y - 1), (x - 1, y + 1), (x + 1, y + 1),
+            ):
+                if 0 <= next_x < width and 0 <= next_y < height:
+                    queue.append((next_x, next_y))
+
+        for y in range(height):
+            for x in range(width):
+                if background[y * width + x]:
+                    red, green, blue, _ = pixels[x, y]
+                    pixels[x, y] = (red, green, blue, 0)
+
+        image.save(output_path, "PNG")
         print(f"Processed {output_path}")
     except Exception as e:
         print(f"Error processing {input_path}: {e}")
 
 if __name__ == '__main__':
     images = [
-        ('public/hero-char.png', 'public/hero-char.png'),
-        ('public/offerings-char.png', 'public/offerings-char.png'),
-        ('public/about-char.png', 'public/about-char.png')
+        (f'public/Personaje{number}.jpg', f'public/Personaje{number}.png')
+        for number in range(1, 4)
     ]
     for src, dst in images:
-        process_image(src, dst)
+        if Path(src).exists():
+            process_image(src, dst)
