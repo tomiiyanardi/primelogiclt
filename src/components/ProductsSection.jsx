@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { RevealGroup, RevealText, revealItem } from '../utils/animations';
 
 const ProductsSection = () => {
   const products = [
@@ -38,24 +39,24 @@ const ProductsSection = () => {
       <div className="max-w-7xl w-full mx-auto px-6 lg:px-8">
         <div className="text-center mb-16 lg:mb-20">
           <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">Nuestros Servicios</h2>
-          <p className="text-4xl font-extrabold text-brand-black">
+          <RevealText className="text-4xl font-extrabold text-brand-black" delay={0.1}>
             Soluciones Tecnológicas Integrales
-          </p>
+          </RevealText>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-16 items-start">
-          <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+          <RevealGroup className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16" delay={0.12}>
             {products.map((product, index) => (
-              <div key={index} className="flex flex-col">
+              <motion.div key={index} variants={revealItem} className="flex flex-col">
                 <h3 className="text-xl font-bold text-brand-black mb-3 border-b-2 border-brand-blue pb-2 inline-block w-fit">
                   {product.name}
                 </h3>
                 <p className="text-gray-600 font-light leading-relaxed">
                   {product.desc}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </RevealGroup>
 
           <div className="hidden lg:flex w-1/3 justify-center sticky top-32">
             {/* Personaje Products */}

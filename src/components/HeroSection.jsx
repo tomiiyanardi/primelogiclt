@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { RevealText } from '../utils/animations';
 
 const HeroSection = () => {
   return (
@@ -28,14 +29,9 @@ const HeroSection = () => {
           alt="Primelogic LT Logo" 
           className="w-32 md:w-40 h-auto mb-10"
         />
-        <motion.h1 
-          initial={{ opacity: 0, y: 40, scale: 0.8 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2, type: "spring", bounce: 0.4 }}
-          className="text-5xl md:text-7xl font-black mb-6 tracking-tight"
-        >
+        <RevealText className="text-5xl md:text-7xl font-black mb-6 tracking-tight" delay={0.2}>
           Primelogic LT
-        </motion.h1>
+        </RevealText>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,7 +42,14 @@ const HeroSection = () => {
         </motion.p>
       </div>
       
-      {/* Subtle modern background elements */}
+      <div className="hero-signal absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+        <span className="signal-node signal-node-one"></span>
+        <span className="signal-node signal-node-two"></span>
+        <span className="signal-node signal-node-three"></span>
+        <span className="signal-line signal-line-one"></span>
+        <span className="signal-line signal-line-two"></span>
+      </div>
+
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-brand-blue/[0.03] rounded-full blur-3xl"></div>
       </div>

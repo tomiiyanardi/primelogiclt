@@ -2,6 +2,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
+import { RevealText } from '../utils/animations';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 
@@ -70,9 +71,9 @@ const ClientsSection = () => {
       <div className="w-full">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12 text-center">
           <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">Nuestros Clientes</h2>
-          <p className="text-4xl font-extrabold text-brand-black">
+          <RevealText className="text-4xl font-extrabold text-brand-black" delay={0.1}>
             Empresas que confían en nosotros
-          </p>
+          </RevealText>
         </div>
 
         <div className="w-full">

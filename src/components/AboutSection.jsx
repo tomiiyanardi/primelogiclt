@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { RevealGroup, RevealText, revealItem } from '../utils/animations';
 
 const AboutSection = () => {
   return (
@@ -36,15 +37,15 @@ const AboutSection = () => {
           >
             <div>
               <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">¿Quiénes Somos?</h2>
-              <p className="text-4xl font-extrabold text-brand-black mb-6">
+              <RevealText className="text-4xl font-extrabold text-brand-black mb-6" delay={0.1}>
                 El motor detrás de la lógica
-              </p>
-              <p className="text-lg text-gray-600 font-light leading-relaxed">
+              </RevealText>
+              <motion.p variants={revealItem} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.5 }} className="text-lg text-gray-600 font-light leading-relaxed">
                 Somos dos amigos con ganas de potenciar negocios reales a través de la tecnología. Nos apasiona involucrarnos profundamente en los desafíos de cada cliente para diseñar y construir la infraestructura exacta que necesitan para escalar. No buscamos ser un proveedor más; nos convertimos en el engranaje tecnológico de tu equipo.
-              </p>
+              </motion.p>
             </div>
 
-            <div className="space-y-10">
+            <RevealGroup className="space-y-10" delay={0.15}>
               <motion.div whileHover={{ scale: 1.02 }} className="p-4 rounded-2xl hover:bg-brand-blue/5 transition-colors">
                 <h3 className="text-lg font-bold text-brand-blue uppercase tracking-wider mb-3">Misión</h3>
                 <p className="text-gray-600 font-light leading-relaxed">
@@ -58,7 +59,7 @@ const AboutSection = () => {
                   Ser referencia regional de sistemas de alta calidad, donde seamos conocidos por implementar soluciones innovadoras, y poder solucionar problemas tecnológicos complejos.
                 </p>
               </motion.div>
-            </div>
+            </RevealGroup>
 
           </motion.div>
         </div>

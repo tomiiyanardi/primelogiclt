@@ -1,5 +1,6 @@
 import React from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
+import { RevealText } from "../utils/animations";
 
 const ContactSection = () => {
   return (
@@ -15,7 +16,7 @@ const ContactSection = () => {
               translateZ="50"
               className="text-3xl font-extrabold text-brand-black mb-2"
             >
-              ¿Qué esperas para que tu idea sea realidad?
+              <RevealText delay={0.1}>¿Qué esperas para que tu idea sea realidad?</RevealText>
             </CardItem>
             <CardItem
               as="p"

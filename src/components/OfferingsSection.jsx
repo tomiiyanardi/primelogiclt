@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { RevealGroup, RevealText, revealItem } from '../utils/animations';
 
 const OfferingsSection = () => {
   return (
@@ -16,34 +17,34 @@ const OfferingsSection = () => {
           >
             <div>
               <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">¿Qué Ofrecemos?</h2>
-              <p className="text-4xl lg:text-5xl font-extrabold text-brand-black leading-tight">
+              <RevealText className="text-4xl lg:text-5xl font-extrabold text-brand-black leading-tight" delay={0.1}>
                 Tu éxito es nuestro objetivo principal
-              </p>
+              </RevealText>
             </div>
 
-            <div className="space-y-10 pl-4 border-l-2 border-brand-blue/20">
-              <motion.div whileHover={{ x: 5 }} className="relative transition-transform duration-300">
+            <RevealGroup className="space-y-10 pl-4 border-l-2 border-brand-blue/20" delay={0.16}>
+              <motion.div variants={revealItem} whileHover={{ x: 5 }} className="relative transition-transform duration-300">
                 <div className="absolute -left-[21px] top-2 w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
                 <h3 className="text-xl font-bold text-brand-black mb-2">Optimización Real</h3>
                 <p className="text-gray-500 leading-relaxed font-light text-lg">
                   Queremos que nuestros clientes ganen plata o tiempo automatizando procesos clave de su negocio.
                 </p>
               </motion.div>
-              <motion.div whileHover={{ x: 5 }} className="relative transition-transform duration-300">
+              <motion.div variants={revealItem} whileHover={{ x: 5 }} className="relative transition-transform duration-300">
                 <div className="absolute -left-[21px] top-2 w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
                 <h3 className="text-xl font-bold text-brand-black mb-2">Beneficio Mutuo</h3>
                 <p className="text-gray-500 leading-relaxed font-light text-lg">
                   Si nuestros clientes ganan, nosotros también. Nuestra mayor satisfacción es el éxito y crecimiento de nuestros clientes.
                 </p>
               </motion.div>
-              <motion.div whileHover={{ x: 5 }} className="relative transition-transform duration-300">
+              <motion.div variants={revealItem} whileHover={{ x: 5 }} className="relative transition-transform duration-300">
                 <div className="absolute -left-[21px] top-2 w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
                 <h3 className="text-xl font-bold text-brand-black mb-2">Compromiso Total</h3>
                 <p className="text-gray-500 leading-relaxed font-light text-lg">
                   Tenemos el mismo compromiso. Nosotros queremos tanto como el cliente alcanzar la mejor versión de sus proyectos y sistemas.
                 </p>
               </motion.div>
-            </div>
+            </RevealGroup>
           </motion.div>
 
           {/* Image Side */}

@@ -5,7 +5,6 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-// Datos temporales simulados. Luego puedes mover esto a un archivo de datos.
 const projectDataMock = {
   "importadoralyl": {
     name: "Importadora LYL",
@@ -19,17 +18,42 @@ const projectDataMock = {
     name: "SportFitness Cervantes",
     description: "Desarrollo de un sistema de gestión integral para la sede Cervantes, incluyendo control de acceso, gestión de socios y pagos automatizados. Mejoramos la eficiencia administrativa en un 40%.",
     technologies: ["React", "Node.js", "PostgreSQL"],
-    images: ["/placeholder1.png", "/placeholder2.png", "/placeholder3.png"],
-    color: "from-blue-50 to-indigo-100"
+    images: ["/SportFitness.png", "/SportFitness.webp"],
+    color: "from-blue-50 to-indigo-100",
+    url: null
   },
   "sftrapiche": {
     name: "SportFitness Trapiche",
     description: "Modernización de la infraestructura de red e implementación de software de control de ingresos mediante biometría, garantizando mayor seguridad y agilidad para los clientes.",
     technologies: ["Hardware", "Biometría", "Redes"],
-    images: ["/placeholder1.png", "/placeholder2.png"],
-    color: "from-indigo-50 to-purple-100"
+    images: ["/SportFitness.webp", "/SportFitness.png"],
+    color: "from-indigo-50 to-purple-100",
+    url: null
   },
-  // ...otros
+  "flomstore": {
+    name: "Flom Store",
+    description: "Diseño y desarrollo de una experiencia digital para una tienda online, con foco en catálogo, identidad visual y una navegación simple para convertir visitas en consultas.",
+    technologies: ["E-Commerce", "Diseño UX", "Integraciones"],
+    images: ["/flomstore.png", "/flomstore.webp"],
+    color: "from-pink-50 to-rose-100",
+    url: null
+  },
+  "alcorta": {
+    name: "Alcorta Descartables",
+    description: "Plataforma comercial para organizar el catálogo de productos descartables y facilitar el contacto con clientes, con una interfaz clara y orientada a la venta.",
+    technologies: ["Catálogo Web", "Responsive Design", "Automatización"],
+    images: ["/alcortadescartablepantallas.png", "/alcortadescartablepantallas.webp"],
+    color: "from-rose-50 to-orange-100",
+    url: null
+  },
+  "curvauno": {
+    name: "Curva Uno",
+    description: "Desarrollo de una presencia digital moderna para comunicar la propuesta de valor de la marca y presentar sus productos de forma atractiva en cualquier dispositivo.",
+    technologies: ["Diseño Web", "Responsive Design", "Contenido Digital"],
+    images: ["/curvaunopantallas.png", "/curvaunopantallas.webp"],
+    color: "from-orange-50 to-amber-100",
+    url: null
+  }
 };
 
 const ProjectDetail = () => {
@@ -44,7 +68,7 @@ const ProjectDetail = () => {
       name: `Proyecto: ${id}`,
       description: "Detalles en construcción. Próximamente agregaremos las capturas y la explicación completa de los desafíos superados y el impacto de este desarrollo.",
       technologies: ["Tecnología A", "Tecnología B"],
-      images: ["/placeholder1.png", "/placeholder2.png"],
+      images: ["/ecommerce.png"],
       color: "from-gray-50 to-gray-100"
     };
     setProject(data);
@@ -78,7 +102,8 @@ const ProjectDetail = () => {
             className="lg:col-span-5 space-y-8 sticky top-32 h-fit"
           >
             <div>
-              <div className="inline-block px-3 py-1 mb-4 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-widest">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
                 Caso de Éxito
               </div>
               <h1 className="text-4xl lg:text-5xl font-extrabold text-brand-black leading-tight mb-6">
@@ -122,7 +147,7 @@ const ProjectDetail = () => {
             className="lg:col-span-7 space-y-12"
           >
             <h2 className="text-2xl font-bold text-brand-black mb-8 border-b border-gray-100 pb-4">
-              Capturas del Proyecto
+              El proyecto en imágenes
             </h2>
             
             <div className="space-y-8">
