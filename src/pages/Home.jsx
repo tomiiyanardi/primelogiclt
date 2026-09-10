@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import OfferingsSection from '../components/OfferingsSection';
 import ProductsSection from '../components/ProductsSection';
+import ProcessSection from '../components/ProcessSection';
 import AboutSection from '../components/AboutSection';
 import ClientsSection from '../components/ClientsSection';
 import ContactSection from '../components/ContactSection';
@@ -18,6 +19,7 @@ const Home = () => {
         <HeroSection />
         <OfferingsSection />
         <ProductsSection />
+        <ProcessSection />
         <AboutSection />
         <ClientsSection />
         <ContactSection />

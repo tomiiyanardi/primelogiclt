@@ -8,7 +8,11 @@ import Footer from '../components/Footer';
 const projectData = {
   "importadoralyl": {
     name: "Importadora LYL",
-    description: "Desarrollo completo de una plataforma de E-Commerce especializada en la distribución de tecnología y equipos de alta gama. Implementamos un diseño minimalista, un catálogo dinámico y un sistema de contacto rápido vía WhatsApp para cerrar ventas de forma segura y directa, optimizando toda la logística de la empresa.",
+    category: "E-Commerce para distribución tecnológica",
+    description: "Importadora LYL necesitaba llevar su catálogo y proceso comercial a un entorno digital propio. Desarrollamos una tienda online para presentar tecnología y equipos de alta gama, facilitar la búsqueda de productos y convertir consultas en ventas directas.",
+    problem: "La oferta estaba concentrada en canales dispersos y el cliente no contaba con una experiencia digital propia para explorar productos y consultar compras.",
+    solution: "Construimos un e-commerce con catálogo dinámico, buscador, carrito, experiencia responsive y contacto rápido por WhatsApp.",
+    outcome: "La empresa cuenta con un canal digital centralizado para mostrar su catálogo, recibir consultas y acompañar el proceso de compra.",
     technologies: ["Next.js", "Tailwind CSS", "E-Commerce"],
     images: ["/lyl-1.png", "/lyl-2.png", "/lyl-3.png"],
     color: "from-gray-50 to-gray-200",
@@ -16,7 +20,11 @@ const projectData = {
   },
   "sfcervantes": {
     name: "SportFitness Cervantes",
-    description: "Desarrollo de un sistema de gestión integral para la sede Cervantes, incluyendo control de acceso, gestión de socios y pagos automatizados.",
+    category: "Sistema de gestión para gimnasios",
+    description: "SportFitness Cervantes necesitaba dejar atrás los controles manuales de su operación diaria. Desarrollamos un sistema de gestión integral para ordenar el acceso, la información de socios y el seguimiento de pagos desde una misma herramienta.",
+    problem: "El equipo no contaba con un sistema centralizado para verificar socios, registrar ingresos y consultar el estado de las cuotas.",
+    solution: "Implementamos control de acceso por QR y búsqueda manual, gestión de socios, caja y pagos dentro de un panel operativo claro.",
+    outcome: "La sede puede resolver tareas clave de recepción y administración con información disponible en tiempo real.",
     technologies: ["React", "Node.js", "PostgreSQL"],
     images: ["/SportFitness.png", "/SportFitness.webp"],
     color: "from-blue-50 to-indigo-100",
@@ -24,7 +32,11 @@ const projectData = {
   },
   "sftrapiche": {
     name: "SportFitness Trapiche",
-    description: "Modernización de la infraestructura de red e implementación de software de control de ingresos mediante biometría, garantizando mayor seguridad y agilidad para los clientes.",
+    category: "Infraestructura y control de acceso",
+    description: "Para SportFitness Trapiche desarrollamos la infraestructura tecnológica necesaria para modernizar el ingreso de sus socios y darle mayor control a la operación de la sede.",
+    problem: "El acceso dependía de procesos manuales y la infraestructura existente no acompañaba el volumen de uso cotidiano del gimnasio.",
+    solution: "Integramos red, hardware y control biométrico para validar ingresos de forma rápida y segura.",
+    outcome: "La sede cuenta con un acceso más ordenado y una base tecnológica preparada para sostener su operación diaria.",
     technologies: ["Hardware", "Biometría", "Redes"],
     images: ["/SportFitness.webp", "/SportFitness.png"],
     color: "from-indigo-50 to-purple-100",
@@ -32,7 +44,11 @@ const projectData = {
   },
   "flomstore": {
     name: "Flom Store",
-    description: "Diseño y desarrollo de una experiencia digital para una tienda online, con foco en catálogo, identidad visual y una navegación simple para convertir visitas en consultas.",
+    category: "Experiencia digital para tienda online",
+    description: "Flom Store necesitaba una presencia digital que estuviera a la altura de su identidad y que pudiera presentar su propuesta de manera simple, cuidada y memorable.",
+    problem: "La marca no tenía un espacio digital propio que combinara identidad visual, catálogo y una navegación pensada para sus clientes.",
+    solution: "Diseñamos y desarrollamos una experiencia de tienda online con navegación minimalista, presentación editorial y foco en el descubrimiento de productos.",
+    outcome: "Flom Store tiene ahora una vidriera digital con personalidad propia y una base preparada para crecer como canal comercial.",
     technologies: ["E-Commerce", "Diseño UX", "Integraciones"],
     images: ["/flomstore.png", "/flomstore.webp"],
     color: "from-pink-50 to-rose-100",
@@ -40,7 +56,11 @@ const projectData = {
   },
   "alcorta": {
     name: "Alcorta Descartables",
-    description: "Plataforma comercial para organizar el catálogo de productos descartables y facilitar el contacto con clientes, con una interfaz clara y orientada a la venta.",
+    category: "Gestión comercial y operaciones",
+    description: "Alcorta Descartables necesitaba transformar información comercial dispersa en una herramienta para tomar decisiones sobre ventas, costos, stock y compras.",
+    problem: "La operación no tenía un sistema centralizado para consultar el estado del negocio ni visualizar el rendimiento de sus ventas desde distintos dispositivos.",
+    solution: "Desarrollamos un dashboard responsive con indicadores de ventas, ganancias, costos, caja, stock, alertas e historial de movimientos.",
+    outcome: "El negocio puede consultar el pulso de su operación desde una interfaz única, tanto en computadora como en celular.",
     technologies: ["Catálogo Web", "Responsive Design", "Automatización"],
     images: ["/alcortadescartablepantallas.png", "/alcortadescartablepantallas.webp"],
     color: "from-rose-50 to-orange-100",
@@ -48,7 +68,11 @@ const projectData = {
   },
   "curvauno": {
     name: "Curva Uno",
-    description: "Desarrollo de una presencia digital moderna para comunicar la propuesta de valor de la marca y presentar sus productos de forma atractiva en cualquier dispositivo.",
+    category: "Experiencia digital y reservas",
+    description: "Curva Uno necesitaba convertir una propuesta vinculada al automovilismo virtual en una experiencia digital que transmitiera su energía y facilitara la reserva de servicios.",
+    problem: "La marca no contaba con una plataforma propia para explicar su propuesta, mostrar la experiencia y recibir reservas desde cualquier dispositivo.",
+    solution: "Creamos una landing inmersiva con identidad visual de competición, adaptación responsive y llamados a la acción orientados a reservar.",
+    outcome: "Curva Uno cuenta con una presentación digital coherente con su universo de marca y preparada para transformar interés en reservas.",
     technologies: ["Diseño Web", "Responsive Design", "Contenido Digital"],
     images: ["/curvaunopantallas.png", "/curvaunopantallas.webp"],
     color: "from-orange-50 to-amber-100",
@@ -109,7 +133,7 @@ const ProjectDetail = () => {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-widest">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
-                Caso de Éxito
+                {project.category}
               </div>
               <h1 className="text-4xl lg:text-5xl font-extrabold text-brand-black leading-tight mb-6">
                 {project.name}
@@ -117,6 +141,21 @@ const ProjectDetail = () => {
               <p className="text-lg text-gray-600 font-light leading-relaxed">
                 {project.description}
               </p>
+            </div>
+
+            <div className="space-y-6 border-y border-gray-100 py-7">
+              <div>
+                <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-blue">El desafío</h2>
+                <p className="leading-relaxed text-gray-600">{project.problem}</p>
+              </div>
+              <div>
+                <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-blue">Lo que hicimos</h2>
+                <p className="leading-relaxed text-gray-600">{project.solution}</p>
+              </div>
+              <div>
+                <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-blue">El resultado</h2>
+                <p className="leading-relaxed text-gray-600">{project.outcome}</p>
+              </div>
             </div>
 
             <div>

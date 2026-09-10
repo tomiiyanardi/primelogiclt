@@ -16,6 +16,8 @@ const ContactSection = () => {
         body: JSON.stringify({
           name: event.currentTarget.name.value,
           email: event.currentTarget.email.value,
+          projectType: event.currentTarget.projectType.value,
+          challenge: event.currentTarget.challenge.value,
           message: event.currentTarget.message.value,
           _subject: 'Nueva consulta desde Primelogic LT',
           _captcha: 'false',
@@ -76,6 +78,35 @@ const ContactSection = () => {
                     required 
                     className="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all bg-gray-50"
                     placeholder="tu@correo.com"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="projectType" className="text-sm font-semibold text-gray-700">¿Qué estás buscando?</label>
+                  <select
+                    name="projectType"
+                    id="projectType"
+                    required
+                    defaultValue=""
+                    className="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all bg-gray-50 text-gray-700"
+                  >
+                    <option value="" disabled>Seleccioná una opción</option>
+                    <option value="software">Software o plataforma a medida</option>
+                    <option value="automation">Automatización o integración</option>
+                    <option value="consulting">Consultoría y evolución tecnológica</option>
+                    <option value="other">Todavía no lo tengo definido</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="challenge" className="text-sm font-semibold text-gray-700">¿Cuál es el principal desafío?</label>
+                  <input
+                    type="text"
+                    name="challenge"
+                    id="challenge"
+                    required
+                    className="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all bg-gray-50"
+                    placeholder="Ej.: perdemos tiempo cargando datos manualmente"
                   />
                 </div>
 

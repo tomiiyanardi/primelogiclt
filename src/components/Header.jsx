@@ -21,6 +21,7 @@ const Header = () => {
         <nav className="hidden md:flex gap-8 text-sm font-medium text-brand-black">
           <Link to="/#ofrecemos" className="hover:text-brand-blue transition-colors">Ofrecemos</Link>
           <Link to="/#servicios" className="hover:text-brand-blue transition-colors">Servicios</Link>
+          <Link to="/#proceso" className="hover:text-brand-blue transition-colors">Proceso</Link>
           <Link to="/#nosotros" className="hover:text-brand-blue transition-colors">Nosotros</Link>
           <Link to="/#clientes" className="hover:text-brand-blue transition-colors">Clientes</Link>
         </nav>
@@ -47,6 +48,7 @@ const Header = () => {
         <nav className="flex flex-col px-6 py-4 space-y-4 font-medium text-brand-black text-center">
           <Link to="/#ofrecemos" onClick={toggleMenu} className="hover:text-brand-blue transition-colors py-2 border-b border-gray-50">Ofrecemos</Link>
           <Link to="/#servicios" onClick={toggleMenu} className="hover:text-brand-blue transition-colors py-2 border-b border-gray-50">Servicios</Link>
+          <Link to="/#proceso" onClick={toggleMenu} className="hover:text-brand-blue transition-colors py-2 border-b border-gray-50">Proceso</Link>
           <Link to="/#nosotros" onClick={toggleMenu} className="hover:text-brand-blue transition-colors py-2 border-b border-gray-50">Nosotros</Link>
           <Link to="/#clientes" onClick={toggleMenu} className="hover:text-brand-blue transition-colors py-2 border-b border-gray-50">Clientes</Link>
           <Link to="/#contacto" onClick={toggleMenu} className="w-full mt-2 px-6 py-2 bg-brand-blue text-brand-white rounded-full font-medium hover:bg-opacity-90 transition-all text-center">

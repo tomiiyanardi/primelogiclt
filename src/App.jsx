@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
+import WhatsAppButton from './components/WhatsAppButton';
 import './index.css';
 
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/proyecto/:id" element={<Suspense fallback={<div className="min-h-screen bg-brand-white" aria-label="Cargando proyecto" />}><ProjectDetail /></Suspense>} />
       </Routes>
+      <WhatsAppButton />
     </>
   );
 }
