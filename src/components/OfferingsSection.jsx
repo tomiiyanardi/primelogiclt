@@ -59,7 +59,7 @@ const OfferingsSection = () => {
             <div className="absolute inset-0 bg-brand-blue/5 rounded-3xl -z-10 transform rotate-3 scale-105"></div>
             
             <Motion.img
-              src="/offerings-char.png"
+              src="/characters/offerings.svg"
               alt="Especialista señalando las oportunidades de mejora del negocio"
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}

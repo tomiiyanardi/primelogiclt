@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 460" role="img" aria-labelledby="title desc">
+  <title id="title">Diseñadora de producto digital</title>
+  <desc id="desc">Ilustracion limpia de una diseñadora revisando una interfaz en una pantalla.</desc>
+  <g stroke="#10243A" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+    <ellipse cx="217" cy="425" rx="170" ry="24" fill="#EAF1F5" stroke="none"/>
+    <path fill="#F4C7A8" d="M135 101c0-42 30-70 75-70s75 28 75 70-30 73-75 73-75-31-75-73Z"/>
+    <path fill="#6B4037" stroke="none" d="M137 103c-4-45 27-78 74-78 45 0 72 31 73 73-22-20-47-29-74-24-28 5-47 17-73 29Z"/>
+    <path fill="#F4C7A8" d="M170 164v28c13 14 28 20 40 20s27-7 40-20v-29"/>
+    <path fill="#B75262" d="M170 178c14 17 27 25 40 25s28-8 40-25c39 5 68 27 80 63l27 123H55l30-123c12-36 41-58 85-63Z"/>
+    <path fill="#F8FBFC" d="m169 179 41 30 40-30 30 20-39 62h-62l-39-62Z"/>
+    <path fill="#F4C7A8" d="M105 222c-15 10-21 27-17 45l14 56c4 15 18 23 33 19 14-4 22-18 18-33l-10-36 54 31c13 7 29 2 36-11 7-13 2-29-11-36l-72-38c-15-8-32-7-45 3Z"/>
+    <path fill="#F4C7A8" d="M286 218c15-8 33-3 42 12l35 53-36 24-38-55c-10-15-14-26-3-34Z"/>
+    <path fill="#173B60" d="M258 207h133c9 0 16 7 16 16v88c0 9-7 16-16 16H258c-9 0-16-7-16-16v-88c0-9 7-16 16-16Z"/>
+    <path fill="#C5E6EA" d="M273 223h103v64H273z"/>
+    <path fill="none" stroke="#4B8795" stroke-width="5" d="M287 241h42M287 258h67M287 275h51"/>
+    <path fill="#DCE3EA" d="M233 309h176l23 15H210Z"/>
+    <path fill="#4B5967" d="M114 364h194l-15 58H129Z"/>
+    <path fill="#F4C7A8" d="M167 104h4M247 104h4M182 137c18 14 39 14 57 0"/>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 460" role="img" aria-labelledby="title desc">
+  <title id="title">Desarrollador trabajando con una notebook</title>
+  <desc id="desc">Ilustracion limpia de un desarrollador escribiendo en una notebook con una interfaz de codigo.</desc>
+  <g stroke="#10243A" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+    <ellipse cx="214" cy="425" rx="170" ry="24" fill="#EAF1F5" stroke="none"/>
+    <path fill="#F4C7A8" d="M136 101c0-42 30-70 75-70s75 28 75 70-30 73-75 73-75-31-75-73Z"/>
+    <path fill="#3B2934" stroke="none" d="M138 103c-3-46 27-78 74-78 46 0 73 31 74 75-22-20-47-29-74-24-28 5-48 17-74 27Z"/>
+    <path fill="#F4C7A8" d="M171 164v28c13 14 28 20 40 20s27-7 40-20v-29"/>
+    <path fill="#4B8795" d="M171 178c14 17 27 25 40 25s28-8 40-25c39 5 68 27 80 63l27 123H56l30-123c12-36 41-58 85-63Z"/>
+    <path fill="#F8FBFC" d="m170 179 41 30 40-30 30 20-39 62h-62l-39-62Z"/>
+    <path fill="#F4C7A8" d="M105 222c-14 10-20 27-16 45l14 57c4 14 18 22 32 18 14-4 22-18 18-32l-10-37 55 31c13 7 29 2 36-11 7-13 2-29-11-36l-73-38c-15-8-32-7-45 3Z"/>
+    <path fill="#F4C7A8" d="M286 220c14-9 32-5 43 9l39 49-34 27-41-52c-11-14-17-24-7-33Z"/>
+    <path fill="#173B60" d="M259 210h132c9 0 16 7 16 16v84c0 9-7 16-16 16H259c-9 0-16-7-16-16v-84c0-9 7-16 16-16Z"/>
+    <path fill="#C5E6EA" d="M274 226h102v61H274z"/>
+    <path fill="none" stroke="#4B8795" stroke-width="5" d="M288 244h35M288 261h67M288 278h49"/>
+    <path fill="#DCE3EA" d="M235 310h176l23 15H212Z"/>
+    <path fill="#4B5967" d="M115 364h194l-15 58H130Z"/>
+    <path fill="#F4C7A8" d="M168 104h4M248 104h4M183 137c18 14 39 14 57 0"/>
+  </g>
+</svg>

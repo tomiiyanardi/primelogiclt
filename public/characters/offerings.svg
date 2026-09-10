@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 460" role="img" aria-labelledby="title desc">
+  <title id="title">Consultora explicando un sistema</title>
+  <desc id="desc">Ilustracion limpia de una consultora señalando un tablero digital con conexiones.</desc>
+  <g stroke="#10243A" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+    <ellipse cx="192" cy="425" rx="145" ry="24" fill="#EAF1F5" stroke="none"/>
+    <path fill="#F4C7A8" d="M118 101c0-42 30-70 75-70s75 28 75 70-30 73-75 73-75-31-75-73Z"/>
+    <path fill="#3B2934" stroke="none" d="M120 103c-3-46 27-78 74-78 46 0 73 31 74 75-22-20-47-29-74-24-28 5-48 17-74 27Z"/>
+    <path fill="#F4C7A8" d="M154 164v28c13 14 28 20 39 20s27-7 40-20v-29"/>
+    <path fill="#D37878" d="M154 178c14 17 27 25 40 25s28-8 40-25c38 5 67 27 79 63l27 123H44l30-123c12-36 41-58 80-63Z"/>
+    <path fill="#F8FBFC" d="m153 179 41 30 40-30 30 20-39 62h-62l-39-62Z"/>
+    <path fill="#F4C7A8" d="M86 223c-13 12-19 29-16 48l10 56c3 15 16 24 31 21 14-3 23-17 20-32l-8-39 47 32c12 8 28 5 36-7 8-12 5-28-7-36l-61-42c-17-12-38-11-52-1Z"/>
+    <path fill="#F4C7A8" d="M267 215c14-10 33-7 45 7l41 48-34 29-43-50c-12-14-19-24-9-34Z"/>
+    <path fill="#173B60" d="M292 89h104c8 0 14 6 14 14v88c0 8-6 14-14 14H292c-8 0-14-6-14-14v-88c0-8 6-14 14-14Z"/>
+    <path fill="#C5E6EA" d="M307 106h74v58h-74z"/>
+    <path fill="none" stroke="#4B8795" stroke-width="5" d="M318 124h28M318 140h50M318 156h35"/>
+    <path fill="none" stroke="#F3B642" stroke-width="5" d="m322 155 12-12 10 8 20-23"/>
+    <path fill="#4B5967" d="M115 364h192l-15 58H130Z"/>
+    <path fill="#F4C7A8" d="M150 104h4M230 104h4M165 137c18 14 39 14 57 0"/>
+  </g>
+</svg>

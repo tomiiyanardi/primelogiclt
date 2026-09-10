@@ -49,7 +49,7 @@ const ProductsSection = () => {
 
           <div className="hidden lg:flex w-1/3 justify-center sticky top-32 min-h-[30rem] items-center">
             <Motion.img
-              src="/products-char.png"
+              src="/characters/products.svg"
               alt="Especialista trabajando en una solución digital"
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}

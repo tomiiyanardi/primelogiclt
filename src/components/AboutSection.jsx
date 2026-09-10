@@ -19,7 +19,7 @@ const AboutSection = () => {
             <div className="absolute inset-0 bg-brand-blue/5 rounded-[3rem] -z-10 transform -rotate-2 scale-105"></div>
             
             <Motion.img
-              src="/about-char.png"
+              src="/characters/about.svg"
               alt="Especialista desarrollando una solución desde su computadora"
               animate={{ y: [0, -8, 0] }}
               transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}

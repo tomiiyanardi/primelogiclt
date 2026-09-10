@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 460" role="img" aria-labelledby="title desc">
+  <title id="title">Profesional de tecnologia con una tableta</title>
+  <desc id="desc">Ilustracion limpia de una profesional sonriendo mientras presenta una solucion digital.</desc>
+  <g stroke="#10243A" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+    <ellipse cx="210" cy="425" rx="150" ry="24" fill="#EAF1F5" stroke="none"/>
+    <path fill="#F4C7A8" d="M135 102c0-42 30-70 75-70s75 28 75 70-30 73-75 73-75-31-75-73Z"/>
+    <path fill="#6B4037" stroke="none" d="M137 105c-4-45 27-78 74-78 45 0 72 31 73 73-22-20-47-29-74-24-28 5-47 17-73 29Z"/>
+    <path fill="#F4C7A8" d="M171 163v28c13 14 28 20 39 20s27-7 39-20v-29"/>
+    <path fill="#173B60" d="M170 178c14 17 27 25 40 25s28-8 40-25c39 5 69 26 82 62l30 124H57l31-124c13-36 42-57 82-62Z"/>
+    <path fill="#F8FBFC" d="m169 179 41 30 40-30 30 20-39 62h-62l-39-62Z"/>
+    <path fill="#F4C7A8" d="M104 218c-17 7-28 22-30 42l-10 67c-2 15 9 28 24 30 15 1 28-9 30-24l8-53 42 44c11 12 30 12 42 1 11-11 12-29 1-41l-58-63c-12-13-31-17-49-3Z"/>
+    <path fill="#F4C7A8" d="M293 215c18-5 34 3 43 20l29 54-39 21-32-55c-9-16-4-34-1-40Z"/>
+    <path fill="#C5E6EA" d="M48 229h111c10 0 18 8 18 18v105c0 10-8 18-18 18H48c-10 0-18-8-18-18V247c0-10 8-18 18-18Z" transform="rotate(-8 112 298)"/>
+    <path fill="none" stroke="#4B8795" stroke-width="6" d="m62 274 67-10M59 296l52-8M56 318l34-6"/>
+    <path fill="#4B5967" d="M113 364h194l-15 58H128Z"/>
+    <path fill="#F4C7A8" d="M166 104h4M246 104h4M181 137c18 14 39 14 57 0"/>
+    <path fill="none" stroke="#88BEC5" stroke-width="5" d="M340 91h38M347 108h31M334 125h44"/>
+    <circle cx="353" cy="71" r="8" fill="#F3B642" stroke="none"/>
+  </g>
+</svg>

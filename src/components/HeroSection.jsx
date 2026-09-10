@@ -58,7 +58,7 @@ const HeroSection = () => {
         >
           <div className="absolute bottom-8 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-brand-blue/[0.07] blur-3xl sm:h-72 sm:w-72" aria-hidden="true" />
           <Motion.img
-            src="/hero-char.png"
+            src="/characters/hero.svg"
             alt="Ilustración de un especialista preparando una solución tecnológica"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
