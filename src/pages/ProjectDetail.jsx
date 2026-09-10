@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const projectDataMock = {
+const projectData = {
   "importadoralyl": {
     name: "Importadora LYL",
     description: "Desarrollo completo de una plataforma de E-Commerce especializada en la distribución de tecnología y equipos de alta gama. Implementamos un diseño minimalista, un catálogo dinámico y un sistema de contacto rápido vía WhatsApp para cerrar ventas de forma segura y directa, optimizando toda la logística de la empresa.",
@@ -16,7 +16,7 @@ const projectDataMock = {
   },
   "sfcervantes": {
     name: "SportFitness Cervantes",
-    description: "Desarrollo de un sistema de gestión integral para la sede Cervantes, incluyendo control de acceso, gestión de socios y pagos automatizados. Mejoramos la eficiencia administrativa en un 40%.",
+    description: "Desarrollo de un sistema de gestión integral para la sede Cervantes, incluyendo control de acceso, gestión de socios y pagos automatizados.",
     technologies: ["React", "Node.js", "PostgreSQL"],
     images: ["/SportFitness.png", "/SportFitness.webp"],
     color: "from-blue-50 to-indigo-100",
@@ -59,29 +59,34 @@ const projectDataMock = {
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [project, setProject] = useState(null);
+  const project = projectData[id] || null;
 
   useEffect(() => {
-    // Simulamos la carga de datos del proyecto
     window.scrollTo(0, 0);
-    const data = projectDataMock[id] || {
-      name: `Proyecto: ${id}`,
-      description: "Detalles en construcción. Próximamente agregaremos las capturas y la explicación completa de los desafíos superados y el impacto de este desarrollo.",
-      technologies: ["Tecnología A", "Tecnología B"],
-      images: ["/ecommerce.png"],
-      color: "from-gray-50 to-gray-100"
-    };
-    setProject(data);
   }, [id]);
 
-  if (!project) return null;
+  if (!project) {
+    return (
+      <div className="font-sans antialiased text-brand-black bg-brand-white min-h-screen flex flex-col">
+        <Header />
+        <main className="flex flex-1 flex-col items-center justify-center px-6 pt-28 pb-20 text-center">
+          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-brand-blue">Caso no encontrado</p>
+          <h1 className="mb-5 text-4xl font-extrabold">Este proyecto todavía no está publicado.</h1>
+          <button type="button" onClick={() => navigate('/')} className="rounded-full bg-brand-blue px-6 py-3 font-bold text-white transition hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2">
+            Volver a inicio
+          </button>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="font-sans antialiased text-brand-black bg-brand-white min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-grow pt-28 pb-20 px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <motion.button 
+        <Motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
@@ -90,12 +95,12 @@ const ProjectDetail = () => {
         >
           <ArrowLeft className="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" />
           <span className="font-medium">Volver a inicio</span>
-        </motion.button>
+        </Motion.button>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
           
           {/* Columna Izquierda: Info del Proyecto */}
-          <motion.div 
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -137,10 +142,10 @@ const ProjectDetail = () => {
               )}
             </div>
             
-          </motion.div>
+          </Motion.div>
 
           {/* Columna Derecha: Capturas de Pantalla */}
-          <motion.div 
+          <Motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -155,12 +160,12 @@ const ProjectDetail = () => {
                 <div key={idx} className={`w-full aspect-video bg-gradient-to-br ${project.color} rounded-3xl overflow-hidden border border-black/5 shadow-lg group relative`}>
                   
                   {/* Imagen Real */}
-                  <img src={img} alt={`Captura ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`${project.name}, vista ${idx + 1}`} className="w-full h-full object-cover" />
                   
                 </div>
               ))}
             </div>
-          </motion.div>
+          </Motion.div>
 
         </div>
       </main>

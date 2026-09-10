@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,19 +30,20 @@ const Header = () => {
         </Link>
 
         {/* Mobile Hamburger Button */}
-        <button 
-          className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
+        <button
+          type="button"
+          className="md:hidden flex h-10 w-10 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
           onClick={toggleMenu}
-          aria-label="Toggle menu"
+          aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-navigation"
         >
-          <span className={`block w-6 h-0.5 bg-brand-black transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-          <span className={`block w-6 h-0.5 bg-brand-black transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-          <span className={`block w-6 h-0.5 bg-brand-black transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+          {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
         </button>
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`md:hidden absolute top-20 left-0 w-full bg-brand-white border-b border-gray-100 shadow-xl transition-all duration-300 origin-top overflow-hidden ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div id="mobile-navigation" className={`md:hidden absolute top-20 left-0 w-full bg-brand-white border-b border-gray-100 shadow-xl transition-all duration-300 origin-top overflow-hidden ${isMenuOpen ? 'max-h-96 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'}`}>
         <nav className="flex flex-col px-6 py-4 space-y-4 font-medium text-brand-black text-center">
           <Link to="/#ofrecemos" onClick={toggleMenu} className="hover:text-brand-blue transition-colors py-2 border-b border-gray-50">Ofrecemos</Link>
           <Link to="/#servicios" onClick={toggleMenu} className="hover:text-brand-blue transition-colors py-2 border-b border-gray-50">Servicios</Link>

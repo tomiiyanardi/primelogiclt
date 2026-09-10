@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { RevealText } from "../utils/animations";
 
 const ContactSection = () => {
+  const [status, setStatus] = useState('idle');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus('sending');
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/primelogiclt@gmail.com', {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: event.currentTarget.name.value,
+          email: event.currentTarget.email.value,
+          message: event.currentTarget.message.value,
+          _subject: 'Nueva consulta desde Primelogic LT',
+          _captcha: 'false',
+        }),
+      });
+
+      if (!response.ok) throw new Error('No se pudo enviar el formulario');
+      event.currentTarget.reset();
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
+  };
+
   return (
     <section id="contacto" className="min-h-screen flex flex-col justify-center py-24 bg-gray-50 border-t border-gray-100">
       <div className="max-w-7xl w-full mx-auto px-6 lg:px-8">
@@ -27,11 +54,7 @@ const ContactSection = () => {
             </CardItem>
 
             <CardItem translateZ="100" className="w-full mt-4">
-              <form action="https://formsubmit.co/primelogiclt@gmail.com" method="POST" className="flex flex-col gap-6">
-                {/* Anti-spam honey pot and config for formsubmit */}
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="text" name="_honey" style={{ display: 'none' }} />
-                
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="text-sm font-semibold text-gray-700">Nombre</label>
                   <input 
@@ -68,14 +91,22 @@ const ContactSection = () => {
                   ></textarea>
                 </div>
 
+                <label className="flex items-start gap-3 text-sm text-gray-600">
+                  <input type="checkbox" name="privacy" required className="mt-1 h-4 w-4 accent-brand-blue" />
+                  <span>Acepto que Primelogic LT use estos datos para responder mi consulta.</span>
+                </label>
+
                 <div className="flex justify-end mt-4">
                   <button 
                     type="submit" 
-                    className="px-8 py-3 rounded-xl bg-brand-blue text-white font-bold hover:bg-opacity-90 hover:scale-105 transition-all w-full shadow-lg shadow-brand-blue/30"
+                    disabled={status === 'sending'}
+                    className="px-8 py-3 rounded-xl bg-brand-blue text-white font-bold hover:bg-opacity-90 hover:scale-[1.02] transition-all w-full shadow-lg shadow-brand-blue/30 disabled:cursor-wait disabled:opacity-60"
                   >
-                    Contact US
+                    {status === 'sending' ? 'Enviando...' : 'Enviar consulta'}
                   </button>
                 </div>
+                {status === 'success' && <p role="status" className="text-sm font-semibold text-emerald-700">Recibimos tu consulta. Te responderemos pronto.</p>}
+                {status === 'error' && <p role="alert" className="text-sm font-semibold text-red-700">No pudimos enviar el mensaje. Revisá los datos o escribinos directamente.</p>}
               </form>
             </CardItem>
           </CardBody>

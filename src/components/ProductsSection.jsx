@@ -1,36 +1,24 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
+import { Bot, Code2, Compass } from 'lucide-react';
 import { RevealGroup, RevealText, revealItem } from '../utils/animations';
 
 const ProductsSection = () => {
   const products = [
     { 
-      name: "Aplicaciones Web", 
-      desc: "Soluciones a medida accesibles desde el navegador para optimizar tu presencia y operativas diarias, asegurando rendimiento y escalabilidad." 
+      name: "Productos digitales",
+      desc: "Aplicaciones web, móviles y sistemas a medida que convierten una operación compleja en una experiencia clara, rápida y escalable.",
+      icon: Code2,
     },
     { 
-      name: "Aplicaciones Móviles", 
-      desc: "Desarrollo nativo o multiplataforma para conectar con tus usuarios en cualquier dispositivo y lugar." 
+      name: "Automatización e integración",
+      desc: "Conectamos tus herramientas, eliminamos tareas repetitivas y sumamos IA donde realmente aporta valor al negocio.",
+      icon: Bot,
     },
     { 
-      name: "Desarrollo de Sistema a Medida", 
-      desc: "Software diseñado y construido específicamente para adaptarse a los flujos y procesos únicos de tu negocio." 
-    },
-    { 
-      name: "IT Outsourcing", 
-      desc: "Ampliamos tu capacidad técnica con profesionales capacitados que se integran de manera transparente a tu equipo." 
-    },
-    { 
-      name: "Guía y Consultoría IT", 
-      desc: "Asesoramiento estratégico para tomar las mejores decisiones tecnológicas y planificar el futuro de tu infraestructura." 
-    },
-    { 
-      name: "Automatización de Sistemas", 
-      desc: "Reducción de tareas manuales repetitivas mediante scripts y flujos automatizados para ahorrar tiempo y recursos." 
-    },
-    { 
-      name: "Integración de Sistemas e IA", 
-      desc: "Conectamos tus diferentes plataformas y sumamos agentes inteligentes (IA) para maximizar el valor de tus datos." 
+      name: "Consultoría y evolución",
+      desc: "Acompañamiento técnico para priorizar, modernizar y sostener una plataforma que crezca con tu empresa.",
+      icon: Compass,
     },
   ];
 
@@ -46,26 +34,26 @@ const ProductsSection = () => {
 
         <div className="flex flex-col lg:flex-row gap-16 items-start">
           <RevealGroup className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16" delay={0.12}>
-            {products.map((product, index) => (
-              <motion.div key={index} variants={revealItem} className="flex flex-col">
-                <h3 className="text-xl font-bold text-brand-black mb-3 border-b-2 border-brand-blue pb-2 inline-block w-fit">
+            {products.map((product) => (
+              <Motion.div key={product.name} variants={revealItem} className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/5">
+                <product.icon className="mb-5 h-7 w-7 text-brand-blue" aria-hidden="true" />
+                <h3 className="text-xl font-bold text-brand-black mb-3">
                   {product.name}
                 </h3>
                 <p className="text-gray-600 font-light leading-relaxed">
                   {product.desc}
                 </p>
-              </motion.div>
+              </Motion.div>
             ))}
           </RevealGroup>
 
-          <div className="hidden lg:flex w-1/3 justify-center sticky top-32">
-            {/* Personaje Products */}
-            <motion.img 
-              src="/Personaje3.png" 
-              alt="Personaje mostrando soluciones tecnológicas" 
+          <div className="hidden lg:flex w-1/3 justify-center sticky top-32 min-h-[30rem] items-center">
+            <Motion.img
+              src="/products-char.png"
+              alt="Especialista trabajando en una solución digital"
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="w-full max-w-sm lg:max-w-md object-contain drop-shadow-2xl mix-blend-multiply cursor-pointer hover:scale-105 transition-transform"
+              className="h-[30rem] w-auto max-w-full object-contain drop-shadow-2xl mix-blend-multiply"
             />
           </div>
         </div>

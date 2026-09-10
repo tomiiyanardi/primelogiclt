@@ -95,8 +95,10 @@ const ClientsSection = () => {
             >
               {clients.map((client, index) => (
                 <SwiperSlide key={index}>
-                  <div 
+                  <button
+                    type="button"
                     onClick={() => handleClientClick(client)}
+                    aria-label={`Ver caso de éxito de ${client.name}`}
                     className={`
                     group relative flex flex-col items-center justify-center 
                     aspect-square 
@@ -125,7 +127,7 @@ const ClientsSection = () => {
                         "
                       />
                     </div>
-                  </div>
+                  </button>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -134,9 +136,11 @@ const ClientsSection = () => {
           {/* MOBILE VIEW: Stacked Rectangles */}
           <div className="md:hidden flex flex-col w-full border-y border-gray-200">
             {baseClients.map((client, index) => (
-              <div 
+              <button
+                type="button"
                 key={index} 
                 onClick={() => handleClientClick(client)}
+                aria-label={`Ver caso de éxito de ${client.name}`}
                 className={`
                   group relative flex flex-col items-center justify-center 
                   h-40 w-full
@@ -159,7 +163,7 @@ const ClientsSection = () => {
                     "
                   />
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 
