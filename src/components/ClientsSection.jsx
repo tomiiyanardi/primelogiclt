@@ -67,7 +67,7 @@ const ClientsSection = () => {
   };
 
   return (
-    <section id="clientes" className="min-h-screen flex flex-col justify-center bg-gray-50 border-t border-gray-100 overflow-hidden py-10">
+    <section id="clientes" className="min-h-screen py-20 flex flex-col justify-center bg-white/40 backdrop-blur-sm border-t border-gray-200/50">
       <div className="w-full">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12 text-center">
           <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">Nuestros Clientes</h2>

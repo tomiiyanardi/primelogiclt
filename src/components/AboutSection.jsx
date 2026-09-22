@@ -4,7 +4,7 @@ import { RevealGroup, RevealText, revealItem } from '../utils/animations';
 
 const AboutSection = () => {
   return (
-    <section id="nosotros" className="min-h-screen flex flex-col justify-center py-24 bg-brand-white">
+    <section id="nosotros" className="min-h-screen py-20 flex flex-col justify-center bg-transparent">
       <div className="max-w-7xl w-full mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
           

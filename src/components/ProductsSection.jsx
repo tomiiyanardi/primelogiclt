@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion as Motion } from 'framer-motion';
-import { Bot, Code2, Compass } from 'lucide-react';
+import { Bot, Code2, Compass, BrainCircuit } from 'lucide-react';
 import { RevealGroup, RevealText, revealItem } from '../utils/animations';
 
 const ProductsSection = () => {
@@ -12,51 +12,49 @@ const ProductsSection = () => {
     },
     { 
       name: "Automatización e integración",
-      desc: "Conectamos tus herramientas, eliminamos tareas repetitivas y sumamos IA donde realmente aporta valor al negocio.",
+      desc: "Conectamos tus herramientas y eliminamos tareas repetitivas para que tu equipo se enfoque en aportar valor real.",
       icon: Bot,
     },
     { 
+      name: "Inteligencia Artificial",
+      desc: "Implementamos soluciones de IA generativa y análisis predictivo para potenciar la toma de decisiones y crear ventajas competitivas.",
+      icon: BrainCircuit,
+    },
+    { 
       name: "Consultoría y evolución",
-      desc: "Acompañamiento técnico para priorizar, modernizar y sostener una plataforma que crezca con tu empresa.",
+      desc: "Acompañamiento técnico constante para priorizar, modernizar y sostener una plataforma que crezca orgánicamente con tu empresa.",
       icon: Compass,
     },
   ];
 
   return (
-    <section id="servicios" className="min-h-screen flex flex-col justify-center py-24 bg-gray-50 border-y border-gray-100">
-      <div className="max-w-7xl w-full mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16 lg:mb-20">
+    <section id="servicios" className="min-h-screen py-20 flex flex-col justify-center bg-white/40 backdrop-blur-sm border-y border-gray-200/50 relative">
+      <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-brand-blue/5 to-transparent pointer-events-none overflow-hidden"></div>
+      <div className="max-w-7xl w-full mx-auto px-6 lg:px-8 relative z-10">
+        <div className="mb-12">
           <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">Nuestros Servicios</h2>
-          <RevealText className="text-4xl font-extrabold text-brand-black" delay={0.1}>
+          <RevealText className="text-4xl lg:text-5xl font-extrabold text-brand-black" delay={0.1}>
             Soluciones Tecnológicas Integrales
           </RevealText>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
-          <RevealGroup className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16" delay={0.12}>
-            {products.map((product) => (
-              <Motion.div key={product.name} variants={revealItem} className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/5">
-                <product.icon className="mb-5 h-7 w-7 text-brand-blue" aria-hidden="true" />
-                <h3 className="text-xl font-bold text-brand-black mb-3">
+        <RevealGroup className="flex flex-col space-y-8" delay={0.12}>
+          {products.map((product) => (
+            <Motion.div key={product.name} variants={revealItem} className="flex items-start gap-6 group cursor-pointer max-w-4xl">
+              <div className="flex-shrink-0 mt-1">
+                <product.icon className="h-8 w-8 text-gray-400 group-hover:text-brand-blue transition-colors duration-300" aria-hidden="true" />
+              </div>
+              <div className="border-b border-gray-200 pb-6 w-full group-hover:border-brand-blue/30 transition-colors duration-300">
+                <h3 className="text-2xl font-bold text-brand-black mb-2 group-hover:text-brand-blue transition-colors duration-300">
                   {product.name}
                 </h3>
-                <p className="text-gray-600 font-light leading-relaxed">
+                <p className="text-gray-500 font-light text-lg leading-relaxed">
                   {product.desc}
                 </p>
-              </Motion.div>
-            ))}
-          </RevealGroup>
-
-          <div className="hidden lg:flex w-1/3 justify-center sticky top-32 min-h-[30rem] items-center">
-            <Motion.img
-              src="/characters/products.svg"
-              alt="Especialista trabajando en una solución digital"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="h-[30rem] w-auto max-w-full object-contain drop-shadow-2xl mix-blend-multiply"
-            />
-          </div>
-        </div>
+              </div>
+            </Motion.div>
+          ))}
+        </RevealGroup>
       </div>
     </section>
   );

@@ -4,70 +4,45 @@ import { RevealGroup, RevealText, revealItem } from '../utils/animations';
 
 const OfferingsSection = () => {
   return (
-    <section id="ofrecemos" className="min-h-screen flex flex-col justify-center py-24 bg-brand-white">
-      <div className="max-w-7xl w-full mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
-          {/* Text Side - Clean Typography Layout */}
-          <Motion.div
-            initial={{ opacity: 0, x: -30, scale: 0.95 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
-            className="flex-1 space-y-12"
-          >
-            <div>
-              <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">¿Qué Ofrecemos?</h2>
-              <RevealText className="text-4xl lg:text-5xl font-extrabold text-brand-black leading-tight" delay={0.1}>
-                Tu éxito es nuestro objetivo principal
-              </RevealText>
-            </div>
-
-            <RevealGroup className="space-y-10 pl-4 border-l-2 border-brand-blue/20" delay={0.16}>
-              <Motion.div variants={revealItem} whileHover={{ x: 5 }} className="relative transition-transform duration-300">
-                <div className="absolute -left-[21px] top-2 w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
-                <h3 className="text-xl font-bold text-brand-black mb-2">Optimización Real</h3>
-                <p className="text-gray-500 leading-relaxed font-light text-lg">
-                  Queremos que nuestros clientes ganen plata o tiempo automatizando procesos clave de su negocio.
-                </p>
-              </Motion.div>
-              <Motion.div variants={revealItem} whileHover={{ x: 5 }} className="relative transition-transform duration-300">
-                <div className="absolute -left-[21px] top-2 w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
-                <h3 className="text-xl font-bold text-brand-black mb-2">Beneficio Mutuo</h3>
-                <p className="text-gray-500 leading-relaxed font-light text-lg">
-                  Si nuestros clientes ganan, nosotros también. Nuestra mayor satisfacción es el éxito y crecimiento de nuestros clientes.
-                </p>
-              </Motion.div>
-              <Motion.div variants={revealItem} whileHover={{ x: 5 }} className="relative transition-transform duration-300">
-                <div className="absolute -left-[21px] top-2 w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
-                <h3 className="text-xl font-bold text-brand-black mb-2">Compromiso Total</h3>
-                <p className="text-gray-500 leading-relaxed font-light text-lg">
-                  Tenemos el mismo compromiso. Nosotros queremos tanto como el cliente alcanzar la mejor versión de sus proyectos y sistemas.
-                </p>
-              </Motion.div>
-            </RevealGroup>
-          </Motion.div>
-
-          {/* Image Side */}
-          <Motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex-1 flex justify-center lg:justify-end w-full relative min-h-[22rem] sm:min-h-[28rem] lg:min-h-[34rem] items-center"
-          >
-            
-            <div className="absolute inset-0 bg-brand-blue/5 rounded-3xl -z-10 transform rotate-3 scale-105"></div>
-            
-            <Motion.img
-              src="/characters/offerings.svg"
-              alt="Especialista señalando las oportunidades de mejora del negocio"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
-              className="h-[22rem] sm:h-[28rem] lg:h-[34rem] w-auto max-w-full object-contain drop-shadow-2xl mix-blend-multiply"
-            />
-
-          </Motion.div>
+    <section id="ofrecemos" className="min-h-screen py-20 flex flex-col justify-center bg-transparent relative">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(29,78,216,0.05)_0,transparent_60%)] pointer-events-none overflow-hidden" />
+      <div className="max-w-6xl w-full mx-auto px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">¿Qué Ofrecemos?</h2>
+          <RevealText className="text-4xl lg:text-5xl font-extrabold text-brand-black leading-tight max-w-4xl mx-auto" delay={0.1}>
+            Tu éxito es nuestro objetivo principal
+          </RevealText>
         </div>
+
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-12" delay={0.16}>
+          <Motion.div variants={revealItem} whileHover={{ y: -5 }} className="relative transition-transform duration-300 text-center">
+            <div className="w-12 h-12 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
+            </div>
+            <h3 className="text-xl font-bold text-brand-black mb-4">Optimización Real</h3>
+            <p className="text-gray-500 leading-relaxed font-light text-lg">
+              Queremos que nuestros clientes ganen plata o tiempo automatizando procesos clave de su negocio.
+            </p>
+          </Motion.div>
+          <Motion.div variants={revealItem} whileHover={{ y: -5 }} className="relative transition-transform duration-300 text-center">
+            <div className="w-12 h-12 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
+            </div>
+            <h3 className="text-xl font-bold text-brand-black mb-4">Beneficio Mutuo</h3>
+            <p className="text-gray-500 leading-relaxed font-light text-lg">
+              Si nuestros clientes ganan, nosotros también. Nuestra mayor satisfacción es el éxito y crecimiento de nuestros clientes.
+            </p>
+          </Motion.div>
+          <Motion.div variants={revealItem} whileHover={{ y: -5 }} className="relative transition-transform duration-300 text-center">
+            <div className="w-12 h-12 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-3 h-3 bg-brand-blue rounded-full shadow-[0_0_10px_rgba(0,116,217,0.5)]"></div>
+            </div>
+            <h3 className="text-xl font-bold text-brand-black mb-4">Compromiso Total</h3>
+            <p className="text-gray-500 leading-relaxed font-light text-lg">
+              Tenemos el mismo compromiso. Nosotros queremos tanto como el cliente alcanzar la mejor versión de sus proyectos y sistemas.
+            </p>
+          </Motion.div>
+        </RevealGroup>
       </div>
     </section>
   );

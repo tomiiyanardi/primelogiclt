@@ -32,7 +32,7 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="proceso" className="border-y border-gray-100 bg-brand-white py-24">
+    <section id="proceso" className="min-h-screen py-20 flex flex-col justify-center border-y border-gray-200/50 bg-transparent">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="mb-14 max-w-2xl">
           <p className="mb-4 text-xs font-bold uppercase tracking-widest text-brand-blue">Cómo trabajamos</p>
