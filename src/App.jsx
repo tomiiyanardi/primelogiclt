@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import WhatsAppButton from './components/WhatsAppButton';
-import InteractiveCanvas from './components/ui/InteractiveCanvas';
+import { MotionConfig } from 'framer-motion';
 import './index.css';
 
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
@@ -19,7 +19,7 @@ const ScrollToTop = () => {
       }
 
       const target = document.getElementById(hash.slice(1));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (target) target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
     };
 
     const frameId = window.requestAnimationFrame(scrollToDestination);
@@ -31,15 +31,15 @@ const ScrollToTop = () => {
 
 function App() {
   return (
-    <>
-      <InteractiveCanvas />
+    <MotionConfig reducedMotion="user">
+      
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/proyecto/:id" element={<Suspense fallback={<div className="min-h-screen bg-transparent" aria-label="Cargando proyecto" />}><ProjectDetail /></Suspense>} />
       </Routes>
       <WhatsAppButton />
-    </>
+    </MotionConfig>
   );
 }
 

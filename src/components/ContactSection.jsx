@@ -6,6 +6,7 @@ const ContactSection = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
     setStatus('sending');
 
     try {
@@ -13,18 +14,18 @@ const ContactSection = () => {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: event.currentTarget.name.value,
-          email: event.currentTarget.email.value,
-          projectType: event.currentTarget.projectType.value,
-          challenge: event.currentTarget.challenge.value,
-          message: event.currentTarget.message.value,
+          name: form.name.value,
+          email: form.email.value,
+          projectType: form.projectType.value,
+          challenge: form.challenge.value,
+          message: form.message.value,
           _subject: 'Nueva consulta desde Primelogic LT',
           _captcha: 'false',
         }),
       });
 
       if (!response.ok) throw new Error('No se pudo enviar el formulario');
-      event.currentTarget.reset();
+      form.reset();
       setStatus('success');
     } catch {
       setStatus('error');
@@ -40,7 +41,7 @@ const ContactSection = () => {
           <div className="flex-1 text-center lg:text-left">
             <h2 className="text-brand-blue text-xs font-bold uppercase tracking-widest mb-4">Contáctanos</h2>
             <RevealText className="text-4xl lg:text-5xl font-extrabold text-brand-black mb-6 leading-tight" delay={0.1}>
-              ¿Qué esperas para que tu idea sea realidad?
+              Contanos qué necesita tu negocio.
             </RevealText>
             <p className="text-gray-500 text-lg max-w-md mx-auto lg:mx-0">
               Escríbenos y comencemos a construir el futuro de tu negocio hoy mismo. Un equipo experto está listo para asesorarte.
@@ -141,3 +142,4 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
+

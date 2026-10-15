@@ -1,7 +1,8 @@
+import { revealItem } from '../utils/motionVariants';
 import React from 'react';
 import { motion as Motion } from 'framer-motion';
 import { Bot, Code2, Compass, BrainCircuit } from 'lucide-react';
-import { RevealGroup, RevealText, revealItem } from '../utils/animations';
+import { RevealGroup, RevealText } from '../utils/animations';
 
 const ProductsSection = () => {
   const products = [
@@ -61,3 +62,4 @@ const ProductsSection = () => {
 };
 
 export default ProductsSection;
+

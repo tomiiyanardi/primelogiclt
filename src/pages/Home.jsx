@@ -15,7 +15,7 @@ const Home = () => {
     <div className="font-sans antialiased text-brand-black bg-transparent selection:bg-brand-blue/30 selection:text-brand-blue">
       <ScrollProgress />
       <Header />
-      <main className="pt-20"> {/* Add padding top to account for fixed header */}
+      <a className="skip-link" href="#contenido">Saltar al contenido</a><main id="contenido" className="landing-main">
         <HeroSection />
         <OfferingsSection />
         <ProductsSection />
@@ -30,3 +30,4 @@ const Home = () => {
 };
 
 export default Home;
+

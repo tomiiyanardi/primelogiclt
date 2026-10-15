@@ -1,6 +1,7 @@
+import { revealItem } from '../utils/motionVariants';
 import React from 'react';
 import { motion as Motion } from 'framer-motion';
-import { RevealGroup, RevealText, revealItem } from '../utils/animations';
+import { RevealGroup, RevealText } from '../utils/animations';
 
 const OfferingsSection = () => {
   return (
@@ -49,3 +50,4 @@ const OfferingsSection = () => {
 };
 
 export default OfferingsSection;
+

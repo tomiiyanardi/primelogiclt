@@ -26,7 +26,7 @@ const projectData = {
     solution: "Implementamos control de acceso por QR y búsqueda manual, gestión de socios, caja y pagos dentro de un panel operativo claro.",
     outcome: "La sede puede resolver tareas clave de recepción y administración con información disponible en tiempo real.",
     technologies: ["React", "Node.js", "PostgreSQL"],
-    images: ["/SportFitness.png", "/SportFitness.webp"],
+    images: ["/SportFitness.webp"],
     color: "from-blue-50 to-indigo-100",
     url: null
   },
@@ -38,7 +38,7 @@ const projectData = {
     solution: "Integramos red, hardware y control biométrico para validar ingresos de forma rápida y segura.",
     outcome: "La sede cuenta con un acceso más ordenado y una base tecnológica preparada para sostener su operación diaria.",
     technologies: ["Hardware", "Biometría", "Redes"],
-    images: ["/SportFitness.webp", "/SportFitness.png"],
+    images: ["/SportFitness.webp"],
     color: "from-indigo-50 to-purple-100",
     url: null
   },
@@ -50,7 +50,7 @@ const projectData = {
     solution: "Diseñamos y desarrollamos una experiencia de tienda online con navegación minimalista, presentación editorial y foco en el descubrimiento de productos.",
     outcome: "Flom Store tiene ahora una vidriera digital con personalidad propia y una base preparada para crecer como canal comercial.",
     technologies: ["E-Commerce", "Diseño UX", "Integraciones"],
-    images: ["/flomstore.png", "/flomstore.webp"],
+    images: ["/flomstore.webp"],
     color: "from-pink-50 to-rose-100",
     url: null
   },
@@ -62,7 +62,7 @@ const projectData = {
     solution: "Desarrollamos un dashboard responsive con indicadores de ventas, ganancias, costos, caja, stock, alertas e historial de movimientos.",
     outcome: "El negocio puede consultar el pulso de su operación desde una interfaz única, tanto en computadora como en celular.",
     technologies: ["Catálogo Web", "Responsive Design", "Automatización"],
-    images: ["/alcortadescartablepantallas.png", "/alcortadescartablepantallas.webp"],
+    images: ["/alcortadescartablepantallas.webp"],
     color: "from-rose-50 to-orange-100",
     url: null
   },
@@ -74,7 +74,7 @@ const projectData = {
     solution: "Creamos una landing inmersiva con identidad visual de competición, adaptación responsive y llamados a la acción orientados a reservar.",
     outcome: "Curva Uno cuenta con una presentación digital coherente con su universo de marca y preparada para transformar interés en reservas.",
     technologies: ["Diseño Web", "Responsive Design", "Contenido Digital"],
-    images: ["/curvaunopantallas.png", "/curvaunopantallas.webp"],
+    images: ["/curvaunopantallas.webp"],
     color: "from-orange-50 to-amber-100",
     url: null
   }
@@ -215,3 +215,4 @@ const ProjectDetail = () => {
 };
 
 export default ProjectDetail;
+

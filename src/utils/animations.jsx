@@ -1,17 +1,12 @@
-import { motion } from "framer-motion";
+import { fadeUp, staggerContainer } from './motionVariants';
+import { motion as Motion, useReducedMotion } from "framer-motion";
 
-export const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] } }
-};
 
-export const staggerContainer = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
-};
+
+
 
 export const RevealGroup = ({ children, className = "", delay = 0 }) => (
-  <motion.div
+  <Motion.div
     initial="hidden"
     whileInView="show"
     viewport={{ once: true, amount: 0.2 }}
@@ -22,50 +17,25 @@ export const RevealGroup = ({ children, className = "", delay = 0 }) => (
     className={className}
   >
     {children}
-  </motion.div>
+  </Motion.div>
 );
 
-export const revealItem = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  }
-};
+
 
 export const RevealText = ({ children, className = "", delay = 0 }) => {
-  const words = children.split(" ");
-
-  return (
-    <motion.span
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.7 }}
-      variants={{
-        hidden: {},
-        show: { transition: { staggerChildren: 0.045, delayChildren: delay } }
-      }}
-      className={`inline-flex flex-wrap gap-x-[0.25em] ${className}`}
-    >
-      {words.map((word, index) => (
-        <motion.span key={`${word}-${index}`} variants={revealItem} className="inline-block">
-          {word}
-        </motion.span>
-      ))}
-    </motion.span>
-  );
+  const reduced = useReducedMotion();
+  return <Motion.span initial={reduced ? false : { opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reduced ? 0 : 0.5, delay }} className={`inline-block ${className}`}>{children}</Motion.span>;
 };
-
 export const TypewriterText = ({ text, className }) => {
   const letters = text.split("");
   return (
-    <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} className={`inline-flex flex-wrap ${className}`}>
+    <Motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} className={`inline-flex flex-wrap ${className}`}>
       {letters.map((char, index) => (
-        <motion.span key={index} variants={fadeUp} className="inline-block">
+        <Motion.span key={index} variants={fadeUp} className="inline-block">
           {char === " " ? "\u00A0" : char}
-        </motion.span>
+        </Motion.span>
       ))}
-    </motion.div>
+    </Motion.div>
   );
 };
+
