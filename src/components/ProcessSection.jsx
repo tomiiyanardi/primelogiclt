@@ -37,24 +37,49 @@ export default function ProcessSection() {
     <section id="proceso" className="min-h-screen py-20 flex flex-col justify-center relative isolate">
       <ChapterBackdrop variant="iso" label="03" />
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8 relative z-1">
-        <div className="mb-14 max-w-2xl">
-          <p className="mb-4 text-xs font-bold uppercase tracking-widest" style={{ color: '#00d4ff' }}>
-            03 / Cómo trabajamos
-          </p>
-          <h2>
-            <Motion.span
-              initial={reduced ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: reduced ? 0 : 0.5, delay: 0.1 }}
-              className="inline-block text-4xl font-extrabold leading-tight text-white md:text-5xl"
-            >
-              Claridad antes que complejidad
-            </Motion.span>
-          </h2>
-          <p className="mt-5 text-lg font-light leading-relaxed" style={{ color: 'rgba(255,255,255,.45)' }}>
-            Cada proyecto empieza por entender el negocio y termina con una solución que el equipo puede usar, medir y hacer evolucionar.
-          </p>
+        <div className="mb-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="max-w-2xl">
+            <p className="mb-4 text-xs font-bold uppercase tracking-widest" style={{ color: '#00d4ff' }}>
+              03 / Cómo trabajamos
+            </p>
+            <h2>
+              <Motion.span
+                initial={reduced ? false : { opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: reduced ? 0 : 0.5, delay: 0.1 }}
+                className="inline-block text-4xl font-extrabold leading-tight text-white md:text-5xl"
+              >
+                Claridad antes que complejidad
+              </Motion.span>
+            </h2>
+            <p className="mt-5 text-lg font-light leading-relaxed" style={{ color: 'rgba(255,255,255,.45)' }}>
+              Cada proyecto empieza por entender el negocio y termina con una solución que el equipo puede usar, medir y hacer evolucionar.
+            </p>
+          </div>
+
+          <Motion.div
+            className="process-mascot-pill"
+            initial={reduced ? false : { opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <img
+              src="/mascots/mascot-walking-backpack.webp"
+              alt="Mascota Primelogic en marcha"
+              className="w-20 sm:w-24 h-auto object-contain filter drop-shadow-[0_10px_20px_rgba(0,212,255,0.22)]"
+              loading="lazy"
+            />
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold tracking-widest uppercase text-[#00d4ff]">
+                METODOLOGÍA ÁGIL
+              </span>
+              <p className="text-xs text-white/80 font-medium max-w-[200px]">
+                Avanzamos con criterio, entregas continuas y foco en resultados.
+              </p>
+            </div>
+          </Motion.div>
         </div>
 
         <div className="process-grid">

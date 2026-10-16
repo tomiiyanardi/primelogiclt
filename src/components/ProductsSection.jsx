@@ -19,6 +19,7 @@ const products = [
     icon: Code2,
     tags: ['Web & mobile', 'Sistemas a medida'],
     visual: 'interface',
+    mascot: '/mascots/mascot-sitting-laptop.webp',
   },
   {
     title: 'Menos tareas. Más posibilidades.',
@@ -27,6 +28,7 @@ const products = [
     icon: Workflow,
     tags: ['Procesos conectados', 'Operación eficiente'],
     visual: 'workflow',
+    mascot: '/mascots/mascot-point-forward.webp',
   },
   {
     title: 'Inteligencia aplicada a tu negocio.',
@@ -35,6 +37,7 @@ const products = [
     icon: BrainCircuit,
     tags: ['IA generativa', 'Análisis predictivo'],
     visual: 'intelligence',
+    mascot: '/mascots/mascot-tablet.webp',
   },
   {
     title: 'Una base sólida. Un futuro abierto.',
@@ -43,16 +46,26 @@ const products = [
     icon: Compass,
     tags: ['Arquitectura', 'Acompañamiento'],
     visual: 'architecture',
+    mascot: '/mascots/mascot-arms-crossed.webp',
   },
 ];
 
-function ServiceVisual({ kind, icon }) {
+function ServiceVisual({ kind, icon, mascot, title }) {
   return (
     <div className={`service-visual visual-${kind}`} aria-hidden="true">
       <span className="visual-axis axis-x" />
       <span className="visual-axis axis-y" />
-      <div className="visual-shell">
-        <div className="visual-shell-inner">{icon}</div>
+      <div className="visual-shell relative flex items-center justify-center p-2">
+        {mascot ? (
+          <img
+            src={mascot}
+            alt={title}
+            className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,212,255,0.35)] transition-transform duration-300 hover:scale-110"
+            loading="lazy"
+          />
+        ) : (
+          <div className="visual-shell-inner">{icon}</div>
+        )}
       </div>
       <i className="visual-node node-a" />
       <i className="visual-node node-b" />
@@ -136,7 +149,12 @@ export default function ProductsSection() {
                     ))}
                   </ul>
                 </div>
-                <ServiceVisual kind={product.visual} icon={<product.icon size={40} strokeWidth={1} />} />
+                <ServiceVisual
+                  kind={product.visual}
+                  icon={<product.icon size={40} strokeWidth={1} />}
+                  mascot={product.mascot}
+                  title={product.title}
+                />
               </article>
             ))}
           </Motion.div>

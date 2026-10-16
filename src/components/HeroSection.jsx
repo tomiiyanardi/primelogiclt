@@ -135,20 +135,29 @@ export default function HeroSection() {
 
       {/* Mascot leaning on viewport edge */}
       <Motion.div
-        className="hero-mascot"
+        className="hero-mascot group"
         initial={reduced ? false : { opacity: 0, x: 25 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ ...entrance, delay: 0.7 }}
         aria-hidden="true"
       >
-        <img
-          src="/mascota-apoyada.webp"
-          width="605"
-          height="992"
-          alt=""
-          fetchPriority="high"
-          decoding="async"
-        />
+        <div className="hero-mascot-speech">
+          <span className="speech-kicker">PRIMELOGIC</span>
+          <span className="speech-text">Ideas que se convierten en soluciones ✨</span>
+        </div>
+        <Motion.div
+          animate={reduced ? {} : { y: [0, -8, 0] }}
+          transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
+        >
+          <img
+            src="/mascota-apoyada.webp"
+            width="605"
+            height="992"
+            alt="Mascota Primelogic"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </Motion.div>
       </Motion.div>
 
       {/* Scroll hint */}

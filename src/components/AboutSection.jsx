@@ -1,5 +1,6 @@
 import { motion as Motion, useReducedMotion } from 'framer-motion';
 import ChapterBackdrop from './ChapterBackdrop';
+import MascotInteractive from './MascotInteractive';
 
 const revealItem = {
   hidden: { opacity: 0, y: 18 },
@@ -20,58 +21,15 @@ export default function AboutSection() {
       <div className="max-w-7xl w-full mx-auto px-6 lg:px-8 relative z-1">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
 
-          {/* Image */}
+          {/* Interactive Mascot Companion */}
           <Motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex-1 flex justify-center lg:justify-start order-2 lg:order-1 relative w-full min-h-[24rem] sm:min-h-[30rem] items-center"
+            className="flex-1 flex justify-center lg:justify-start order-2 lg:order-1 relative w-full items-center"
           >
-            <Motion.div className="relative flex items-center justify-center">
-              <picture>
-                <source srcSet="/mascota-laptop.webp" type="image/webp" />
-                <img
-                  src="/mascota-laptop.webp"
-                  width="768"
-                  height="1024"
-                  decoding="async"
-                  alt="Mascota de Primelogic con laptop"
-                  className="h-[22rem] sm:h-[28rem] lg:h-[32rem] w-auto max-w-full object-contain"
-                  loading="lazy"
-                />
-              </picture>
-
-              {/* Floating tech badge */}
-              <Motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="absolute -bottom-2 -right-2 sm:bottom-4 sm:right-2 rounded-2xl p-3.5 flex items-center gap-3 select-none"
-                style={{
-                  background: 'rgba(255,255,255,.04)',
-                  border: '1px solid rgba(0,212,255,.12)',
-                  backdropFilter: 'blur(12px)',
-                }}
-              >
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm"
-                  style={{ background: 'rgba(0,212,255,.1)', color: '#00d4ff' }}
-                >
-                  PL
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <p className="text-xs font-bold text-white">100% Desarrollo Propio</p>
-                  </div>
-                  <p className="text-[11px] font-medium" style={{ color: 'rgba(255,255,255,.35)' }}>
-                    Arquitectura & IA a medida
-                  </p>
-                </div>
-              </Motion.div>
-            </Motion.div>
+            <MascotInteractive />
           </Motion.div>
 
           {/* Text Content */}

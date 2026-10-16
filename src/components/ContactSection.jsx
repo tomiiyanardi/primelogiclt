@@ -61,6 +61,34 @@ export default function ContactSection() {
             <p style={{ color: 'rgba(255,255,255,.4)' }} className="text-lg max-w-md mx-auto lg:mx-0">
               Escribinos y empecemos a construir el futuro de tu negocio hoy mismo. Un equipo especializado está listo para asesorarte.
             </p>
+
+            <Motion.div
+              initial={reduced ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-8 flex items-center gap-5 p-4 rounded-2xl max-w-md mx-auto lg:mx-0"
+              style={{
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(0, 212, 255, 0.2)',
+                boxShadow: '0 12px 32px rgba(0, 0, 0, 0.4)',
+              }}
+            >
+              <img
+                src="/mascots/mascot-celebrate.webp"
+                alt="Mascota Primelogic celebrando"
+                className="w-20 h-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,212,255,0.3)]"
+                loading="lazy"
+              />
+              <div>
+                <span className="block text-[11px] font-extrabold tracking-widest uppercase text-[#00d4ff] mb-1">
+                  RESPUESTA RÁPIDA
+                </span>
+                <p className="text-sm font-medium text-white/90 leading-snug">
+                  Analizamos tu caso y coordinamos una reunión de diagnóstico sin costo.
+                </p>
+              </div>
+            </Motion.div>
           </div>
 
           {/* Right form */}

@@ -56,6 +56,30 @@ export default function OfferingsSection() {
             </Motion.article>
           ))}
         </Motion.div>
+
+        {/* Mascot brand highlight */}
+        <Motion.div
+          className="manifesto-mascot-card"
+          initial={reduced ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="manifesto-mascot-glow" aria-hidden="true" />
+          <img
+            src="/mascots/mascot-point-forward.webp"
+            alt="Mascota Primelogic señalando hacia adelante"
+            className="manifesto-mascot-img"
+            loading="lazy"
+          />
+          <div className="manifesto-mascot-text">
+            <span className="manifesto-mascot-kicker">FILOSOFÍA PRIMELOGIC</span>
+            <h4 className="manifesto-mascot-title">Tu proyecto, nuestra lógica.</h4>
+            <p className="manifesto-mascot-desc">
+              No hacemos tecnología por moda: creamos soluciones específicas para resolver cuellos de botella y multiplicar la rentabilidad de tu empresa.
+            </p>
+          </div>
+        </Motion.div>
       </div>
     </section>
   );
