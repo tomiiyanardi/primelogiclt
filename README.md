@@ -31,8 +31,18 @@ Publicar `dist/`. Configurar el hosting para resolver rutas como `/proyecto/curv
 
 El hero ocupa como mínimo 100svh (100vh como fallback). En pantallas bajas o con texto ampliado crece para no recortar contenido. La mascota se ubica fuera del contenedor de texto, contra el margen derecho, con espacio reservado en móvil. Su fondo blanco original se integra al hero sin editar la imagen.
 
-Scroll nativo suave, entradas que se ejecutan una vez y parallax de 64px solo desde 1024px. Se respeta `prefers-reduced-motion`. No se usa un canvas animado continuo ni carrusel automático. Logos WebP con carga diferida y mascota principal con prioridad alta.
+Scroll nativo suave, entradas al viewport, parallax y una secuencia horizontal adaptativa (detallada abajo). Se respeta `prefers-reduced-motion`. Fondos geométricos CSS en capas independientes; logos WebP con carga diferida y mascota principal con prioridad alta.
 
 El formulario conserva FormSubmit y WhatsApp conserva el número existente. Para probar envíos reales se necesita la cuenta de FormSubmit activada. La validación local no envía consultas.
 
 Revisión recomendada antes de publicar: 360/390/768/1440px, orientación horizontal, zoom 200%, navegación por teclado y movimiento reducido. Medir Core Web Vitals en el hosting final y dispositivos reales.
+
+## Experiencia editorial y movimiento
+
+La landing se organiza en seis capítulos con fondos independientes: manifiesto oscuro, servicios gris técnico, proceso marfil, equipo azul claro, casos blanco y contacto verde suave. `ChapterBackdrop.jsx` mantiene el arte decorativo separado del contenido y aplica un desplazamiento de 70px a lo largo del scroll, sin capturar eventos de puntero.
+
+El hero utiliza un reveal tipográfico por líneas, geometría orbital CSS y parallax asociado al scroll. Las figuras son ilustraciones abstractas, no capturas de productos. No se incorporaron dependencias nuevas ni un renderizador WebGL.
+
+`ProductsSection.jsx` usa una secuencia horizontal ligada al scroll vertical a partir de 1024px de ancho y 760px de alto. El capítulo ocupa 350svh; el contenido permanece sticky durante el recorrido. En móviles, pantallas bajas o con movimiento reducido se usa scroll horizontal nativo con snap, foco por teclado y botones anterior/siguiente. El modo se actualiza al cambiar el tamaño o la preferencia de movimiento.
+
+Los estilos de capítulos y la adaptación responsive están centralizados en `src/index.css`. El formulario, los casos y sus rutas conservan sus integraciones existentes.
