@@ -66,7 +66,7 @@ export default function ProcessSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <LiveMascot
-              src="/mascots/mascot-walking-backpack.webp"
+              src="/mascots/mascot-walking-backpack.svg"
               alt="Mascota Primelogic en marcha"
               className="process-walker"
               imgClassName="w-20 sm:w-24 h-auto object-contain drop-shadow-[0_10px_20px_rgba(0,212,255,0.22)]"

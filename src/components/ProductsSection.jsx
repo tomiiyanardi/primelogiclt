@@ -20,7 +20,7 @@ const products = [
     icon: Code2,
     tags: ['Web & mobile', 'Sistemas a medida'],
     visual: 'interface',
-    mascot: '/mascots/mascot-sitting-laptop.webp',
+    mascot: '/mascots/mascot-sitting-laptop.svg',
     chips: ['Panel en vivo', 'App lista para usar'],
   },
   {
@@ -30,7 +30,7 @@ const products = [
     icon: Workflow,
     tags: ['Procesos conectados', 'Operación eficiente'],
     visual: 'workflow',
-    mascot: '/mascots/mascot-point-forward.webp',
+    mascot: '/mascots/mascot-point-forward.svg',
     chips: ['Tarea automatizada ✓', 'Sistemas conectados'],
   },
   {
@@ -40,7 +40,7 @@ const products = [
     icon: BrainCircuit,
     tags: ['IA generativa', 'Análisis predictivo'],
     visual: 'intelligence',
-    mascot: '/mascots/mascot-tablet.webp',
+    mascot: '/mascots/mascot-tablet.svg',
     chips: ['Insight generado', 'Predicción lista'],
   },
   {
@@ -50,7 +50,7 @@ const products = [
     icon: Compass,
     tags: ['Arquitectura', 'Acompañamiento'],
     visual: 'architecture',
-    mascot: '/mascots/mascot-arms-crossed.webp',
+    mascot: '/mascots/mascot-arms-crossed.svg',
     chips: ['Arquitectura escalable', 'Soporte continuo'],
   },
 ];

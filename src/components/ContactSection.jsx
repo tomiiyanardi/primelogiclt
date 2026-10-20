@@ -76,8 +76,8 @@ export default function ContactSection() {
               }}
             >
               <LiveMascot
-                src="/mascots/mascot-celebrate.webp"
-                alt="Mascota Primelogic celebrando"
+                src="/mascots/mascot-wave.svg"
+                alt="Mascota Primelogic saludando"
                 imgClassName="w-20 h-auto object-contain drop-shadow-[0_8px_16px_rgba(0,212,255,0.3)]"
                 float={6}
                 sway={3}

@@ -183,10 +183,10 @@ export default function HeroSection() {
         <span className="hero-mascot-pillar" aria-hidden="true" />
         <MascotPitch reduced={reduced} />
         <LiveMascot
-          src="/mascota-apoyada.webp"
+          src="/mascots/mascot-lean.svg"
           alt="Mascota de Primelogic apoyada, señalando hacia el texto"
-          width="548"
-          height="964"
+          width="400"
+          height="620"
           priority
           float={6}
           sway={1}

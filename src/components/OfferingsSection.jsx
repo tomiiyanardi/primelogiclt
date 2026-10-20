@@ -68,7 +68,7 @@ export default function OfferingsSection() {
         >
           <div className="manifesto-mascot-glow" aria-hidden="true" />
           <LiveMascot
-            src="/mascots/mascot-point-forward.webp"
+            src="/mascots/mascot-point-forward.svg"
             alt="Mascota Primelogic señalando hacia adelante"
             className="manifesto-mascot-img"
             float={5}
