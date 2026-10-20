@@ -1,4 +1,5 @@
-import { motion as Motion, useReducedMotion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion as Motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Search, Compass, Hammer, Sparkles } from 'lucide-react';
 import ChapterBackdrop from './ChapterBackdrop';
 import LiveMascot from './LiveMascot';
@@ -32,12 +33,18 @@ const steps = [
 
 export default function ProcessSection() {
   const reduced = useReducedMotion();
+  const track = useRef(null);
+  const [active, setActive] = useState(0);
+  // The mascot walks across the four steps as the section scrolls by
+  const { scrollYProgress } = useScroll({ target: track, offset: ['start 85%', 'end 35%'] });
+  const walkerX = useTransform(scrollYProgress, [0, 1], ['0%', '75%']);
+  useMotionValueEvent(scrollYProgress, 'change', (v) => setActive(Math.min(3, Math.floor(v * 4))));
 
   return (
     <section id="proceso" className="min-h-screen py-20 flex flex-col justify-center relative isolate">
       <ChapterBackdrop variant="iso" label="03" />
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8 relative z-1">
-        <div className="mb-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div className="mb-14 md:mb-2 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="max-w-2xl">
             <p className="mb-4 text-xs font-bold uppercase tracking-widest" style={{ color: '#00d4ff' }}>
               03 / Cómo trabajamos
@@ -59,7 +66,7 @@ export default function ProcessSection() {
           </div>
 
           <Motion.div
-            className="process-mascot-pill"
+            className="process-mascot-pill md:hidden"
             initial={reduced ? false : { opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -87,6 +94,10 @@ export default function ProcessSection() {
           </Motion.div>
         </div>
 
+        <div className="process-track" ref={track}>
+          <Motion.div className="process-walker-rail" style={reduced ? undefined : { left: walkerX }} aria-hidden="true">
+            <img src="/mascots/mascot-walking-backpack.svg" alt="" width="400" height="620" />
+          </Motion.div>
         <div className="process-grid">
           {steps.map((step, index) => (
             <Motion.article
@@ -95,7 +106,7 @@ export default function ProcessSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.45, delay: index * 0.08 }}
-              className="process-step group"
+              className={`process-step group ${active === index ? 'is-active' : ''}`}
             >
               <div className="process-dot" />
               <div className="mb-6 flex items-center justify-between">
@@ -110,6 +121,7 @@ export default function ProcessSection() {
               <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,.4)' }}>{step.description}</p>
             </Motion.article>
           ))}
+        </div>
         </div>
 
         <div className="mt-10 flex items-center gap-3 text-sm font-semibold" style={{ color: '#00d4ff' }}>

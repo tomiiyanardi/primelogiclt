@@ -68,7 +68,7 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-8 flex items-center gap-5 p-4 rounded-2xl max-w-md mx-auto lg:mx-0"
+              className="contact-mascot-card mt-16 flex items-end gap-5 pr-5 pb-4 rounded-2xl max-w-md mx-auto lg:mx-0"
               style={{
                 background: 'rgba(255, 255, 255, 0.03)',
                 border: '1px solid rgba(0, 212, 255, 0.2)',
@@ -78,13 +78,14 @@ export default function ContactSection() {
               <LiveMascot
                 src="/mascots/mascot-wave.svg"
                 alt="Mascota Primelogic saludando"
-                imgClassName="w-20 h-auto object-contain drop-shadow-[0_8px_16px_rgba(0,212,255,0.3)]"
+                className="contact-mascot"
+                imgClassName="h-auto object-contain drop-shadow-[0_8px_16px_rgba(0,212,255,0.3)]"
                 float={6}
                 sway={3}
                 duration={2.4}
                 shadow={false}
               />
-              <div>
+              <div className="pt-4">
                 <span className="block text-[11px] font-extrabold tracking-widest uppercase text-[#00d4ff] mb-1">
                   RESPUESTA RÁPIDA
                 </span>

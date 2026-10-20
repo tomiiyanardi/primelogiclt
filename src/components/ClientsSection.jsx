@@ -2,6 +2,7 @@ import { motion as Motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import ChapterBackdrop from './ChapterBackdrop';
+import LiveMascot from './LiveMascot';
 
 const clients = [
   ['sfcervantes', 'SportFitness Cervantes', 'logoSFC'],
@@ -19,6 +20,8 @@ export default function ClientsSection() {
     <section id="clientes" className="landing-window relative isolate" style={{ background: '#0d1a24', padding: '80px 0', minHeight: '70svh', borderRadius: '28px 28px 0 0', marginTop: '-24px' }}>
       <ChapterBackdrop variant="grid" label="05" />
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-1">
+        <div className="clients-head">
+        <div>
         <p className="section-label">05 / Negocios reales. Trabajo compartido.</p>
         <h2>
           <Motion.span
@@ -31,6 +34,12 @@ export default function ClientsSection() {
             Empresas que confían en nosotros
           </Motion.span>
         </h2>
+        </div>
+          <div className="clients-mascot" aria-hidden="true">
+            <span className="clients-chip"><i /> Sistemas en producción</span>
+            <LiveMascot src="/mascots/mascot-phone.svg" alt="" float={5} shadow={false} />
+          </div>
+        </div>
         <div className="clients-grid">
           {clients.map(([id, name, logo], index) => (
             <Motion.div

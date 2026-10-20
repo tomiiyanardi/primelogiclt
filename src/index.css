@@ -295,7 +295,7 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   pointer-events: none;
 }
 .manifesto-mascot-img {
-  width: 90px;
+  width: 120px;
   height: auto;
   object-fit: contain;
   flex-shrink: 0;
@@ -337,6 +337,37 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   border: 1px solid rgba(0, 212, 255, 0.15);
   backdrop-filter: blur(14px);
 }
+
+/* Walking mascot over the process steps (desktop) */
+.process-track { position: relative; }
+.process-walker-rail { display: none; }
+.process-step { transition: background .4s ease; }
+.process-step.is-active { background: rgba(0,212,255,.05); }
+.process-step.is-active .process-dot { box-shadow: 0 0 0 6px rgba(0,212,255,.15), 0 0 18px #00d4ff; }
+@media (min-width: 768px) {
+  .process-track { padding-top: 150px; }
+  .process-mascot-pill { display: none; }
+  .process-walker-rail { display: block; position: absolute; top: 4px; width: 25%; pointer-events: none; }
+  .process-walker-rail img { width: 92px; height: auto; margin-left: 14px; filter: drop-shadow(0 12px 20px rgba(0,212,255,.25)); }
+}
+
+/* Contact: mascot pops out of the "respuesta rápida" card */
+.contact-mascot-card { position: relative; padding-left: 0; }
+.contact-mascot { width: 104px; flex-shrink: 0; margin-top: -64px; margin-left: 8px; }
+.contact-mascot img { width: 100%; }
+
+/* Clients heading with a mascot showing a live system */
+.clients-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.clients-mascot { display: none; position: relative; }
+.clients-mascot .live-mascot img { width: 120px; }
+.clients-chip {
+  position: absolute; top: 18px; right: 112px; z-index: 2; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 600; color: rgba(255,255,255,.85);
+  background: rgba(9,24,38,.85); border: 1px solid rgba(0,212,255,.3);
+}
+.clients-chip i { width: 6px; height: 6px; border-radius: 50%; background: #22e3a0; box-shadow: 0 0 8px #22e3a0; }
+@media (min-width: 900px) { .clients-mascot { display: block; } }
 
 /* Scroll indicator */
 .hero-scroll {
@@ -641,7 +672,7 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   .service-visual { flex: 1; height: 330px; }
   .visual-shell { width: 170px; height: 170px; padding: 20px; }
   .visual-interface .visual-shell { width: 220px; }
-  .service-mascot { height: 250px; }
+  .service-mascot { height: 290px; }
   .services-heading { padding: 0 40px; }
   .service-controls { max-width: 1200px; margin: auto; padding: 20px 40px 0; }
   .contact-form-wrapper { padding: 40px 36px; }
