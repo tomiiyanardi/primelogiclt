@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion as Motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import LiveMascot from './LiveMascot';
 
 const MOODS = [
   {
@@ -22,7 +23,7 @@ const MOODS = [
     id: 'happy',
     name: 'Contento',
     avatar: '/mascots/avatar-happy.webp',
-    mascot: '/mascots/mascot-celebrate.webp',
+    mascot: '/mascots/mascot-phone.webp',
     tag: 'STATUS: ÉXITO EN PRODUCCIÓN',
     quote: 'Procesos automatizados y clientes felices. Misión cumplida.',
   },
@@ -46,6 +47,22 @@ const MOODS = [
 
 export default function MascotInteractive() {
   const [activeMood, setActiveMood] = useState(MOODS[0]);
+  const [autoplay, setAutoplay] = useState(true);
+  const reduced = useReducedMotion();
+
+  // Cycle through the moods on its own until the visitor picks one
+  useEffect(() => {
+    if (!autoplay || reduced) return undefined;
+    const id = setInterval(() => {
+      setActiveMood((current) => MOODS[(MOODS.indexOf(current) + 1) % MOODS.length]);
+    }, 4200);
+    return () => clearInterval(id);
+  }, [autoplay, reduced]);
+
+  const pick = (mood) => {
+    setAutoplay(false);
+    setActiveMood(mood);
+  };
 
   return (
     <div className="relative flex flex-col items-center justify-center w-full max-w-md mx-auto select-none">
@@ -97,27 +114,24 @@ export default function MascotInteractive() {
           }}
         />
 
-        {/* Mascot with floating breathing animation */}
-        <Motion.div
-          animate={{ y: [0, -8, 0] }}
-          transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
-          className="relative z-10"
-        >
-          <AnimatePresence mode="wait">
-            <Motion.img
-              key={activeMood.id}
+        {/* Mascot: pops in with a little jump on every mood change, then idles */}
+        <AnimatePresence mode="wait">
+          <Motion.div
+            key={activeMood.id}
+            initial={{ opacity: 0, y: 24, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+            className="relative z-10"
+          >
+            <LiveMascot
               src={activeMood.mascot}
               alt={`Primelogic Mascota - ${activeMood.name}`}
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.3 }}
-              className="h-[18rem] sm:h-[22rem] w-auto max-w-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,212,255,0.25)]"
-              loading="lazy"
-              decoding="async"
+              imgClassName="h-[18rem] sm:h-[22rem] w-auto max-w-full object-contain drop-shadow-[0_20px_35px_rgba(0,212,255,0.25)]"
+              shadow={false}
             />
-          </AnimatePresence>
-        </Motion.div>
+          </Motion.div>
+        </AnimatePresence>
 
         {/* Ground neon oval reflection */}
         <div
@@ -146,7 +160,9 @@ export default function MascotInteractive() {
           return (
             <button
               key={mood.id}
-              onClick={() => setActiveMood(mood)}
+              type="button"
+              aria-pressed={isActive}
+              onClick={() => pick(mood)}
               className="group relative flex flex-col items-center p-1.5 rounded-xl transition-all duration-200"
               style={{
                 background: isActive ? 'rgba(0, 212, 255, 0.15)' : 'transparent',
@@ -158,7 +174,8 @@ export default function MascotInteractive() {
             >
               <img
                 src={mood.avatar}
-                alt={mood.name}
+                alt=""
+                aria-hidden="true"
                 className={`w-8 h-8 sm:w-9 sm:h-9 object-contain rounded-lg transition-transform duration-200 ${
                   isActive ? 'scale-110 drop-shadow-[0_0_8px_rgba(0,212,255,0.6)]' : 'opacity-70 group-hover:opacity-100 group-hover:scale-105'
                 }`}

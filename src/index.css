@@ -198,23 +198,34 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   position: absolute; right: 2%; bottom: 20px;
   width: clamp(130px, 18vw, 300px); z-index: 2; pointer-events: auto;
   filter: drop-shadow(0 20px 45px rgba(0, 212, 255, 0.28));
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  transition: filter 0.4s ease;
 }
-.hero-mascot:hover {
-  transform: translateY(-8px) scale(1.02);
-  filter: drop-shadow(0 25px 50px rgba(0, 212, 255, 0.45));
-}
+.hero-mascot:hover { filter: drop-shadow(0 25px 50px rgba(0, 212, 255, 0.45)); }
 .hero-mascot img { width: 100%; height: auto; display: block; }
+/* The pose leans on something: a thin light pillar instead of the old white wall */
+.hero-mascot-pillar {
+  position: absolute; right: 2%; bottom: 2%; width: 3px; height: 88%;
+  border-radius: 3px;
+  background: linear-gradient(to top, rgba(0,212,255,.9), rgba(0,212,255,.35) 60%, transparent);
+  box-shadow: 0 0 18px rgba(0,212,255,.55), 0 0 42px rgba(0,119,255,.3);
+  animation: pillarPulse 4s ease-in-out infinite;
+}
+@keyframes pillarPulse {
+  0%, 100% { opacity: .75; }
+  50% { opacity: 1; }
+}
 
 .hero-mascot-speech {
   position: absolute;
-  top: -46px;
-  right: 10%;
+  top: -50px;
+  right: 6%;
+  z-index: 3;
+  min-width: 230px;
   background: rgba(9, 24, 38, 0.88);
   border: 1px solid rgba(0, 212, 255, 0.4);
   backdrop-filter: blur(12px);
-  padding: 6px 14px;
-  border-radius: 12px;
+  padding: 7px 14px 8px;
+  border-radius: 12px 12px 4px 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 212, 255, 0.2);
   display: flex;
   flex-direction: column;
@@ -223,15 +234,32 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   animation: speechFloat 3.5s ease-in-out infinite;
 }
 .hero-mascot-speech .speech-kicker {
+  display: flex; align-items: center; gap: 6px;
   font-size: 8px;
   font-weight: 800;
   letter-spacing: 0.12em;
   color: #00d4ff;
 }
+.speech-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: #22e3a0;
+  box-shadow: 0 0 8px #22e3a0; animation: pillarPulse 1.6s ease-in-out infinite;
+}
 .hero-mascot-speech .speech-text {
+  display: block;
   font-size: 11px;
   font-weight: 600;
   color: #ffffff;
+}
+
+/* Living mascots (see LiveMascot.jsx) */
+.live-mascot { position: relative; display: flex; justify-content: center; align-items: flex-end; }
+.live-mascot-body { position: relative; z-index: 1; transform-style: preserve-3d; cursor: pointer; will-change: transform; }
+.live-mascot-body img { display: block; max-width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.live-mascot-shadow {
+  position: absolute; left: 50%; bottom: -6px; width: 62%; height: 14px; margin-left: -31%;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0,212,255,.45) 0%, rgba(0,212,255,.08) 55%, transparent 72%);
+  filter: blur(3px);
 }
 @keyframes speechFloat {
   0%, 100% { transform: translateY(0); }
@@ -397,6 +425,28 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
 .node-a { top: 25%; left: 20%; }
 .node-b { bottom: 25%; right: 20%; }
 .visual-caption { position: absolute; bottom: 12px; left: 16px; font-size: 8px; letter-spacing: .12em; color: rgba(0,212,255,.4); }
+.visual-shell { grid-area: 1 / 1; }
+.service-mascot { grid-area: 1 / 1; z-index: 2; height: 135px; }
+.service-mascot .live-mascot-body, .service-mascot img { height: 100%; width: auto; }
+.service-mascot img { filter: drop-shadow(0 15px 30px rgba(0,212,255,.3)); }
+.service-chip {
+  position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.85);
+  background: rgba(9,24,38,.85); border: 1px solid rgba(0,212,255,.3); backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.35); white-space: nowrap;
+}
+.service-chip i { width: 6px; height: 6px; border-radius: 50%; background: #00d4ff; box-shadow: 0 0 8px #00d4ff; }
+.service-chip.chip-0 { top: 14%; left: 6%; }
+.service-chip.chip-1 { bottom: 18%; right: 6%; }
+.service-chip.chip-1 i { background: #22e3a0; box-shadow: 0 0 8px #22e3a0; }
+@media (prefers-reduced-motion: no-preference) {
+  .service-chip.chip-0 { animation: chipDrift 6s ease-in-out infinite; }
+  .service-chip.chip-1 { animation: chipDrift 7s ease-in-out -2s infinite reverse; }
+  .visual-node { animation: nodeBlink 3s ease-in-out infinite; }
+  .node-b { animation-delay: -1.5s; }
+}
+@keyframes chipDrift { 0%, 100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+@keyframes nodeBlink { 0%, 100% { opacity: .25; transform: scale(1); } 50% { opacity: .8; transform: scale(1.6); } }
 
 /* Service controls (mobile) */
 .service-controls { display: flex; align-items: center; gap: 8px; padding: 16px 24px 0; }
@@ -453,8 +503,11 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   border-bottom: 1px solid rgba(255,255,255,.06); transition: background .25s;
 }
 .client-card:hover { background: rgba(0,212,255,.04); }
-.client-card img { width: 100%; height: 90px; object-fit: contain; margin-bottom: 24px; filter: brightness(0) invert(.8); transition: filter .25s; }
-.client-card:hover img { filter: brightness(0) invert(1); }
+.client-card img { width: 100%; height: 90px; object-fit: contain; margin-bottom: 24px; filter: brightness(0) invert(.8); transition: filter .25s, transform .35s cubic-bezier(.22,1,.36,1); }
+.client-card:hover img { filter: brightness(0) invert(1); transform: scale(1.04); }
+/* Full-colour round badges (e.g. Alcorta) turn into a flat disc with the silhouette filter */
+.client-card img.is-badge { filter: grayscale(.85) brightness(.95); opacity: .85; border-radius: 50%; }
+.client-card:hover img.is-badge { filter: none; opacity: 1; }
 .client-card span {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
   font-size: 10px; font-weight: 600; color: rgba(255,255,255,.5);
@@ -480,6 +533,9 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   color: #fff; border-radius: 12px; padding: 12px 16px;
   transition: border-color .25s, background .25s;
   width: 100%;
+}
+.contact-form-wrapper input[type="checkbox"] {
+  width: 16px; height: 16px; padding: 0; flex-shrink: 0; border-radius: 4px;
 }
 .contact-form-wrapper input:focus,
 .contact-form-wrapper select:focus,
@@ -585,6 +641,7 @@ body { margin: 0; background: #0a1018; color: #e8edf0; font-family: "Plus Jakart
   .service-visual { flex: 1; height: 330px; }
   .visual-shell { width: 170px; height: 170px; padding: 20px; }
   .visual-interface .visual-shell { width: 220px; }
+  .service-mascot { height: 250px; }
   .services-heading { padding: 0 40px; }
   .service-controls { max-width: 1200px; margin: auto; padding: 20px 40px 0; }
   .contact-form-wrapper { padding: 40px 36px; }

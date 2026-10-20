@@ -41,7 +41,7 @@ export default function ClientsSection() {
               transition={{ duration: 0.4, delay: index * 0.06 }}
             >
               <Link to={`/proyecto/${id}`} className="client-card" style={{ display: 'block' }}>
-                <img src={`/${logo}.webp`} alt={name} width="240" height="120" loading="lazy" decoding="async" />
+                <img src={`/${logo}.webp`} alt={name} className={id === 'alcorta' ? 'is-badge' : undefined} width="240" height="120" loading="lazy" decoding="async" />
                 <span>
                   {name}
                   <ArrowUpRight size={16} aria-hidden="true" />

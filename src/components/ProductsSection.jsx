@@ -2,6 +2,7 @@ import { useRef, useSyncExternalStore, useState, useEffect } from 'react';
 import { motion as Motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Code2, Workflow, BrainCircuit, Compass } from 'lucide-react';
 import ChapterBackdrop from './ChapterBackdrop';
+import LiveMascot from './LiveMascot';
 
 const query = '(min-width: 1024px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)';
 const subscribe = (callback) => {
@@ -20,6 +21,7 @@ const products = [
     tags: ['Web & mobile', 'Sistemas a medida'],
     visual: 'interface',
     mascot: '/mascots/mascot-sitting-laptop.webp',
+    chips: ['Panel en vivo', 'App lista para usar'],
   },
   {
     title: 'Menos tareas. Más posibilidades.',
@@ -29,6 +31,7 @@ const products = [
     tags: ['Procesos conectados', 'Operación eficiente'],
     visual: 'workflow',
     mascot: '/mascots/mascot-point-forward.webp',
+    chips: ['Tarea automatizada ✓', 'Sistemas conectados'],
   },
   {
     title: 'Inteligencia aplicada a tu negocio.',
@@ -38,6 +41,7 @@ const products = [
     tags: ['IA generativa', 'Análisis predictivo'],
     visual: 'intelligence',
     mascot: '/mascots/mascot-tablet.webp',
+    chips: ['Insight generado', 'Predicción lista'],
   },
   {
     title: 'Una base sólida. Un futuro abierto.',
@@ -47,29 +51,45 @@ const products = [
     tags: ['Arquitectura', 'Acompañamiento'],
     visual: 'architecture',
     mascot: '/mascots/mascot-arms-crossed.webp',
+    chips: ['Arquitectura escalable', 'Soporte continuo'],
   },
 ];
 
-function ServiceVisual({ kind, icon, mascot, title }) {
+function ServiceVisual({ kind, icon, mascot, title, chips = [] }) {
   return (
-    <div className={`service-visual visual-${kind}`} aria-hidden="true">
-      <span className="visual-axis axis-x" />
-      <span className="visual-axis axis-y" />
-      <div className="visual-shell relative flex items-center justify-center p-2">
-        {mascot ? (
-          <img
-            src={mascot}
-            alt={title}
-            className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,212,255,0.35)] transition-transform duration-300 hover:scale-110"
-            loading="lazy"
-          />
-        ) : (
-          <div className="visual-shell-inner">{icon}</div>
-        )}
+    <div className={`service-visual visual-${kind}`}>
+      <span className="visual-axis axis-x" aria-hidden="true" />
+      <span className="visual-axis axis-y" aria-hidden="true" />
+      {/* Decorative shape stays behind; the mascot stands upright on top of it */}
+      <div className="visual-shell" aria-hidden="true">
+        {!mascot && <div className="visual-shell-inner">{icon}</div>}
       </div>
-      <i className="visual-node node-a" />
-      <i className="visual-node node-b" />
-      <span className="visual-caption">PRIMELOGIC / {kind.toUpperCase()}</span>
+      {mascot && (
+        <LiveMascot
+          src={mascot}
+          alt={title}
+          className="service-mascot"
+          imgClassName="service-mascot-img"
+          float={7}
+          duration={4.2}
+        />
+      )}
+      {chips.map((chip, i) => (
+        <Motion.span
+          key={chip}
+          className={`service-chip chip-${i}`}
+          aria-hidden="true"
+          initial={{ opacity: 0, y: 10, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: false, amount: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.25 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <i /> {chip}
+        </Motion.span>
+      ))}
+      <i className="visual-node node-a" aria-hidden="true" />
+      <i className="visual-node node-b" aria-hidden="true" />
+      <span className="visual-caption" aria-hidden="true">PRIMELOGIC / {kind.toUpperCase()}</span>
     </div>
   );
 }
@@ -154,6 +174,7 @@ export default function ProductsSection() {
                   icon={<product.icon size={40} strokeWidth={1} />}
                   mascot={product.mascot}
                   title={product.title}
+                  chips={product.chips}
                 />
               </article>
             ))}

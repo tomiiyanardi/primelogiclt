@@ -1,6 +1,45 @@
-import { useRef, useEffect, useCallback } from 'react';
-import { motion as Motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion as Motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import LiveMascot from './LiveMascot';
+
+const PITCHES = [
+  'Ideas que se convierten en soluciones ✨',
+  'Sistemas a medida para tu operación',
+  'Automatizamos lo que hoy hacés a mano',
+  'IA aplicada a decisiones reales',
+];
+
+/** Speech bubble that rotates through what we build, one line at a time. */
+function MascotPitch({ reduced }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (reduced) return undefined;
+    const id = setInterval(() => setIndex((i) => (i + 1) % PITCHES.length), 3200);
+    return () => clearInterval(id);
+  }, [reduced]);
+
+  return (
+    <div className="hero-mascot-speech" role="status" aria-live="off">
+      <span className="speech-kicker">
+        <i className="speech-dot" /> PRIMELOGIC
+      </span>
+      <AnimatePresence mode="wait" initial={false}>
+        <Motion.span
+          key={index}
+          className="speech-text"
+          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {PITCHES[index]}
+        </Motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 /**
  * HeroGeometry — a procedural SVG visual: concentric rings that subtly shift
@@ -79,7 +118,7 @@ export default function HeroSection() {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const mascotY = useTransform(scrollYProgress, [0, 1], [0, 120]);
 
   // Orchestrated entrance timing
   const entrance = { duration: reduced ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] };
@@ -133,31 +172,27 @@ export default function HeroSection() {
         </Motion.div>
       </div>
 
-      {/* Mascot leaning on viewport edge */}
+      {/* Mascot leaning on a light pillar at the viewport edge */}
       <Motion.div
-        className="hero-mascot group"
-        initial={reduced ? false : { opacity: 0, x: 25 }}
+        className="hero-mascot"
+        initial={reduced ? false : { opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ ...entrance, delay: 0.7 }}
-        aria-hidden="true"
+        transition={{ type: 'spring', stiffness: 70, damping: 14, delay: 0.7 }}
+        style={reduced ? undefined : { y: mascotY }}
       >
-        <div className="hero-mascot-speech">
-          <span className="speech-kicker">PRIMELOGIC</span>
-          <span className="speech-text">Ideas que se convierten en soluciones ✨</span>
-        </div>
-        <Motion.div
-          animate={reduced ? {} : { y: [0, -8, 0] }}
-          transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
-        >
-          <img
-            src="/mascota-apoyada.webp"
-            width="605"
-            height="992"
-            alt="Mascota Primelogic"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </Motion.div>
+        <span className="hero-mascot-pillar" aria-hidden="true" />
+        <MascotPitch reduced={reduced} />
+        <LiveMascot
+          src="/mascota-apoyada.webp"
+          alt="Mascota de Primelogic apoyada, señalando hacia el texto"
+          width="548"
+          height="964"
+          priority
+          float={6}
+          sway={1}
+          duration={5}
+          shadow={false}
+        />
       </Motion.div>
 
       {/* Scroll hint */}

@@ -1,5 +1,6 @@
 import { motion as Motion, useReducedMotion } from 'framer-motion';
 import ChapterBackdrop from './ChapterBackdrop';
+import LiveMascot from './LiveMascot';
 
 const values = [
   ['01', 'Tiempo para lo importante.', 'Automatizamos procesos clave para que tu equipo deje de repetir tareas y pueda enfocarse en hacer crecer el negocio.'],
@@ -66,11 +67,12 @@ export default function OfferingsSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="manifesto-mascot-glow" aria-hidden="true" />
-          <img
+          <LiveMascot
             src="/mascots/mascot-point-forward.webp"
             alt="Mascota Primelogic señalando hacia adelante"
             className="manifesto-mascot-img"
-            loading="lazy"
+            float={5}
+            shadow={false}
           />
           <div className="manifesto-mascot-text">
             <span className="manifesto-mascot-kicker">FILOSOFÍA PRIMELOGIC</span>

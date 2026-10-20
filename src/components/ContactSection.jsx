@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion as Motion, useReducedMotion } from 'framer-motion';
 import ChapterBackdrop from './ChapterBackdrop';
+import LiveMascot from './LiveMascot';
 
 export default function ContactSection() {
   const [status, setStatus] = useState('idle');
@@ -74,11 +75,14 @@ export default function ContactSection() {
                 boxShadow: '0 12px 32px rgba(0, 0, 0, 0.4)',
               }}
             >
-              <img
+              <LiveMascot
                 src="/mascots/mascot-celebrate.webp"
                 alt="Mascota Primelogic celebrando"
-                className="w-20 h-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,212,255,0.3)]"
-                loading="lazy"
+                imgClassName="w-20 h-auto object-contain drop-shadow-[0_8px_16px_rgba(0,212,255,0.3)]"
+                float={6}
+                sway={3}
+                duration={2.4}
+                shadow={false}
               />
               <div>
                 <span className="block text-[11px] font-extrabold tracking-widest uppercase text-[#00d4ff] mb-1">

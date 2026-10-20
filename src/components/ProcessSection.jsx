@@ -1,7 +1,7 @@
-import { useRef } from 'react';
-import { motion as Motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion as Motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Search, Compass, Hammer, Sparkles } from 'lucide-react';
 import ChapterBackdrop from './ChapterBackdrop';
+import LiveMascot from './LiveMascot';
 
 const steps = [
   {
@@ -65,11 +65,16 @@ export default function ProcessSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <img
+            <LiveMascot
               src="/mascots/mascot-walking-backpack.webp"
               alt="Mascota Primelogic en marcha"
-              className="w-20 sm:w-24 h-auto object-contain filter drop-shadow-[0_10px_20px_rgba(0,212,255,0.22)]"
-              loading="lazy"
+              className="process-walker"
+              imgClassName="w-20 sm:w-24 h-auto object-contain drop-shadow-[0_10px_20px_rgba(0,212,255,0.22)]"
+              float={4}
+              sway={4}
+              duration={0.9}
+              track={false}
+              shadow={false}
             />
             <div className="flex flex-col">
               <span className="text-[10px] font-bold tracking-widest uppercase text-[#00d4ff]">
