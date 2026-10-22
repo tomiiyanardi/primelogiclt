@@ -1,130 +1,174 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { AnimatePresence, motion as Motion, useReducedMotion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Building2, Check, Mail, Phone, User } from 'lucide-react';
 
 const options = [
   ['software', 'Software a medida', 'var(--blue)'],
   ['automation', 'Automatización', 'var(--cyan)'],
   ['ai', 'IA aplicada', 'var(--violet)'],
   ['consulting', 'Consultoría', 'var(--magenta)'],
-  ['other', 'Otro / no estoy seguro', 'rgba(255,255,255,.35)'],
+  ['other', 'Otro / no estoy seguro', 'rgba(255,255,255,.5)'],
 ];
 
+// The character changes pose as the visitor moves through the form
 const steps = [
-  ['Nos contás el desafío', 'var(--blue)'],
-  ['Charlamos sin costo', 'var(--cyan)'],
-  ['Te proponemos un camino concreto', 'var(--violet)'],
+  { label: 'Tus datos', mascot: '/mascots/mascot-lean.svg' },
+  { label: 'Qué necesitás', mascot: '/mascots/mascot-point-forward.svg' },
+  { label: 'Tu proyecto', mascot: '/mascots/mascot-tablet.svg' },
 ];
+
+function Field({ icon, label, ...input }) {
+  return (
+    <label className="cf-field">
+      <span className="cf-label">{label}</span>
+      <span className="cf-input">
+        {icon}
+        <input {...input} />
+      </span>
+    </label>
+  );
+}
 
 export default function ContactSection() {
+  const reduced = useReducedMotion();
+  const form = useRef(null);
+  const [step, setStep] = useState(0);
   const [status, setStatus] = useState('idle');
+
+  // Each step validates only its own fields, so hidden steps never block the visitor
+  const stepIsValid = () => {
+    const fields = form.current.querySelectorAll(`[data-step="${step}"] input, [data-step="${step}"] textarea`);
+    for (const field of fields) {
+      if (!field.checkValidity()) {
+        field.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
+    if (!stepIsValid()) return;
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+      return;
+    }
+    const data = form.current;
     setStatus('sending');
-
     try {
       const response = await fetch('https://formsubmit.co/ajax/primelogiclt@gmail.com', {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: form.name.value,
-          email: form.email.value,
-          company: form.company.value,
-          phone: form.phone.value,
-          projectType: form.projectType.value,
-          message: form.message.value,
+          name: data.name.value,
+          email: data.email.value,
+          company: data.company.value,
+          phone: data.phone.value,
+          projectType: data.projectType.value,
+          message: data.message.value,
           _subject: 'Nueva consulta desde Primelogic LT',
           _captcha: 'false',
         }),
       });
-
       if (!response.ok) throw new Error('No se pudo enviar el formulario');
-      form.reset();
+      data.reset();
       setStatus('success');
     } catch {
       setStatus('error');
     }
   };
 
+  const done = status === 'success';
+  const mascot = done ? '/mascots/mascot-celebrate.svg' : steps[step].mascot;
+  const swap = reduced ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -12 }, transition: { duration: 0.35 } };
+
   return (
     <section id="contacto" className="section">
       <div className="wrap">
-        <div className="contact">
-          <span className="blob blob-a" aria-hidden="true" />
-          <span className="blob blob-b" aria-hidden="true" />
-          <span className="blob blob-c" aria-hidden="true" />
-
-          <div className="contact-side">
-            <p className="contact-tag">contacto</p>
-            <h2 className="display">Hablemos de<br />tu proyecto</h2>
-            <p className="lead">Contanos qué necesitás y coordinamos una primera charla de diagnóstico, sin costo.</p>
-            <ol className="contact-steps">
-              {steps.map(([text, color], index) => (
-                <li key={text} style={{ '--c': color }}>
-                  <span>{index + 1}</span> {text}
-                </li>
-              ))}
-            </ol>
-            <p className="contact-mail">
-              O si preferís, escribinos a:<br />
-              <a href="mailto:primelogiclt@gmail.com">primelogiclt@gmail.com</a>
-            </p>
+        <div className="cf">
+          <div className="cf-mascot" aria-hidden="true">
+            <AnimatePresence mode="wait">
+              <Motion.img key={mascot} src={mascot} alt="" width="400" height="620" {...swap} />
+            </AnimatePresence>
           </div>
 
-          <form className="contact-form" onSubmit={handleSubmit}>
-            <fieldset>
-              <legend><span>01</span> Tus datos</legend>
-              <div className="field-grid">
-                <label className="field">
-                  <span>Nombre y apellido *</span>
-                  <input name="name" id="name" required placeholder="Ej: Ana Pérez" autoComplete="name" />
-                </label>
-                <label className="field">
-                  <span>Email *</span>
-                  <input type="email" name="email" id="email" required placeholder="ana@empresa.com" autoComplete="email" />
-                </label>
-                <label className="field">
-                  <span>Empresa</span>
-                  <input name="company" id="company" placeholder="Nombre de la empresa" autoComplete="organization" />
-                </label>
-                <label className="field">
-                  <span>Teléfono / WhatsApp</span>
-                  <input type="tel" name="phone" id="phone" placeholder="+54 9 ..." autoComplete="tel" />
-                </label>
-              </div>
-            </fieldset>
+          <div className="cf-panel">
+            <header className="cf-head">
+              <h2 className="display">Hablemos de tu proyecto</h2>
+              <p>Contanos qué necesitás y coordinamos una primera charla de diagnóstico, sin costo.</p>
+            </header>
 
-            <fieldset>
-              <legend><span>02</span> ¿Qué necesitás? *</legend>
-              <div className="chips">
-                {options.map(([value, label, color], index) => (
-                  <label key={value} className="chip" style={{ '--c': color }}>
-                    <input type="radio" name="projectType" value={value} required={index === 0} />
-                    <span>{label}</span>
+            {done ? (
+              <div className="cf-done" role="status">
+                <span className="cf-done-icon"><Check size={28} aria-hidden="true" /></span>
+                <h3>¡Recibimos tu mensaje!</h3>
+                <p>Te respondemos pronto para coordinar la charla.</p>
+                <button type="button" className="cf-link" onClick={() => { setStatus('idle'); setStep(0); }}>
+                  Enviar otra consulta
+                </button>
+              </div>
+            ) : (
+              <form ref={form} className="cf-form" onSubmit={handleSubmit} noValidate>
+                <ol className="cf-steps" aria-label="Pasos del formulario">
+                  {steps.map((s, index) => (
+                    <li key={s.label} className={index === step ? 'is-current' : index < step ? 'is-done' : undefined} aria-current={index === step ? 'step' : undefined}>
+                      <span>{index < step ? <Check size={14} aria-hidden="true" /> : index + 1}</span>
+                      {s.label}
+                    </li>
+                  ))}
+                </ol>
+
+                <fieldset data-step="0" hidden={step !== 0}>
+                  <legend className="sr-only">Tus datos</legend>
+                  <div className="cf-grid">
+                    <Field icon={<User size={18} aria-hidden="true" />} label="Nombre y apellido *" name="name" required placeholder="Ej: Ana Pérez" autoComplete="name" />
+                    <Field icon={<Mail size={18} aria-hidden="true" />} label="Email *" type="email" name="email" required placeholder="ana@empresa.com" autoComplete="email" />
+                    <Field icon={<Building2 size={18} aria-hidden="true" />} label="Empresa" name="company" placeholder="Nombre de la empresa" autoComplete="organization" />
+                    <Field icon={<Phone size={18} aria-hidden="true" />} label="Teléfono / WhatsApp" type="tel" name="phone" placeholder="+54 9 ..." autoComplete="tel" />
+                  </div>
+                </fieldset>
+
+                <fieldset data-step="1" hidden={step !== 1}>
+                  <legend className="cf-label">¿Qué necesitás? *</legend>
+                  <div className="cf-chips">
+                    {options.map(([value, label, color], index) => (
+                      <label key={value} className="cf-chip" style={{ '--c': color }}>
+                        <input type="radio" name="projectType" value={value} required={index === 0} />
+                        <span>{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+
+                <fieldset data-step="2" hidden={step !== 2}>
+                  <legend className="sr-only">Tu proyecto</legend>
+                  <label className="cf-field">
+                    <span className="cf-label">Tu proyecto *</span>
+                    <textarea name="message" required rows="5" placeholder="Contanos qué querés lograr, en qué etapa está y para cuándo lo necesitás." />
                   </label>
-                ))}
-              </div>
-            </fieldset>
+                </fieldset>
 
-            <fieldset>
-              <legend><span>03</span> Tu proyecto *</legend>
-              <label className="field">
-                <span className="sr-only">Tu proyecto</span>
-                <textarea name="message" id="message" rows="3" required placeholder="Contanos brevemente qué querés lograr, en qué etapa está y para cuándo lo necesitás." />
-              </label>
-            </fieldset>
+                <div className="cf-actions">
+                  {step > 0 && (
+                    <button type="button" className="cf-back" onClick={() => setStep(step - 1)}>
+                      <ArrowLeft size={18} aria-hidden="true" /> Volver
+                    </button>
+                  )}
+                  <button type="submit" className="cf-submit" disabled={status === 'sending'}>
+                    {step < steps.length - 1 ? 'Siguiente' : status === 'sending' ? 'Enviando...' : 'Enviar mensaje'}
+                    <ArrowRight size={18} aria-hidden="true" />
+                  </button>
+                </div>
 
-            <button type="submit" className="pill pill-light pill-send" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Enviando...' : 'Enviar mensaje'}
-              <span className="send-dot" aria-hidden="true">→</span>
-            </button>
-
-            <p className="form-note" role="status">
-              {status === 'success' && 'Recibimos tu mensaje. Te respondemos pronto.'}
-              {status === 'error' && 'No pudimos enviarlo. Probá de nuevo o escribinos a primelogiclt@gmail.com.'}
-              {(status === 'idle' || status === 'sending') && 'Usamos tus datos solo para responderte.'}
-            </p>
-          </form>
+                <p className="cf-note" role="status">
+                  {status === 'error'
+                    ? 'No pudimos enviarlo. Probá de nuevo o escribinos a primelogiclt@gmail.com.'
+                    : 'Usamos tus datos solo para responderte. También podés escribirnos a primelogiclt@gmail.com.'}
+                </p>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </section>
