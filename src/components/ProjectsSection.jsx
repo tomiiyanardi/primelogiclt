@@ -32,11 +32,16 @@ export default function ProjectsSection() {
   return (
     <section id="proyectos" className="section section-graphite">
       <div className="wrap">
-        <a className="bento-hero" href="#casos">
-          <span className="bento-big">Ver</span>
-          <span className="bento-small">proyectos</span>
-          <span className="bento-arrow" aria-hidden="true" />
-        </a>
+        <header className="proj-head">
+          <div>
+            <p className="eyebrow">Proyectos</p>
+            <h2 className="display">Lo que ya<br />construimos.</h2>
+          </div>
+          <a className="proj-link" href="#casos">
+            Ver casos
+            <span className="proj-arrow" aria-hidden="true"><ArrowUpRight size={30} strokeWidth={2.2} /></span>
+          </a>
+        </header>
 
         <div className="bento">
           <div className="bento-card bento-paper">
