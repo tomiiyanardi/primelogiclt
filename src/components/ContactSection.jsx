@@ -1,11 +1,21 @@
 import { useState } from 'react';
-import { motion as Motion, useReducedMotion } from 'framer-motion';
-import ChapterBackdrop from './ChapterBackdrop';
-import LiveMascot from './LiveMascot';
+
+const options = [
+  ['software', 'Software a medida', 'var(--violet)'],
+  ['automation', 'Automatización', 'var(--ochre)'],
+  ['ai', 'IA aplicada', 'var(--magenta)'],
+  ['consulting', 'Consultoría', 'var(--cyan)'],
+  ['other', 'Otro / no estoy seguro', 'rgba(255,255,255,.35)'],
+];
+
+const steps = [
+  ['Nos contás el desafío', 'var(--violet)'],
+  ['Charlamos sin costo', 'var(--ochre)'],
+  ['Te proponemos un camino concreto', 'var(--magenta)'],
+];
 
 export default function ContactSection() {
   const [status, setStatus] = useState('idle');
-  const reduced = useReducedMotion();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,8 +29,9 @@ export default function ContactSection() {
         body: JSON.stringify({
           name: form.name.value,
           email: form.email.value,
+          company: form.company.value,
+          phone: form.phone.value,
           projectType: form.projectType.value,
-          challenge: form.challenge.value,
           message: form.message.value,
           _subject: 'Nueva consulta desde Primelogic LT',
           _captcha: 'false',
@@ -36,153 +47,84 @@ export default function ContactSection() {
   };
 
   return (
-    <section
-      id="contacto"
-      className="min-h-screen py-24 flex flex-col justify-center relative isolate"
-      style={{ borderRadius: '28px 28px 0 0', marginTop: '-24px' }}
-    >
-      <ChapterBackdrop variant="topo" label="06" />
-      <div className="max-w-7xl w-full mx-auto px-6 lg:px-8 relative z-1">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
+    <section id="contacto" className="section">
+      <div className="wrap">
+        <div className="contact">
+          <span className="blob blob-a" aria-hidden="true" />
+          <span className="blob blob-b" aria-hidden="true" />
+          <span className="blob blob-c" aria-hidden="true" />
 
-          {/* Left text */}
-          <div className="flex-1 text-center lg:text-left">
-            <h2 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#00d4ff' }}>
-              06 / Hablemos
-            </h2>
-            <Motion.span
-              initial={reduced ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: reduced ? 0 : 0.5, delay: 0.1 }}
-              className="inline-block text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight"
-            >
-              Contanos qué necesita tu negocio.
-            </Motion.span>
-            <p style={{ color: 'rgba(255,255,255,.4)' }} className="text-lg max-w-md mx-auto lg:mx-0">
-              Escribinos y empecemos a construir el futuro de tu negocio hoy mismo. Un equipo especializado está listo para asesorarte.
+          <div className="contact-side">
+            <p className="contact-tag">contacto</p>
+            <h2 className="display">Hablemos de<br />tu proyecto</h2>
+            <p className="lead">Contanos qué necesitás y coordinamos una primera charla de diagnóstico, sin costo.</p>
+            <ol className="contact-steps">
+              {steps.map(([text, color], index) => (
+                <li key={text} style={{ '--c': color }}>
+                  <span>{index + 1}</span> {text}
+                </li>
+              ))}
+            </ol>
+            <p className="contact-mail">
+              O si preferís, escribinos a:<br />
+              <a href="mailto:primelogiclt@gmail.com">primelogiclt@gmail.com</a>
             </p>
-
-            <Motion.div
-              initial={reduced ? false : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="contact-mascot-card mt-16 flex items-end gap-5 pr-5 pb-4 rounded-2xl max-w-md mx-auto lg:mx-0"
-              style={{
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(0, 212, 255, 0.2)',
-                boxShadow: '0 12px 32px rgba(0, 0, 0, 0.4)',
-              }}
-            >
-              <LiveMascot
-                src="/mascots/mascot-wave.svg"
-                alt="Mascota Primelogic saludando"
-                className="contact-mascot"
-                imgClassName="h-auto object-contain drop-shadow-[0_8px_16px_rgba(0,212,255,0.3)]"
-                float={6}
-                sway={3}
-                duration={2.4}
-                shadow={false}
-              />
-              <div className="pt-4">
-                <span className="block text-[11px] font-extrabold tracking-widest uppercase text-[#00d4ff] mb-1">
-                  RESPUESTA RÁPIDA
-                </span>
-                <p className="text-sm font-medium text-white/90 leading-snug">
-                  Analizamos tu caso y coordinamos una reunión de diagnóstico sin costo.
-                </p>
-              </div>
-            </Motion.div>
           </div>
 
-          {/* Right form */}
-          <div className="flex-1 w-full max-w-xl contact-form-wrapper">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="name" className="text-sm font-semibold">Nombre</label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  required
-                  placeholder="Tu nombre completo"
-                />
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <fieldset>
+              <legend><span>01</span> Tus datos</legend>
+              <div className="field-grid">
+                <label className="field">
+                  <span>Nombre y apellido *</span>
+                  <input name="name" id="name" required placeholder="Ej: Ana Pérez" autoComplete="name" />
+                </label>
+                <label className="field">
+                  <span>Email *</span>
+                  <input type="email" name="email" id="email" required placeholder="ana@empresa.com" autoComplete="email" />
+                </label>
+                <label className="field">
+                  <span>Empresa</span>
+                  <input name="company" id="company" placeholder="Nombre de la empresa" autoComplete="organization" />
+                </label>
+                <label className="field">
+                  <span>Teléfono / WhatsApp</span>
+                  <input type="tel" name="phone" id="phone" placeholder="+54 9 ..." autoComplete="tel" />
+                </label>
               </div>
+            </fieldset>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="email" className="text-sm font-semibold">Correo Electrónico</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  placeholder="tu@correo.com"
-                />
+            <fieldset>
+              <legend><span>02</span> ¿Qué necesitás? *</legend>
+              <div className="chips">
+                {options.map(([value, label, color], index) => (
+                  <label key={value} className="chip" style={{ '--c': color }}>
+                    <input type="radio" name="projectType" value={value} required={index === 0} />
+                    <span>{label}</span>
+                  </label>
+                ))}
               </div>
+            </fieldset>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="projectType" className="text-sm font-semibold">¿Qué estás buscando?</label>
-                <select name="projectType" id="projectType" required defaultValue="">
-                  <option value="" disabled>Seleccioná una opción</option>
-                  <option value="software">Software o plataforma a medida</option>
-                  <option value="automation">Automatización o integración</option>
-                  <option value="consulting">Consultoría y evolución tecnológica</option>
-                  <option value="other">Todavía no lo tengo definido</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label htmlFor="challenge" className="text-sm font-semibold">¿Cuál es el principal desafío?</label>
-                <input
-                  type="text"
-                  name="challenge"
-                  id="challenge"
-                  required
-                  placeholder="Ej.: perdemos tiempo cargando datos manualmente"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label htmlFor="message" className="text-sm font-semibold">Mensaje</label>
-                <textarea
-                  name="message"
-                  id="message"
-                  rows="4"
-                  required
-                  placeholder="Contanos sobre tu idea o proyecto..."
-                  className="resize-none"
-                />
-              </div>
-
-              <label className="flex items-start gap-3 text-sm mt-2" style={{ color: 'rgba(255,255,255,.45)' }}>
-                <input type="checkbox" name="privacy" required className="mt-1 h-4 w-4 accent-cyan-400" />
-                <span>Acepto que Primelogic LT use estos datos para responder mi consulta.</span>
+            <fieldset>
+              <legend><span>03</span> Tu proyecto *</legend>
+              <label className="field">
+                <span className="sr-only">Tu proyecto</span>
+                <textarea name="message" id="message" rows="3" required placeholder="Contanos brevemente qué querés lograr, en qué etapa está y para cuándo lo necesitás." />
               </label>
+            </fieldset>
 
-              <div className="flex justify-end mt-4">
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="contact-submit"
-                >
-                  {status === 'sending' ? 'Enviando...' : 'Enviar consulta'}
-                </button>
-              </div>
+            <button type="submit" className="pill pill-light pill-send" disabled={status === 'sending'}>
+              {status === 'sending' ? 'Enviando...' : 'Enviar mensaje'}
+              <span className="send-dot" aria-hidden="true">→</span>
+            </button>
 
-              {status === 'success' && (
-                <p role="status" className="text-sm font-semibold text-emerald-400 text-center">
-                  Recibimos tu consulta. Te responderemos pronto.
-                </p>
-              )}
-              {status === 'error' && (
-                <p role="alert" className="text-sm font-semibold text-red-400 text-center">
-                  No pudimos enviar el mensaje. Revisá los datos o escribinos directamente.
-                </p>
-              )}
-            </form>
-          </div>
-
+            <p className="form-note" role="status">
+              {status === 'success' && 'Recibimos tu mensaje. Te respondemos pronto.'}
+              {status === 'error' && 'No pudimos enviarlo. Probá de nuevo o escribinos a primelogiclt@gmail.com.'}
+              {(status === 'idle' || status === 'sending') && 'Usamos tus datos solo para responderte.'}
+            </p>
+          </form>
         </div>
       </div>
     </section>

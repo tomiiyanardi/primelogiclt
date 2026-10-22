@@ -1,48 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const links = [
-  ['ofrecemos', 'Enfoque'],
+  ['enfoque', 'Enfoque'],
   ['servicios', 'Servicios'],
   ['proceso', 'Proceso'],
-  ['nosotros', 'Nosotros'],
-  ['clientes', 'Clientes'],
+  ['proyectos', 'Proyectos'],
+  ['equipo', 'Equipo'],
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const close = () => setOpen(false);
 
   return (
     <header
-      className="site-header"
+      className={`site-header ${scrolled || open ? 'is-solid' : ''}`}
       onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          setOpen(false);
-          event.currentTarget.querySelector('button')?.focus();
-        }
+        if (event.key === 'Escape') setOpen(false);
       }}
     >
       <nav aria-label="Navegación principal" className="site-nav">
-        <Link to="/#inicio" onClick={() => setOpen(false)} aria-label="Primelogic LT, inicio">
-          <img src="/logo.svg" alt="Primelogic LT" width="160" height="36" />
-          <span className="nav-wordmark">
-            primelogic<span>LT</span>
-          </span>
+        <Link to="/#inicio" onClick={close} className="nav-brand" aria-label="Primelogic LT, inicio">
+          <img src="/logo.svg" alt="" width="28" height="28" />
+          <span>primelogic<small>LT</small></span>
         </Link>
 
-        <div className="desktop-nav">
+        <div className="nav-links">
           {links.map(([id, label]) => (
             <Link key={id} to={`/#${id}`}>{label}</Link>
           ))}
         </div>
 
-        <Link className="nav-contact" to="/#contacto" onClick={() => setOpen(false)}>
-          Hablemos <ArrowUpRight size={16} aria-hidden="true" />
+        <Link className="pill pill-light nav-cta" to="/#contacto" onClick={close}>
+          Hablemos <span aria-hidden="true">→</span>
         </Link>
 
         <button
-          className="menu-toggle"
+          type="button"
+          className="nav-toggle"
           aria-expanded={open}
           aria-controls="mobile-navigation"
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
@@ -53,12 +59,9 @@ export default function Header() {
       </nav>
 
       {open && (
-        <nav id="mobile-navigation" aria-label="Navegación móvil" className="mobile-nav">
-          {links.map(([id, label]) => (
-            <Link key={id} to={`/#${id}`} onClick={() => setOpen(false)}>
-              {label}
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </Link>
+        <nav id="mobile-navigation" aria-label="Navegación móvil" className="nav-mobile">
+          {[...links, ['contacto', 'Contacto']].map(([id, label]) => (
+            <Link key={id} to={`/#${id}`} onClick={close}>{label}</Link>
           ))}
         </nav>
       )}

@@ -3,25 +3,26 @@ import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import OfferingsSection from '../components/OfferingsSection';
 import ProductsSection from '../components/ProductsSection';
+import ClientsMarquee from '../components/ClientsMarquee';
 import ProcessSection from '../components/ProcessSection';
-import AboutSection from '../components/AboutSection';
-import ClientsSection from '../components/ClientsSection';
+import ProjectsSection from '../components/ProjectsSection';
+import TeamSection from '../components/TeamSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
-import ScrollProgress from '../components/ScrollProgress';
 
 const Home = () => {
   return (
-    <div className="font-sans antialiased text-brand-black bg-transparent selection:bg-brand-blue/30 selection:text-brand-blue">
-      <ScrollProgress />
+    <div className="site">
+      <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <Header />
-      <a className="skip-link" href="#contenido">Saltar al contenido</a><main id="contenido" className="landing-main">
+      <main id="contenido">
         <HeroSection />
         <OfferingsSection />
         <ProductsSection />
+        <ClientsMarquee />
         <ProcessSection />
-        <AboutSection />
-        <ClientsSection />
+        <ProjectsSection />
+        <TeamSection />
         <ContactSection />
       </main>
       <Footer />
@@ -30,4 +31,3 @@ const Home = () => {
 };
 
 export default Home;
-

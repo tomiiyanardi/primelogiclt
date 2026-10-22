@@ -1,207 +1,75 @@
-import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion as Motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
-import LiveMascot from './LiveMascot';
+import { useEffect, useState } from 'react';
+import { motion as Motion, useReducedMotion } from 'framer-motion';
+import { ArrowDown } from 'lucide-react';
 
-const PITCHES = [
-  'Ideas que se convierten en soluciones ✨',
-  'Sistemas a medida para tu operación',
-  'Automatizamos lo que hoy hacés a mano',
-  'IA aplicada a decisiones reales',
-];
+const ENDINGS = ['tu crecimiento.', 'tu operación.', 'tus ventas.', 'tu próximo paso.'];
 
-/** Speech bubble that rotates through what we build, one line at a time. */
-function MascotPitch({ reduced }) {
-  const [index, setIndex] = useState(0);
+/** Types and deletes each ending, like a cursor writing by hand. */
+function useTypewriter(words, reduced) {
+  const [state, setState] = useState({ word: 0, length: reduced ? words[0].length : 0, deleting: false });
 
   useEffect(() => {
     if (reduced) return undefined;
-    const id = setInterval(() => setIndex((i) => (i + 1) % PITCHES.length), 3200);
-    return () => clearInterval(id);
-  }, [reduced]);
+    const current = words[state.word];
+    let delay = state.deleting ? 40 : 85;
+    if (!state.deleting && state.length === current.length) delay = 1800;
+    if (state.deleting && state.length === 0) delay = 300;
 
-  return (
-    <div className="hero-mascot-speech" role="status" aria-live="off">
-      <span className="speech-kicker">
-        <i className="speech-dot" /> PRIMELOGIC
-      </span>
-      <AnimatePresence mode="wait" initial={false}>
-        <Motion.span
-          key={index}
-          className="speech-text"
-          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {PITCHES[index]}
-        </Motion.span>
-      </AnimatePresence>
-    </div>
-  );
-}
+    const id = setTimeout(() => {
+      setState((s) => {
+        const text = words[s.word];
+        if (!s.deleting && s.length === text.length) return { ...s, deleting: true };
+        if (s.deleting && s.length === 0) return { word: (s.word + 1) % words.length, length: 0, deleting: false };
+        return { ...s, length: s.length + (s.deleting ? -1 : 1) };
+      });
+    }, delay);
+    return () => clearTimeout(id);
+  }, [state, words, reduced]);
 
-/**
- * HeroGeometry — a procedural SVG visual: concentric rings that subtly shift
- * with scroll. Uses only CSS transforms + SVG for maximum performance.
- */
-function HeroGeometry({ scrollProgress, reduced }) {
-  const rotate = useTransform(scrollProgress, [0, 1], [0, 45]);
-  const scale = useTransform(scrollProgress, [0, 1], [1, 0.85]);
-  const opacity = useTransform(scrollProgress, [0, 1], [0.5, 0.15]);
-
-  const rings = Array.from({ length: 6 }, (_, i) => ({
-    r: 60 + i * 40,
-    opacity: 0.08 - i * 0.008,
-    dash: `${4 + i * 2} ${12 + i * 4}`,
-  }));
-
-  return (
-    <Motion.div
-      className="hero-geometry"
-      style={reduced ? {} : { rotate, scale, opacity }}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {rings.map((ring, i) => (
-          <circle
-            key={i}
-            cx="250"
-            cy="250"
-            r={ring.r}
-            stroke="#00d4ff"
-            strokeWidth="0.6"
-            opacity={ring.opacity * 10}
-            strokeDasharray={ring.dash}
-          >
-            {!reduced && (
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from={`0 250 250`}
-                to={`${i % 2 === 0 ? 360 : -360} 250 250`}
-                dur={`${50 + i * 15}s`}
-                repeatCount="indefinite"
-              />
-            )}
-          </circle>
-        ))}
-        {/* Central glow */}
-        <circle cx="250" cy="250" r="8" fill="#00d4ff" opacity="0.3">
-          {!reduced && (
-            <animate attributeName="r" values="6;10;6" dur="4s" repeatCount="indefinite" />
-          )}
-        </circle>
-        <circle cx="250" cy="250" r="3" fill="#00d4ff" opacity="0.7" />
-        {/* Orbiting point */}
-        {!reduced && (
-          <circle cx="250" cy="130" r="3" fill="#00d4ff" opacity="0.6">
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              from="0 250 250"
-              to="360 250 250"
-              dur="12s"
-              repeatCount="indefinite"
-            />
-          </circle>
-        )}
-        {/* Cross-hair lines */}
-        <line x1="0" y1="250" x2="500" y2="250" stroke="#00d4ff" strokeWidth="0.3" opacity="0.06" />
-        <line x1="250" y1="0" x2="250" y2="500" stroke="#00d4ff" strokeWidth="0.3" opacity="0.06" />
-      </svg>
-    </Motion.div>
-  );
+  return words[state.word].slice(0, state.length);
 }
 
 export default function HeroSection() {
-  const ref = useRef(null);
   const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const mascotY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-
-  // Orchestrated entrance timing
-  const entrance = { duration: reduced ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] };
+  const typed = useTypewriter(ENDINGS, reduced);
+  const rise = (delay) => ({
+    initial: reduced ? false : { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] },
+  });
 
   return (
-    <section ref={ref} id="inicio" className="landing-hero">
-      {/* Atmospheric gradient */}
-      <div className="hero-atmosphere" aria-hidden="true" />
-      {/* Topographic background texture */}
-      <div className="hero-topo" aria-hidden="true" />
+    <section id="inicio" className="hero">
+      <h1 className="sr-only">Primelogic LT. La lógica detrás de tu crecimiento.</h1>
 
-      {/* Procedural geometry — the hero's visual protagonist */}
-      <HeroGeometry scrollProgress={scrollYProgress} reduced={reduced} />
-
-      {/* Main content */}
-      <div className="hero-copy">
-        <Motion.p
-          className="hero-eyebrow"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ ...entrance, delay: 0.1 }}
-        >
-          <span /> PRIMELOGIC LT / SOFTWARE FACTORY
-        </Motion.p>
-
-        <h1 aria-label="Que a tu empresa le vaya bien.">
-          {['Que a tu empresa', 'le vaya bien.'].map((line, i) => (
-            <span className="hero-line" aria-hidden="true" key={line}>
-              <Motion.span
-                initial={reduced ? false : { y: '110%' }}
-                animate={{ y: 0 }}
-                transition={{ ...entrance, delay: 0.2 + i * 0.15 }}
-              >
-                {line}
-              </Motion.span>
-            </span>
-          ))}
-        </h1>
-
-        <Motion.div
-          initial={reduced ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...entrance, delay: 0.55 }}
-        >
-          <p className="hero-description">
-            Ese es el objetivo. La tecnología es cómo lo hacemos.
-          </p>
-          <a className="hero-primary" href="#contacto">
-            Construyamos juntos <ArrowUpRight size={18} aria-hidden="true" />
-          </a>
-        </Motion.div>
-      </div>
-
-      {/* Mascot leaning on a light pillar at the viewport edge */}
-      <Motion.div
-        className="hero-mascot"
-        initial={reduced ? false : { opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ type: 'spring', stiffness: 70, damping: 14, delay: 0.7 }}
-        style={reduced ? undefined : { y: mascotY }}
-      >
-        <span className="hero-mascot-pillar" aria-hidden="true" />
-        <MascotPitch reduced={reduced} />
-        <LiveMascot
-          src="/mascots/mascot-lean.svg"
-          alt="Mascota de Primelogic apoyada, señalando hacia el texto"
-          width="400"
-          height="620"
-          priority
-          float={6}
-          sway={1}
-          duration={5}
-          shadow={false}
-        />
+      <Motion.div className="hero-lockup" aria-hidden="true" {...rise(0.1)}>
+        <img className="hero-mark" src="/logo.svg" alt="" width="160" height="160" />
+        <div className="hero-word">
+          <span className="hero-word-top">primelogic</span>
+          <span className="hero-dots">
+            <i style={{ '--c': 'var(--violet)' }} />
+            <i style={{ '--c': 'var(--ochre)' }} />
+            <i style={{ '--c': 'var(--magenta)' }} />
+            <i style={{ '--c': 'var(--cyan)' }} />
+            <b>LT</b>
+          </span>
+        </div>
       </Motion.div>
 
-      {/* Scroll hint */}
-      <a href="#ofrecemos" className="hero-scroll">
-        <span className="scroll-line" />
-        <ArrowDown size={14} aria-hidden="true" /> Descubrí lo que sigue
-      </a>
+      <Motion.p className="hero-line" aria-hidden="true" {...rise(0.35)}>
+        La lógica detrás de <span className="script">{typed}</span>
+        <span className="caret" />
+      </Motion.p>
 
-      <span className="hero-edition">MENDOZA, ARGENTINA · SIN FRONTERAS</span>
+      <Motion.div className="hero-actions" {...rise(0.5)}>
+        <a className="pill pill-light" href="#contacto">
+          Hablá con nosotros <span aria-hidden="true">→</span>
+        </a>
+      </Motion.div>
+
+      <a className="hero-scroll" href="#enfoque" aria-label="Bajar al contenido">
+        <ArrowDown size={18} aria-hidden="true" />
+      </a>
     </section>
   );
 }
