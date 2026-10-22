@@ -46,12 +46,10 @@ export default function HeroSection() {
         <img className="hero-mark" src="/logo.svg" alt="" width="160" height="160" />
         <div className="hero-word">
           <span className="hero-word-top">primelogic</span>
-          <span className="hero-dots">
-            <i style={{ '--c': 'var(--violet)' }} />
-            <i style={{ '--c': 'var(--ochre)' }} />
-            <i style={{ '--c': 'var(--magenta)' }} />
-            <i style={{ '--c': 'var(--cyan)' }} />
+          <span className="hero-sub">
+            <i />
             <b>LT</b>
+            <span>Software factory</span>
           </span>
         </div>
       </Motion.div>

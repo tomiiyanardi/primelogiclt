@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
 const options = [
-  ['software', 'Software a medida', 'var(--violet)'],
-  ['automation', 'Automatización', 'var(--ochre)'],
-  ['ai', 'IA aplicada', 'var(--magenta)'],
-  ['consulting', 'Consultoría', 'var(--cyan)'],
+  ['software', 'Software a medida', 'var(--blue)'],
+  ['automation', 'Automatización', 'var(--cyan)'],
+  ['ai', 'IA aplicada', 'var(--violet)'],
+  ['consulting', 'Consultoría', 'var(--magenta)'],
   ['other', 'Otro / no estoy seguro', 'rgba(255,255,255,.35)'],
 ];
 
 const steps = [
-  ['Nos contás el desafío', 'var(--violet)'],
-  ['Charlamos sin costo', 'var(--ochre)'],
-  ['Te proponemos un camino concreto', 'var(--magenta)'],
+  ['Nos contás el desafío', 'var(--blue)'],
+  ['Charlamos sin costo', 'var(--cyan)'],
+  ['Te proponemos un camino concreto', 'var(--violet)'],
 ];
 
 export default function ContactSection() {

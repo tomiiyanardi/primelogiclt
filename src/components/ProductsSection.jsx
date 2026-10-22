@@ -6,7 +6,7 @@ const services = [
     title: ['Software', 'a medida'],
     text: 'Aplicaciones web, móviles y sistemas que convierten una operación compleja en una experiencia clara, rápida y preparada para crecer.',
     bullets: ['Web apps y aplicaciones móviles', 'Paneles de gestión y reportes', 'Sistemas pensados para tu operación'],
-    color: 'var(--violet)',
+    color: 'var(--blue)',
     value: 'software',
   },
   {
@@ -14,7 +14,7 @@ const services = [
     title: ['Automatización'],
     text: 'Conectamos tus herramientas y eliminamos tareas repetitivas para que tu equipo se enfoque en aportar valor real.',
     bullets: ['Procesos conectados de punta a punta', 'Integraciones con los sistemas que ya usás', 'Reportes que se arman solos'],
-    color: 'var(--ochre)',
+    color: 'var(--cyan)',
     value: 'automation',
   },
   {
@@ -22,7 +22,7 @@ const services = [
     title: ['IA', 'aplicada'],
     text: 'IA generativa y análisis predictivo para potenciar decisiones y transformar información en nuevas oportunidades.',
     bullets: ['Asistentes con IA para tu equipo', 'Análisis predictivo', 'Datos convertidos en decisiones'],
-    color: 'var(--magenta)',
+    color: 'var(--violet)',
     value: 'ai',
   },
   {
@@ -30,7 +30,7 @@ const services = [
     title: ['Consultoría'],
     text: 'Acompañamiento técnico para priorizar, modernizar y sostener una plataforma que crezca con tu empresa.',
     bullets: ['Arquitectura escalable', 'Modernización de sistemas', 'Soporte y evolución continua'],
-    color: 'var(--cyan)',
+    color: 'var(--magenta)',
     value: 'consulting',
   },
 ];

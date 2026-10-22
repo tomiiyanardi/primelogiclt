@@ -7,25 +7,25 @@ const steps = [
     title: 'Entender',
     text: 'Mapeamos el problema real, el contexto del negocio y las oportunidades que vale la pena priorizar.',
     tags: ['Entrevistas', 'Diagnóstico', 'Prioridades'],
-    color: 'var(--violet)',
+    color: 'var(--blue)',
   },
   {
     title: 'Diseñar',
     text: 'Convertimos esa información en una solución clara: prototipamos y validamos con personas reales antes de construir.',
     tags: ['UX/UI', 'Prototipos', 'Validación'],
-    color: 'var(--ochre)',
+    color: 'var(--cyan)',
   },
   {
     title: 'Construir',
     text: 'Desarrollamos, integramos y probamos cada parte para que la tecnología funcione en la operación diaria.',
     tags: ['Desarrollo', 'Integraciones', 'Pruebas'],
-    color: 'var(--magenta)',
+    color: 'var(--violet)',
   },
   {
     title: 'Evolucionar',
     text: 'Medimos lo que cambia y acompañamos las siguientes mejoras para que la solución siga creciendo.',
     tags: ['Métricas', 'Soporte', 'Mejoras'],
-    color: 'var(--cyan)',
+    color: 'var(--magenta)',
   },
 ];
 

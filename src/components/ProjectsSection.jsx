@@ -44,11 +44,11 @@ export default function ProjectsSection() {
             <span className="bento-label">a medida</span>
             <span className="bento-stripes" aria-hidden="true" />
           </div>
-          <div className="bento-card" style={{ '--c': 'var(--magenta)' }}>
+          <div className="bento-card" style={{ '--c': 'var(--cyan)' }}>
             <span className="bento-label">empresas que confían</span>
             <span className="bento-num"><CountUp to={6} prefix="+" /></span>
           </div>
-          <div className="bento-card" style={{ '--c': 'var(--ochre)' }}>
+          <div className="bento-card" style={{ '--c': 'var(--blue)' }}>
             <span className="bento-label">áreas de servicio</span>
             <span className="bento-num"><CountUp to={4} /></span>
           </div>

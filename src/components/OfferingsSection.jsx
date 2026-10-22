@@ -7,16 +7,19 @@ const cards = [
     title: 'Tiempo para lo importante',
     text: 'Automatizamos procesos clave para que tu equipo deje de repetir tareas y pueda enfocarse en hacer crecer el negocio.',
     art: 'art-violet',
+    image: '/mascots/mascot-sitting-laptop.svg',
   },
   {
     title: 'Tu crecimiento nos mueve',
     text: 'Nos involucramos en los desafíos de tu empresa. Si a vos te va bien, estamos haciendo bien nuestro trabajo.',
-    art: 'art-ochre',
+    art: 'art-blue',
+    image: '/mascots/mascot-celebrate.svg',
   },
   {
     title: 'El compromiso es compartido',
     text: 'Diseñamos, construimos y acompañamos cada solución con el mismo interés que vos ponés en tu negocio.',
     art: 'art-magenta',
+    image: '/mascots/mascot-wave.svg',
   },
   {
     title: 'Tu proyecto, nuestra lógica',

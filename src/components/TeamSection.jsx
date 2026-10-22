@@ -7,7 +7,7 @@ const team = [
     text: 'Se asegura de que cada producto sea claro, útil y agradable de usar, desde la primera idea hasta la entrega.',
     tags: ['Diseño', 'UX/UI', 'Producto'],
     avatar: '/mascots/avatar-cool.svg',
-    color: 'var(--violet)',
+    color: 'var(--blue)',
   },
   {
     name: 'Tomás',
@@ -15,7 +15,7 @@ const team = [
     text: 'Piensa la arquitectura y las integraciones para que todo funcione firme en la operación diaria.',
     tags: ['Desarrollo', 'Integraciones', 'Infraestructura'],
     avatar: '/mascots/avatar-wink.svg',
-    color: 'var(--ochre)',
+    color: 'var(--cyan)',
   },
 ];
 
