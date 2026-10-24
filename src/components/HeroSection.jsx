@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion as Motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+import ParticleCanvas from './ParticleCanvas';
 
 const ENDINGS = ['tu crecimiento.', 'tu operación.', 'tus ventas.', 'tu próximo paso.'];
 
@@ -40,6 +41,7 @@ export default function HeroSection() {
 
   return (
     <section id="inicio" className="hero">
+      <ParticleCanvas />
       <h1 className="sr-only">Primelogic LT. La lógica detrás de tu crecimiento.</h1>
 
       <Motion.div className="hero-lockup" aria-hidden="true" {...rise(0.1)}>

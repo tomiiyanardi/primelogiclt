@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion as Motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Building2, Check, Mail, Phone, User } from 'lucide-react';
+import './ContactSection.css';
 
 const options = [
   ['software', 'Software a medida', 'var(--blue)'],
@@ -84,7 +85,7 @@ export default function ContactSection() {
   const swap = reduced ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -12 }, transition: { duration: 0.35 } };
 
   return (
-    <section id="contacto" className="section">
+    <section id="contacto" className="section contact-section">
       <div className="wrap">
         <div className="cf">
           <div className="cf-mascot" aria-hidden="true">
@@ -95,8 +96,9 @@ export default function ContactSection() {
 
           <div className="cf-panel">
             <header className="cf-head">
-              <h2 className="display">Hablemos de tu proyecto</h2>
-              <p>Contanos qué necesitás y coordinamos una primera charla de diagnóstico, sin costo.</p>
+              <span className="cf-eyebrow">EL PRÓXIMO PASO, JUNTOS</span>
+              <h2 className="display">Hablemos de <span>tu proyecto.</span></h2>
+              <p>Contanos qué necesitás. La primera charla de diagnóstico es sin costo.</p>
             </header>
 
             {done ? (
